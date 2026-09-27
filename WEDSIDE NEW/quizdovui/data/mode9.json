@@ -1,0 +1,82 @@
+[
+  {
+    "id": "M9_001",
+    "difficulty": "Easy",
+    "question": "Giấm ăn có thành phần chính là dung dịch axit nào?",
+    "options": ["Axit clohidric", "Axit axetic", "Axit sunfuric", "Axit nitric"],
+    "answer": 1,
+    "explanation": "Giấm ăn là dung dịch axit axetic (CH3COOH) loãng, khoảng 2-5%."
+  },
+  {
+    "id": "M9_002",
+    "difficulty": "Easy",
+    "question": "Khí nào cần thiết cho sự hô hấp của con người?",
+    "options": ["Khí Nitơ", "Khí Oxi", "Khí Cacbonic", "Khí Heli"],
+    "answer": 1,
+    "explanation": "Khí Oxi (O2) cần thiết cho quá trình hô hấp, cung cấp năng lượng cho cơ thể."
+  },
+  {
+    "id": "M9_003",
+    "difficulty": "Medium",
+    "question": "Vì sao không nên trộn nước Javen với axit trong gia đình?",
+    "options": ["Gây nổ mạnh", "Sinh ra khí Clo độc", "Làm mất tác dụng tẩy rửa", "Tạo kết tủa gây tắc ống"],
+    "answer": 1,
+    "explanation": "Nước Javen (NaClO) gặp axit sẽ sinh ra khí Clo (Cl2) độc hại, rất nguy hiểm khi hít phải."
+  },
+  {
+    "id": "M9_004",
+    "difficulty": "Medium",
+    "question": "Baking soda (thuốc muối) dùng trong nấu ăn có công thức hóa học là gì?",
+    "options": ["Na2CO3", "NaHCO3", "NaOH", "CaCO3"],
+    "answer": 1,
+    "explanation": "Baking soda có công thức NaHCO3 (Natri hidrocacbonat / Natri bicacbonat)."
+  },
+  {
+    "id": "M9_005",
+    "difficulty": "Hard",
+    "question": "Vì sao dùng nước vôi trong để khử chua đất trồng trọt?",
+    "options": ["Ca(OH)2 trung hòa axit trong đất", "Ca(OH)2 cung cấp dinh dưỡng", "Ca(OH)2 diệt sâu bệnh", "Ca(OH)2 làm tơi xốp đất"],
+    "answer": 0,
+    "explanation": "Ca(OH)2 là bazơ, có khả năng trung hòa axit dư trong đất chua, cải tạo đất."
+  },
+  {
+    "id": "M9_006",
+    "difficulty": "Hard",
+    "question": "Vì sao không nên ăn quá nhiều thực phẩm chứa hàn the (borax)?",
+    "options": ["Vì hàn the gây độc, tích lũy trong cơ thể", "Vì hàn the làm mất vị ngon", "Vì hàn the đắt tiền", "Vì hàn the không tan trong nước"],
+    "answer": 0,
+    "explanation": "Hàn the (Na2B4O7) là chất cấm dùng trong thực phẩm vì gây độc, tích lũy gây hại cho gan, thận."
+  },
+  {
+    "id": "M9_007",
+    "difficulty": "HSG",
+    "question": "Trong quá trình quang hợp, cây xanh hấp thụ khí CO2 và giải phóng khí O2 nhờ ánh sáng. Phản ứng tổng quát tạo ra glucose (C6H12O6) cần bao nhiêu phân tử CO2 cho 1 phân tử glucose?",
+    "options": ["4", "6", "8", "12"],
+    "answer": 1,
+    "explanation": "Phương trình quang hợp: 6CO2 + 6H2O → C6H12O6 + 6O2, cần 6 phân tử CO2 để tạo 1 phân tử glucose."
+  },
+  {
+    "id": "M9_008",
+    "difficulty": "HSG",
+    "question": "Tại sao khi bảo quản thực phẩm trong tủ lạnh lại giúp thực phẩm lâu hỏng hơn (xét theo phản ứng hóa học phân hủy)?",
+    "options": ["Nhiệt độ thấp làm giảm tốc độ phản ứng phân hủy", "Nhiệt độ thấp diệt hết vi khuẩn", "Nhiệt độ thấp làm đông cứng chất dinh dưỡng", "Nhiệt độ thấp tạo phản ứng bảo quản mới"],
+    "answer": 0,
+    "explanation": "Theo quy tắc tốc độ phản ứng, nhiệt độ càng thấp thì tốc độ các phản ứng hóa học (kể cả phân hủy) càng chậm, giúp thực phẩm lâu hỏng hơn."
+  },
+  {
+    "id": "M9_009",
+    "difficulty": "Hell",
+    "question": "Một mẫu nước có độ cứng tạm thời do chứa Ca(HCO3)2. Khi đun sôi, hiện tượng cặn trắng xuất hiện là do phản ứng nào?",
+    "options": ["Ca(HCO3)2 → CaCO3↓ + CO2↑ + H2O", "Ca(HCO3)2 → CaO + 2CO2 + H2O", "Ca(HCO3)2 → Ca(OH)2 + 2CO2", "Ca(HCO3)2 không phản ứng khi đun"],
+    "answer": 0,
+    "explanation": "Khi đun nóng, Ca(HCO3)2 kém bền bị phân hủy: Ca(HCO3)2 → CaCO3↓ + CO2↑ + H2O, CaCO3 không tan tạo thành cặn trắng."
+  },
+  {
+    "id": "M9_010",
+    "difficulty": "Hell",
+    "question": "Tại sao khi bị ong đốt (nọc có tính axit), dân gian thường bôi vôi (Ca(OH)2) hoặc kem đánh răng lên vết đốt?",
+    "options": ["Để trung hòa axit trong nọc ong, giảm đau", "Để làm mát vết thương", "Để sát trùng vết thương", "Để tạo màu che vết đốt"],
+    "answer": 0,
+    "explanation": "Nọc ong có tính axit, bôi chất có tính bazơ nhẹ như vôi hoặc kem đánh răng giúp trung hòa bớt axit, giảm đau và sưng."
+  }
+]

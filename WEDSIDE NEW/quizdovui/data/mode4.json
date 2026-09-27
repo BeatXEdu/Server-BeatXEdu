@@ -1,0 +1,82 @@
+[
+  {
+    "id": "M4_001",
+    "difficulty": "Easy",
+    "question": "Hệ số cân bằng của phản ứng: H2 + O2 → H2O là gì?",
+    "options": ["H2 + O2 → H2O", "2H2 + O2 → 2H2O", "H2 + 2O2 → H2O", "3H2 + O2 → 2H2O"],
+    "answer": 1,
+    "explanation": "Cân bằng đúng là 2H2 + O2 → 2H2O, đảm bảo số nguyên tử H và O hai vế bằng nhau."
+  },
+  {
+    "id": "M4_002",
+    "difficulty": "Easy",
+    "question": "Phương trình nào sau đây đã được cân bằng đúng?",
+    "options": ["Fe + O2 → Fe2O3", "3Fe + 2O2 → Fe3O4", "2Fe + O2 → 2FeO", "4Fe + 3O2 → 2Fe2O3"],
+    "answer": 3,
+    "explanation": "4Fe + 3O2 → 2Fe2O3 có 4 Fe và 6 O ở cả hai vế, đã cân bằng đúng."
+  },
+  {
+    "id": "M4_003",
+    "difficulty": "Medium",
+    "question": "Cân bằng phương trình: Al + HCl → AlCl3 + H2. Hệ số của HCl là bao nhiêu?",
+    "options": ["2", "3", "6", "4"],
+    "answer": 2,
+    "explanation": "2Al + 6HCl → 2AlCl3 + 3H2, hệ số của HCl là 6."
+  },
+  {
+    "id": "M4_004",
+    "difficulty": "Medium",
+    "question": "Cân bằng phương trình: Na2CO3 + CaCl2 → CaCO3 + NaCl. Hệ số của NaCl sau khi cân bằng là bao nhiêu?",
+    "options": ["1", "2", "3", "4"],
+    "answer": 1,
+    "explanation": "Na2CO3 + CaCl2 → CaCO3 + 2NaCl, hệ số của NaCl là 2 để cân bằng 2 nguyên tử Na và Cl."
+  },
+  {
+    "id": "M4_005",
+    "difficulty": "Hard",
+    "question": "Cân bằng phản ứng: KMnO4 + HCl → KCl + MnCl2 + Cl2 + H2O. Tổng hệ số các chất là bao nhiêu?",
+    "options": ["35", "36", "38", "40"],
+    "answer": 0,
+    "explanation": "Phương trình cân bằng: 2KMnO4 + 16HCl → 2KCl + 2MnCl2 + 5Cl2 + 8H2O, tổng hệ số = 2+16+2+2+5+8 = 35."
+  },
+  {
+    "id": "M4_006",
+    "difficulty": "Hard",
+    "question": "Cân bằng phản ứng cháy: C3H8 + O2 → CO2 + H2O. Hệ số của O2 là bao nhiêu?",
+    "options": ["3", "4", "5", "6"],
+    "answer": 2,
+    "explanation": "C3H8 + 5O2 → 3CO2 + 4H2O, hệ số của O2 là 5."
+  },
+  {
+    "id": "M4_007",
+    "difficulty": "HSG",
+    "question": "Cân bằng phản ứng oxi hóa - khử: FeS2 + HNO3 → Fe(NO3)3 + H2SO4 + NO + H2O. Hệ số của HNO3 là bao nhiêu?",
+    "options": ["6", "8", "10", "12"],
+    "answer": 1,
+    "explanation": "Phương trình cân bằng: FeS2 + 8HNO3 → Fe(NO3)3 + 2H2SO4 + 5NO + 2H2O, hệ số của HNO3 là 8."
+  },
+  {
+    "id": "M4_008",
+    "difficulty": "HSG",
+    "question": "Cân bằng phản ứng: Cu + H2SO4 (đặc, nóng) → CuSO4 + SO2 + H2O. Hệ số của H2SO4 là bao nhiêu?",
+    "options": ["1", "2", "3", "4"],
+    "answer": 1,
+    "explanation": "Cu + 2H2SO4 (đặc) → CuSO4 + SO2 + 2H2O, hệ số của H2SO4 là 2."
+  },
+  {
+    "id": "M4_009",
+    "difficulty": "Hell",
+    "question": "Cân bằng phản ứng: FeCu2S2 + O2 → Fe2O3 + CuO + SO2. Hệ số của O2 sau khi cân bằng tối giản là bao nhiêu?",
+    "options": ["17/2", "15/2", "19/2", "13/2"],
+    "answer": 0,
+    "explanation": "Cân bằng phương trình: 2FeCu2S2 + 17/2 O2 → Fe2O3 + 4CuO + 4SO2 (nhân đôi để ra hệ số nguyên: 4FeCu2S2 + 17O2 → 2Fe2O3 + 8CuO + 8SO2), hệ số O2 tối giản trên 1 FeCu2S2 là 17/2."
+  },
+  {
+    "id": "M4_010",
+    "difficulty": "Hell",
+    "question": "Cân bằng phản ứng oxi hóa khử phức tạp: Cu2S + HNO3 → Cu(NO3)2 + H2SO4 + NO + H2O. Tổng số electron trao đổi tính trên 1 phân tử Cu2S là bao nhiêu?",
+    "options": ["8", "10", "12", "14"],
+    "answer": 1,
+    "explanation": "Trong Cu2S: 2Cu (+1→+2, mỗi Cu nhường 1e, tổng 2e) và S (-2→+6, nhường 8e), tổng electron nhường trên 1 phân tử Cu2S là 2+8 = 10."
+  }
+]

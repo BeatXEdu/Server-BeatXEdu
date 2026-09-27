@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Benchmark KK - kiểm tra CPU, GPU, RAM, SSD và Wi-Fi">
+  <title>Benchmark KK</title>
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="splash" class="splash">
+    <div class="splash-card">
+      <img src="assets/logo.svg" alt="Benchmark KK" class="logo">
+      <h1>Benchmark KK</h1>
+      <p>PC Performance Test</p>
+      <span>By BeatXEdu</span>
+    </div>
+  </div>
+
+  <main class="app hidden" id="app">
+    <header class="topbar">
+      <div class="brand"><img src="assets/logo.svg" alt=""> <strong>Benchmark KK</strong></div>
+      <div class="status-pill" id="supportStatus">Đang kiểm tra trình duyệt…</div>
+    </header>
+
+    <section class="hero">
+      <div>
+        <p class="eyebrow">PC PERFORMANCE TEST</p>
+        <h2>Kiểm tra toàn bộ máy trong <b>15 phút</b></h2>
+        <p class="muted">CPU · GPU · RAM · SSD · Wi-Fi · chấm điểm cấu hình máy</p>
+      </div>
+      <div class="timer-card">
+        <small>THỜI GIAN</small>
+        <strong id="timer">15:00</strong>
+      </div>
+    </section>
+
+    <section class="hardware panel">
+      <div class="section-title"><h3>🖥️ Cấu hình phát hiện</h3><button id="refreshInfo" class="ghost">Làm mới</button></div>
+      <div class="hardware-grid" id="hardwareGrid"></div>
+    </section>
+
+    <section class="panel">
+      <div class="section-title"><h3>🧪 Benchmark</h3><span id="phaseText">Sẵn sàng</span></div>
+      <div class="progress"><div id="overallProgress"></div></div>
+      <div class="test-grid">
+        <article class="test-card" data-key="cpu"><span>🧠</span><h4>CPU</h4><strong id="score-cpu">—</strong><small id="detail-cpu">Chưa test</small></article>
+        <article class="test-card" data-key="gpu"><span>🎮</span><h4>GPU</h4><strong id="score-gpu">—</strong><small id="detail-gpu">Chưa test</small></article>
+        <article class="test-card" data-key="ram"><span>🧮</span><h4>RAM</h4><strong id="score-ram">—</strong><small id="detail-ram">Chưa test</small></article>
+        <article class="test-card" data-key="ssd"><span>💾</span><h4>SSD</h4><strong id="score-ssd">—</strong><small id="detail-ssd">Chưa test</small></article>
+        <article class="test-card" data-key="wifi"><span>🌐</span><h4>Wi-Fi / Network</h4><strong id="score-wifi">—</strong><small id="detail-wifi">Chưa test</small></article>
+      </div>
+      <div class="actions">
+        <button id="startBtn" class="primary">🔥 BẮT ĐẦU TEST</button>
+        <button id="stopBtn" class="danger" disabled>■ DỪNG TEST</button>
+      </div>
+      <p class="notice"><b>Benchmark KK chấm điểm cấu hình máy</b> bằng các bài test chạy trực tiếp trong trình duyệt. Điểm là điểm nội bộ của Benchmark KK, không thay thế benchmark native. Bạn có thể dừng bất kỳ lúc nào.</p>
+    </section>
+
+    <section class="panel hidden" id="resultPanel">
+      <div class="result-head">
+        <div><p class="eyebrow">BENCHMARK RESULT</p><h3>Kết quả của bạn</h3></div>
+        <div class="total-score"><strong id="totalScore">0</strong><span>/100</span><small id="grade">—</small></div>
+      </div>
+      <div class="bars" id="resultBars"></div>
+      <div class="summary" id="summary"></div><div class="recommendations" id="recommendations"></div>
+      <div class="actions">
+        <button id="copyBtn" class="secondary">📋 Sao chép báo cáo</button>
+        <button id="jsonBtn" class="secondary">⬇ Xuất JSON</button>
+        <button id="againBtn" class="primary">↻ Test lại</button>
+      </div>
+      <footer>Benchmark KK · By BeatXEdu</footer>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

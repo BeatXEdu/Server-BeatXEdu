@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảng Tuần Hoàn - Khu vực quản trị hệ thống</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            min-height: 100%;
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            color: #fff;
+            background: radial-gradient(circle at top left, #171b30 0%, #0c0f19 45%, #080a11 100%);
+        }
+
+        .layout {
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 260px;
+            padding: 22px 16px;
+            border-right: 1px solid rgba(126, 145, 220, .18);
+            background: rgba(10, 13, 24, .94);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .sidebar-top {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            margin-bottom: 30px;
+            padding: 6px;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #5968ff, #7547e9);
+            font-size: 21px;
+        }
+
+        .brand-text strong {
+            display: block;
+            font-size: 16px;
+        }
+
+        .brand-text span {
+            color: #686f8b;
+            font-size: 11px;
+        }
+
+        .nav-title {
+            margin: 0 10px 9px;
+            color: #5e6680;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .8px;
+            text-transform: uppercase;
+        }
+
+        .nav {
+            display: grid;
+            gap: 6px;
+        }
+
+        .nav button {
+            width: 100%;
+            padding: 12px;
+            border: 0;
+            border-radius: 11px;
+            background: transparent;
+            color: #9ba3bf;
+            text-align: left;
+            font: inherit;
+            cursor: pointer;
+            transition: .15s;
+        }
+
+        .nav button:hover,
+        .nav button.active {
+            background: rgba(89, 104, 255, .12);
+            color: #fff;
+        }
+
+        .logout {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid rgba(255, 90, 100, .2);
+            border-radius: 11px;
+            background: rgba(170, 40, 50, .08);
+            color: #ff9ba1;
+            font: inherit;
+            cursor: pointer;
+            transition: .15s;
+        }
+
+        .logout:hover {
+            background: rgba(170, 40, 50, .15);
+        }
+
+        /* MAIN CONTENT */
+        .main {
+            flex: 1;
+            min-width: 0;
+            padding: 28px;
+            overflow-y: auto;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+
+        .topbar h1 {
+            margin: 0;
+            font-size: 27px;
+        }
+
+        .topbar p {
+            margin: 7px 0 0;
+            color: #777f9c;
+            font-size: 13px;
+        }
+
+        .account {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 13px;
+            border: 1px solid rgba(126, 145, 220, .18);
+            border-radius: 12px;
+            background: rgba(16, 19, 34, .8);
+        }
+
+        .avatar {
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #5968ff;
+            font-weight: 700;
+        }
+
+        .account small {
+            display: block;
+            color: #68718d;
+            font-size: 10px;
+        }
+
+        .account strong {
+            font-size: 13px;
+        }
+
+        /* CARDS */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .card {
+            min-height: 140px;
+            padding: 20px;
+            border: 1px solid rgba(126, 145, 220, .18);
+            border-radius: 17px;
+            background: rgba(16, 19, 34, .85);
+        }
+
+        .card-icon {
+            margin-bottom: 13px;
+            font-size: 23px;
+        }
+
+        .card h2 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .card p {
+            margin: 8px 0 0;
+            color: #737b98;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        /* PANELS */
+        .panel {
+            margin-top: 20px;
+            padding: 22px;
+            border: 1px solid rgba(126, 145, 220, .18);
+            border-radius: 17px;
+            background: rgba(16, 19, 34, .85);
+        }
+
+        .panel h2 {
+            margin: 0 0 8px;
+            font-size: 18px;
+        }
+
+        .panel p {
+            margin: 0;
+            color: #777f9c;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .role {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(89, 104, 255, .12);
+            color: #8992ff;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 210px;
+            }
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .layout {
+                display: block;
+            }
+            .sidebar {
+                width: 100%;
+                border-right: 0;
+                border-bottom: 1px solid rgba(126, 145, 220, .18);
+                gap: 20px;
+            }
+            .main {
+                padding: 20px;
+            }
+            .topbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-top">
+            <div class="brand">
+                <div class="brand-icon">🛡️</div>
+                <div class="brand-text">
+                    <strong>Yêu Hóa</strong>
+                    <span>KHU VỰC QUẢN TRỊ</span>
+                </div>
+            </div>
+
+            <div class="nav-title">Quản trị</div>
+            
+            <nav class="nav">
+                <button class="active" data-section="dashboard">🏠 Tổng quan</button>
+                <button data-section="logs">📜 Nhật ký</button>
+                <button data-section="security">🛡️ Bảo vệ hệ thống</button>
+                <button id="ownerButton" data-section="owner">👑 Quyền đặc biệt</button>
+            </nav>
+        </div>
+
+        <button class="logout" id="logoutButton">🚪 Đăng xuất</button>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+        <header class="topbar">
+            <div>
+                <h1 id="pageTitle">Tổng quan</h1>
+                <p>Khu vực điều hành nội bộ của Bảng Tuần Hoàn</p>
+            </div>
+
+            <div class="account">
+                <div class="avatar" id="avatar">?</div>
+                <div>
+                    <small>QUYỀN HIỆN TẠI</small>
+                    <strong id="roleText">Đang xác thực...</strong>
+                </div>
+            </div>
+        </header>
+
+        <!-- DASHBOARD SECTION -->
+        <section id="dashboard">
+            <div class="cards">
+                <article class="card">
+                    <div class="card-icon">📊</div>
+                    <h2>Hệ thống</h2>
+                    <p>Xác thực bảo mật đã hoàn tất. Đây là khu vực quản trị nội bộ hệ thống.</p>
+                </article>
+
+                <article class="card">
+                    <div class="card-icon">📜</div>
+                    <h2>Nhật ký</h2>
+                    <p>Xem hoạt động quản trị và các sự kiện ghi nhận từ hệ thống.</p>
+                </article>
+
+                <article class="card">
+                    <div class="card-icon">🛡️</div>
+                    <h2>Bảo vệ</h2>
+                    <p>Các công cụ phòng thủ và kiểm soát an ninh vận hành ổn định.</p>
+                </article>
+            </div>
+
+            <div class="panel">
+                <h2>Chào mừng vào khu quản trị</h2>
+                <p>Quyền truy cập được quản lý chặt chẽ bởi hệ thống phân quyền. Đảm bảo tuân thủ nghiêm ngặt quy tắc bảo mật.</p>
+                <span class="role" id="roleBadge">ĐANG XÁC THỰC</span>
+            </div>
+        </section>
+
+        <!-- LOGS SECTION -->
+        <section id="logs" class="panel hidden">
+            <h2>📜 Nhật ký hệ thống</h2>
+            <p>Dữ liệu nhật ký hoạt động chi tiết được đồng bộ trực tiếp từ phân vùng bảo mật.</p>
+        </section>
+
+        <!-- SECURITY SECTION -->
+        <section id="security" class="panel hidden">
+            <h2>🛡️ Bảo vệ hệ thống</h2>
+            <p>Bảng điều khiển theo dõi tường lửa, trạng thái kết nối và phát hiện các hành vi bất thường.</p>
+        </section>
+
+        <!-- OWNER SECTION -->
+        <section id="owner" class="panel hidden">
+            <h2>👑 Quyền đặc biệt (Owner Panel)</h2>
+            <p>Khu vực tối cao chỉ dành riêng cho tài khoản sở hữu quyền quản trị cấp cao nhất.</p>
+        </section>
+    </main>
+
+</div>
+
+<script>
+    /**
+     * BẢO MẬT & ĐIỀU HƯỚNG PHÂN QUYỀN
+     * Đọc session từ sessionStorage được cấp phát sau khi xác thực thành công.
+     */
+    document.addEventListener("DOMContentLoaded", () => {
+        const role = sessionStorage.getItem("admin_role");
+
+        // Nếu không tồn tại session role, lập tức điều hướng về trang xác thực gốc
+        if (!role) {
+            window.location.replace("/khuvuc/quantri/index.html");
+            return;
+        }
+
+        // Hiển thị thông tin phân quyền lên giao diện
+        const roleText = document.getElementById("roleText");
+        const roleBadge = document.getElementById("roleBadge");
+        const avatar = document.getElementById("avatar");
+
+        if (roleText && roleBadge && avatar) {
+            roleText.textContent = role;
+            roleBadge.textContent = "QUYỀN: " + role;
+            avatar.textContent = role.charAt(0).toUpperCase();
+        }
+
+        // Kiểm soát hiển thị nút Quyền đặc biệt dựa trên role
+        const ownerButton = document.getElementById("ownerButton");
+        if (ownerButton) {
+            if (role !== "OWNER") {
+                ownerButton.classList.add("hidden");
+            }
+        }
+
+        // Quản lý chuyển đổi các panel giao diện
+        const sections = ["dashboard", "logs", "security", "owner"];
+        const titles = {
+            dashboard: "Tổng quan",
+            logs: "Nhật ký",
+            security: "Bảo vệ hệ thống",
+            owner: "Quyền đặc biệt"
+        };
+
+        document.querySelectorAll(".nav button[data-section]").forEach(button => {
+            button.addEventListener("click", () => {
+                const target = button.dataset.section;
+
+                // Chặn truy cập trái phép vào mục owner từ giao diện
+                if (target === "owner" && role !== "OWNER") {
+                    return;
+                }
+
+                // Toggle hiển thị các section
+                sections.forEach(id => {
+                    const section = document.getElementById(id);
+                    if (section) {
+                        section.classList.toggle("hidden", id !== target);
+                    }
+                });
+
+                // Cập nhật trạng thái active cho menu navigation
+                document.querySelectorAll(".nav button[data-section]").forEach(item => {
+                    item.classList.remove("active");
+                });
+                button.classList.add("active");
+
+                // Cập nhật tiêu đề trang
+                const pageTitle = document.getElementById("pageTitle");
+                if (pageTitle) {
+                    pageTitle.textContent = titles[target] || "Quản trị";
+                }
+            });
+        });
+
+        // Xử lý sự kiện đăng xuất an toàn
+        const logoutButton = document.getElementById("logoutButton");
+        if (logoutButton) {
+            logoutButton.addEventListener("click", () => {
+                sessionStorage.clear();
+                window.location.replace("/khuvuc/quantri/index.html");
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

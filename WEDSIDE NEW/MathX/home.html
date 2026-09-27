@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MathX — By BeatXEdu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --toolbar-h:52px;
+    --header-h:44px;
+    --gg-blue:#1A73E8;
+    --gg-blue-soft:#E8F0FE;
+    --gg-border:#DADCE0;
+    --gg-ink:#202124;
+    --gg-ink-soft:#5F6368;
+    --gg-canvas:#FFFFFF;
+    --gg-grid:#EDEDED;
+    --gg-grid-major:#DCDCDC;
+    --gg-axis:#3C3C3C;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;height:100%;}
+  body{
+    font-family:'Roboto',Arial,sans-serif;
+    color:var(--gg-ink);
+    overflow:hidden;
+  }
+  .header{
+    height:var(--header-h);
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:0 14px;
+    border-bottom:1px solid var(--gg-border);
+    background:#fff;
+  }
+  .header .menu-icon{
+    width:20px;height:20px;
+    display:flex;flex-direction:column;justify-content:space-between;
+    cursor:default;
+  }
+  .header .menu-icon span{display:block;height:2px;background:var(--gg-ink-soft);border-radius:1px;}
+  .header .title{
+    font-size:16px;
+    font-weight:500;
+    color:var(--gg-ink);
+  }
+  .header .title .sub{color:var(--gg-ink-soft);font-weight:400;}
+
+  .toolbar{
+    height:var(--toolbar-h);
+    display:flex;
+    align-items:stretch;
+    border-bottom:1px solid var(--gg-border);
+    background:#fff;
+    padding:0 6px;
+  }
+  .tool-btn{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:2px;
+    width:76px;
+    border:none;
+    background:transparent;
+    cursor:pointer;
+    color:var(--gg-ink-soft);
+    border-bottom:3px solid transparent;
+  }
+  .tool-btn:hover{background:#F1F3F4;}
+  .tool-btn.active{
+    background:var(--gg-blue-soft);
+    color:var(--gg-blue);
+    border-bottom-color:var(--gg-blue);
+  }
+  .tool-btn svg{width:22px;height:22px;}
+  .tool-btn .label{font-size:10.5px;}
+  .tool-sep{width:1px;background:var(--gg-border);margin:8px 4px;}
+
+  .app{
+    display:grid;
+    grid-template-columns:300px 1fr;
+    height:calc(100% - var(--header-h) - var(--toolbar-h));
+  }
+  .algebra{
+    border-right:1px solid var(--gg-border);
+    background:#fff;
+    display:flex;
+    flex-direction:column;
+    min-width:0;
+  }
+  .algebra-list{
+    flex:1;
+    overflow-y:auto;
+    padding:4px 0;
+  }
+  .obj-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:7px 10px;
+    border-bottom:1px solid #F1F3F4;
+    cursor:pointer;
+  }
+  .obj-row:hover{background:#F8F9FA;}
+  .obj-row.selected{background:var(--gg-blue-soft);}
+  .obj-eye{
+    width:18px;height:18px;flex-shrink:0;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--gg-ink-soft);
+  }
+  .obj-eye.hidden{opacity:.35;}
+  .obj-swatch{
+    width:10px;height:10px;border-radius:50%;flex-shrink:0;
+  }
+  .obj-def{
+    flex:1;
+    font-family:Georgia,'Times New Roman',serif;
+    font-style:italic;
+    font-size:14.5px;
+    color:var(--gg-ink);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .obj-def b{font-style:normal;font-weight:700;}
+  .obj-del{
+    width:20px;height:20px;flex-shrink:0;
+    display:none;
+    align-items:center;justify-content:center;
+    color:var(--gg-ink-soft);
+    cursor:pointer;
+  }
+  .obj-row:hover .obj-del{display:flex;}
+  .obj-del:hover{color:#D93025;}
+  .algebra-empty{
+    padding:16px 14px;
+    font-size:13px;
+    color:var(--gg-ink-soft);
+    line-height:1.6;
+  }
+  .algebra-input-wrap{
+    border-top:1px solid var(--gg-border);
+    padding:8px 10px 10px;
+  }
+  .algebra-input{
+    width:100%;
+    font-family:Georgia,'Times New Roman',serif;
+    font-style:italic;
+    font-size:15px;
+    padding:8px 10px;
+    border:1.5px solid var(--gg-border);
+    border-radius:5px;
+    outline:none;
+    color:var(--gg-ink);
+  }
+  .algebra-input:focus{border-color:var(--gg-blue);}
+  .algebra-hint{
+    font-family:'Roboto',Arial,sans-serif;
+    font-style:normal;
+    font-size:11.5px;
+    color:var(--gg-ink-soft);
+    margin-top:6px;
+    line-height:1.5;
+  }
+  .algebra-error{
+    font-family:'Roboto',Arial,sans-serif;
+    font-style:normal;
+    font-size:12px;
+    color:#D93025;
+    margin-top:6px;
+    display:none;
+  }
+
+  .canvas-wrap{
+    position:relative;
+    background:var(--gg-canvas);
+    overflow:hidden;
+  }
+  #graphCanvas{
+    display:block;
+    width:100%;
+    height:100%;
+  }
+  .zoom-stack{
+    position:absolute;
+    right:16px;
+    bottom:20px;
+    display:flex;
+    flex-direction:column;
+    box-shadow:0 1px 4px rgba(0,0,0,.25);
+    border-radius:20px;
+    overflow:hidden;
+  }
+  .zoom-btn{
+    width:34px;height:34px;
+    background:#fff;
+    border:none;
+    border-bottom:1px solid #EEE;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    color:var(--gg-ink-soft);
+    font-size:18px;
+    font-weight:600;
+  }
+  .zoom-btn:last-child{border-bottom:none;}
+  .zoom-btn:hover{background:#F1F3F4;color:var(--gg-ink);}
+
+  @media (max-width:760px){
+    .app{grid-template-columns:1fr;grid-template-rows:auto 1fr;}
+    .algebra{border-right:none;border-bottom:1px solid var(--gg-border);max-height:34vh;}
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="menu-icon"><span></span><span></span><span></span></div>
+  <div class="title">MathX</div>
+  <div class="sub">Vẽ Đồ Thị Không Gì Là Khó</div>
+</div>
+
+<div class="toolbar" id="toolbar">
+  <button class="tool-btn active" data-tool="move">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3l4 16 2-6 6-2z"/></svg>
+    <span class="label">Di chuyển</span>
+  </button>
+  <button class="tool-btn" data-tool="point">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3" fill="currentColor"/><circle cx="12" cy="12" r="9"/></svg>
+    <span class="label">Điểm</span>
+  </button>
+  <button class="tool-btn" data-tool="line">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="5" cy="19" r="1.6" fill="currentColor"/><circle cx="19" cy="5" r="1.6" fill="currentColor"/><line x1="5" y1="19" x2="19" y2="5"/></svg>
+    <span class="label">Đường thẳng</span>
+  </button>
+  <button class="tool-btn" data-tool="parabola">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 19 Q12 2 19 19"/><circle cx="12" cy="9" r="1.5" fill="currentColor"/></svg>
+    <span class="label">Parabol</span>
+  </button>
+  <div class="tool-sep"></div>
+  <button class="tool-btn" data-tool="delete">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="M6 7l1 13h10l1-13"/></svg>
+    <span class="label">Xoá</span>
+  </button>
+  <button class="tool-btn" id="clearAll" type="button">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 5l14 14M19 5L5 19"/></svg>
+    <span class="label">Xóa tất cả</span>
+  </button>
+  <button class="tool-btn" id="exportPng" type="button">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>
+    <span class="label">Xuất ảnh</span>
+  </button>
+</div>
+
+<div class="app">
+  <div class="algebra">
+    <div class="algebra-list" id="algebraList"></div>
+    <div class="algebra-input-wrap">
+      <input id="algebraInput" class="algebra-input" type="text" placeholder="Nhập, vd: (2,3) hoặc 2x+3y=6" autocomplete="off" spellcheck="false">
+      <div class="algebra-error" id="algebraError"></div>
+      <div class="algebra-hint">Enter để thêm: <b>(2;3)</b>, <b>2x+3y=6</b> hoặc <b>y=ax²+bx+c</b>. Dùng công cụ trên thanh để thao tác nhanh.</div>
+    </div>
+  </div>
+  <div class="canvas-wrap" id="canvasWrap">
+    <canvas id="graphCanvas"></canvas>
+    <div class="zoom-stack">
+      <button class="zoom-btn" id="zoomIn">+</button>
+      <button class="zoom-btn" id="zoomOut">–</button>
+      <button class="zoom-btn" id="zoomHome" style="font-size:14px;">⌂</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('graphCanvas');
+const ctx = canvas.getContext('2d');
+const wrap = document.getElementById('canvasWrap');
+const algebraList = document.getElementById('algebraList');
+const algebraInput = document.getElementById('algebraInput');
+const algebraError = document.getElementById('algebraError');
+const toolbar = document.getElementById('toolbar');
+
+const PALETTE = ['#1A73E8', '#D93025', '#188038', '#8430CE', '#E8710A', '#12929B'];
+let colorCursor = 0;
+function nextColor(){ const c = PALETTE[colorCursor % PALETTE.length]; colorCursor++; return c; }
+
+let objects = []; // point | line | parabola
+let objId = 1;
+let selectedId = null;
+let currentTool = 'move';
+
+let view = { cx: 0, cy: 0, scale: 55 }; // world center + px-per-unit
+const DEFAULT_VIEW = { cx: 0, cy: 0, scale: 55 };
+
+// ---------- naming ----------
+function nextPointName(){
+  for (let c = 65; c <= 90; c++){
+    const n = String.fromCharCode(c);
+    if (!objects.some(o => o.type === 'point' && o.name === n)) return n;
+  }
+  let i = 1;
+  while (objects.some(o => o.name === 'P' + i)) i++;
+  return 'P' + i;
+}
+function nextParabolaName(){
+  let i=1;
+  while(objects.some(o=>o.type==='parabola' && o.name==='P'+i)) i++;
+  return 'P'+i;
+}
+function nextLineName(){
+  const reserved = ['x','y'];
+  for (let c = 97; c <= 122; c++){
+    const n = String.fromCharCode(c);
+    if (reserved.includes(n)) continue;
+    if (!objects.some(o => o.type === 'line' && o.name === n)) return n;
+  }
+  let i = 1;
+  while (objects.some(o => o.name === 'l' + i)) i++;
+  return 'l' + i;
+}
+
+// ---------- parsing ----------
+function parseSide(raw){
+  let str = raw;
+  if (str[0] !== '+' && str[0] !== '-') str = '+' + str;
+  const tokens = str.match(/[+-][^+-]+/g) || [];
+  if (tokens.join('') !== str) throw new Error('Không đọc được một phần của biểu thức.');
+  const coeffs = {};
+  let constant = 0;
+  tokens.forEach(t=>{
+    const sign = t[0] === '-' ? -1 : 1;
+    const rest = t.slice(1).trim();
+    if (rest === '') throw new Error(`Số hạng rỗng gần "${t}".`);
+    const m = rest.match(/^(\d*\.?\d*)([a-zA-Z])?$/);
+    if (!m || (m[1] === '' && !m[2])) throw new Error(`Không đọc được số hạng "${t}".`);
+    const numPart = m[1];
+    const varPart = m[2];
+    const value = numPart === '' ? 1 : parseFloat(numPart);
+    if (varPart){
+      if (varPart !== 'x' && varPart !== 'y') throw new Error(`Chỉ hỗ trợ biến x và y (gặp "${varPart}").`);
+      coeffs[varPart] = (coeffs[varPart] || 0) + sign * value;
+    } else {
+      constant += sign * value;
+    }
+  });
+  return { coeffs, constant };
+}
+// returns {a,b,c} meaning a*x + b*y = c
+function parseLineEquation(raw){
+  const str = raw.replace(/\s+/g, '');
+  const parts = str.split('=');
+  if (parts.length !== 2 || parts[0] === '' || parts[1] === '') {
+    throw new Error('Phương trình cần đúng một dấu "=" với hai vế khác rỗng.');
+  }
+  const L = parseSide(parts[0]);
+  const R = parseSide(parts[1]);
+  const a = (L.coeffs.x || 0) - (R.coeffs.x || 0);
+  const b = (L.coeffs.y || 0) - (R.coeffs.y || 0);
+  const c = R.constant - L.constant;
+  if (Math.abs(a) < 1e-9 && Math.abs(b) < 1e-9) throw new Error('Phương trình không chứa x hoặc y.');
+  return { a, b, c };
+}
+function parsePoint(raw){
+  let m = raw.match(/^([A-Za-z][A-Za-z0-9]*)\s*=?\s*\(\s*(-?\d*\.?\d+)\s*[,;]\s*(-?\d*\.?\d+)\s*\)$/);
+  if (m) return { name: m[1], x: parseFloat(m[2]), y: parseFloat(m[3]) };
+  m = raw.match(/^\(\s*(-?\d*\.?\d+)\s*[,;]\s*(-?\d*\.?\d+)\s*\)$/);
+  if (m) return { name: null, x: parseFloat(m[1]), y: parseFloat(m[2]) };
+  return null;
+}
+
+function parseQuadratic(raw){
+  let str = raw.replace(/\s+/g,'').replace(/²/g,'^2');
+  if (!/^y=/.test(str)) return null;
+  str = str.slice(2);
+  const parts = str.match(/[+-]?[^+-]+/g) || [];
+  let a=0,b=0,c=0;
+  for(const termRaw of parts){
+    if(!termRaw) continue;
+    const term = termRaw;
+    if(/x\^2$/.test(term)){
+      const n=term.replace('x^2',''); a += n===''||n==='+'?1:n==='-'?-1:parseFloat(n);
+    }else if(/x$/.test(term)){
+      const n=term.slice(0,-1); b += n===''||n==='+'?1:n==='-'?-1:parseFloat(n);
+    }else{
+      const n=parseFloat(term); if(!Number.isFinite(n)) throw new Error('Không đọc được hệ số của parabol.');
+      c += n;
+    }
+  }
+  if(Math.abs(a)<1e-12) throw new Error('Parabol cần hệ số a khác 0.');
+  return {a,b,c};
+}
+
+function fmt(n){
+  const r = Math.round(n * 1000) / 1000;
+  return Object.is(r, -0) ? '0' : String(r);
+}
+function lineLabel(a, b, c){
+  const terms = [];
+  if (Math.abs(a) > 1e-9) terms.push(`${a === 1 ? '' : a === -1 ? '-' : fmt(a)}x`);
+  if (Math.abs(b) > 1e-9){
+    const sign = b > 0 && terms.length ? ' + ' : (b < 0 ? (terms.length ? ' - ' : '-') : '');
+    const mag = Math.abs(b) === 1 ? '' : fmt(Math.abs(b));
+    terms.push((terms.length ? sign : (b < 0 ? '-' : '')) + mag + 'y');
+  }
+  return `${terms.join('') || '0'} = ${fmt(c)}`;
+}
+
+// ---------- object management ----------
+function addPoint(x, y, name, color){
+  const o = { id: objId++, type: 'point', name: name || nextPointName(), color: color || nextColor(), visible: true, x, y };
+  objects.push(o);
+  return o;
+}
+function round2(p){ return { x: Math.round(p.x * 100) / 100, y: Math.round(p.y * 100) / 100 }; }
+function pointsOnLine(a, b, c){
+  let pts;
+  if (Math.abs(b) > 1e-9){
+    pts = [{ x: 0, y: c / b }, { x: 2, y: (c - a * 2) / b }];
+  } else {
+    const x0 = c / a;
+    pts = [{ x: x0, y: 0 }, { x: x0, y: 2 }];
+  }
+  return pts.map(round2);
+}
+function addLineFromCoeffs(a, b, c, name){
+  const o = { id: objId++, type: 'line', name: name || nextLineName(), color: nextColor(), visible: true, a, b, c, independent: true };
+  objects.push(o);
+  pointsOnLine(a, b, c).forEach(p => addPoint(p.x, p.y, null, o.color));
+  return o;
+}
+function addParabola(a,b,c){
+  const o={id:objId++,type:'parabola',name:nextParabolaName(),color:nextColor(),visible:true,a,b,c};
+  objects.push(o); return o;
+}
+function addLineFromPoints(p1id, p2id){
+  const o = { id: objId++, type: 'line', name: nextLineName(), color: nextColor(), visible: true, p1: p1id, p2: p2id, independent: false };
+  objects.push(o);
+  return o;
+}
+function currentLineCoeffs(o){
+  if (o.independent) return { a: o.a, b: o.b, c: o.c };
+  const p1 = objects.find(x => x.id === o.p1);
+  const p2 = objects.find(x => x.id === o.p2);
+  if (!p1 || !p2) return { a: 0, b: 0, c: 0 };
+  const dx = p2.x - p1.x, dy = p2.y - p1.y;
+  return { a: dy, b: -dx, c: dy * p1.x - dx * p1.y };
+}
+function deleteObject(id){
+  objects = objects.filter(o => o.id !== id && !(o.type === 'line' && !o.independent && (o.p1 === id || o.p2 === id)));
+  if (selectedId === id) selectedId = null;
+}
+
+// ---------- algebra panel ----------
+function renderAlgebra(){
+  algebraList.innerHTML = '';
+  if (objects.length === 0){
+    algebraList.innerHTML = '<div class="algebra-empty">Chưa có đối tượng nào. Dùng công cụ Điểm/Đường thẳng trên đồ thị, hoặc nhập trực tiếp bên dưới.</div>';
+    return;
+  }
+  objects.forEach(o=>{
+    const row = document.createElement('div');
+    row.className = 'obj-row' + (o.id === selectedId ? ' selected' : '');
+    row.addEventListener('click', (e)=>{ if (e.target.closest('.obj-eye,.obj-del')) return; selectedId = o.id; renderAll(); });
+
+    const eye = document.createElement('div');
+    eye.className = 'obj-eye' + (o.visible ? '' : ' hidden');
+    eye.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>';
+    eye.addEventListener('click', ()=>{ o.visible = !o.visible; renderAll(); });
+
+    const sw = document.createElement('div');
+    sw.className = 'obj-swatch';
+    sw.style.background = o.color;
+
+    const def = document.createElement('div');
+    def.className = 'obj-def';
+    if (o.type === 'point'){
+      def.innerHTML = `<b>${o.name}</b>(${fmt(o.x)}; ${fmt(o.y)})`;
+    } else if (o.type === 'parabola') {
+      def.innerHTML = `<b>${o.name}:</b> y = ${fmt(o.a)}x² ${o.b >= 0 ? '+ ' : '- '}${fmt(Math.abs(o.b))}x ${o.c >= 0 ? '+ ' : '- '}${fmt(Math.abs(o.c))}`;
+    } else {
+      const { a, b, c } = currentLineCoeffs(o);
+      def.innerHTML = `<b>${o.name}:</b> ${lineLabel(a, b, c)}`;
+    }
+
+    const del = document.createElement('div');
+    del.className = 'obj-del';
+    del.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>';
+    del.addEventListener('click', ()=>{ deleteObject(o.id); renderAll(); });
+
+    row.appendChild(eye);
+    row.appendChild(sw);
+    row.appendChild(def);
+    row.appendChild(del);
+    algebraList.appendChild(row);
+  });
+}
+
+algebraInput.addEventListener('keydown', (e)=>{
+  if (e.key !== 'Enter') return;
+  const raw = algebraInput.value.trim();
+  if (!raw) return;
+  algebraError.style.display = 'none';
+  try {
+    const pt = parsePoint(raw);
+    if (pt){
+      if (pt.name && objects.some(o => o.name === pt.name)) throw new Error(`Tên "${pt.name}" đã được dùng.`);
+      addPoint(pt.x, pt.y, pt.name);
+    } else if (raw.includes('=')) {
+      let body = raw;
+      let name = null;
+      const nm = raw.match(/^([a-zA-Z][a-zA-Z0-9]*)\s*:\s*(.+)$/);
+      if (nm){ name = nm[1]; body = nm[2]; }
+      const { a, b, c } = parseLineEquation(body);
+      if (name && objects.some(o => o.name === name)) throw new Error(`Tên "${name}" đã được dùng.`);
+      addLineFromCoeffs(a, b, c, name);
+    } else {
+      throw new Error('Không nhận diện được. Nhập điểm (2,3) hoặc phương trình 2x+3y=6.');
+    }
+    algebraInput.value = '';
+    renderAll();
+  } catch (err){
+    algebraError.textContent = err.message;
+    algebraError.style.display = 'block';
+  }
+});
+
+// ---------- canvas transform ----------
+let dpr = window.devicePixelRatio || 1;
+function resizeCanvas(){
+  const rect = wrap.getBoundingClientRect();
+  dpr = window.devicePixelRatio || 1;
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  canvas.style.width = rect.width + 'px';
+  canvas.style.height = rect.height + 'px';
+}
+function worldToScreen(x, y){
+  const rect = wrap.getBoundingClientRect();
+  return {
+    x: rect.width / 2 + (x - view.cx) * view.scale,
+    y: rect.height / 2 - (y - view.cy) * view.scale
+  };
+}
+function screenToWorld(sx, sy){
+  const rect = wrap.getBoundingClientRect();
+  return {
+    x: view.cx + (sx - rect.width / 2) / view.scale,
+    y: view.cy - (sy - rect.height / 2) / view.scale
+  };
+}
+function niceStep(raw){
+  const exp = Math.floor(Math.log10(raw));
+  const base = raw / Math.pow(10, exp);
+  let nb;
+  if (base < 1.5) nb = 1; else if (base < 3) nb = 2; else if (base < 7) nb = 5; else nb = 10;
+  return nb * Math.pow(10, exp);
+}
+
+function draw(){
+  const rect = wrap.getBoundingClientRect();
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, rect.width, rect.height);
+
+  const step = niceStep(60 / view.scale);
+  const worldLeft = view.cx - rect.width / 2 / view.scale;
+  const worldRight = view.cx + rect.width / 2 / view.scale;
+  const worldBottom = view.cy - rect.height / 2 / view.scale;
+  const worldTop = view.cy + rect.height / 2 / view.scale;
+
+  // grid
+  ctx.strokeStyle = 'var(--gg-grid)'.startsWith('var') ? '#EDEDED' : '';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  const startX = Math.ceil(worldLeft / step) * step;
+  for (let x = startX; x <= worldRight; x += step){
+    const sx = worldToScreen(x, 0).x;
+    ctx.moveTo(sx + 0.5, 0);
+    ctx.lineTo(sx + 0.5, rect.height);
+  }
+  const startY = Math.ceil(worldBottom / step) * step;
+  for (let y = startY; y <= worldTop; y += step){
+    const sy = worldToScreen(0, y).y;
+    ctx.moveTo(0, sy + 0.5);
+    ctx.lineTo(rect.width, sy + 0.5);
+  }
+  ctx.strokeStyle = '#EDEDED';
+  ctx.stroke();
+
+  // axes
+  const origin = worldToScreen(0, 0);
+  ctx.strokeStyle = '#3C3C3C';
+  ctx.lineWidth = 1.4;
+  ctx.beginPath();
+  ctx.moveTo(0, origin.y); ctx.lineTo(rect.width, origin.y);
+  ctx.moveTo(origin.x, 0); ctx.lineTo(origin.x, rect.height);
+  ctx.stroke();
+  // arrowheads
+  ctx.fillStyle = '#3C3C3C';
+  ctx.beginPath();
+  ctx.moveTo(rect.width, origin.y); ctx.lineTo(rect.width - 8, origin.y - 4); ctx.lineTo(rect.width - 8, origin.y + 4); ctx.fill();
+  ctx.beginPath();
+  ctx.moveTo(origin.x, 0); ctx.lineTo(origin.x - 4, 8); ctx.lineTo(origin.x + 4, 8); ctx.fill();
+
+  // tick labels
+  ctx.fillStyle = '#5F6368';
+  ctx.font = '11px Roboto, Arial, sans-serif';
+  ctx.textAlign = 'center';
+  for (let x = startX; x <= worldRight; x += step){
+    if (Math.abs(x) < step / 1000) continue;
+    const sx = worldToScreen(x, 0).x;
+    ctx.fillText(fmt(x), sx, Math.min(Math.max(origin.y + 14, 12), rect.height - 4));
+  }
+  ctx.textAlign = 'right';
+  for (let y = startY; y <= worldTop; y += step){
+    if (Math.abs(y) < step / 1000) continue;
+    const sy = worldToScreen(0, y).y;
+    ctx.fillText(fmt(y), Math.min(Math.max(origin.x - 6, 22), rect.width - 4), sy + 4);
+  }
+
+  // objects: parabolas first, then lines, then points
+  objects.filter(o => o.type === 'parabola' && o.visible).forEach(o=>{
+    ctx.strokeStyle=o.color; ctx.lineWidth=(o.id===selectedId)?3.4:2.4; ctx.beginPath();
+    let started=false;
+    const pxStep=Math.max(1, rect.width/700);
+    for(let sx=0;sx<=rect.width;sx+=pxStep){
+      const w=screenToWorld(sx,0); const y=o.a*w.x*w.x+o.b*w.x+o.c; const sy=worldToScreen(w.x,y).y;
+      if(sy < -rect.height*2 || sy > rect.height*3){ started=false; continue; }
+      if(!started){ctx.moveTo(sx,sy);started=true;} else ctx.lineTo(sx,sy);
+    }
+    ctx.stroke();
+    const vx=-o.b/(2*o.a), vy=o.a*vx*vx+o.b*vx+o.c, vs=worldToScreen(vx,vy);
+    ctx.fillStyle=o.color; ctx.font='italic 13px Georgia, serif'; ctx.textAlign='left'; ctx.fillText(o.name,vs.x+6,vs.y-6);
+  });
+  objects.filter(o => o.type === 'line' && o.visible).forEach(o=>{
+    const { a, b, c } = currentLineCoeffs(o);
+    const pts = clipLineToRect(a, b, c, worldLeft, worldRight, worldBottom, worldTop);
+    if (pts.length < 2) return;
+    ctx.strokeStyle = o.color;
+    ctx.lineWidth = (o.id === selectedId) ? 3.4 : 2.4;
+    ctx.beginPath();
+    const s1 = worldToScreen(pts[0].x, pts[0].y);
+    const s2 = worldToScreen(pts[1].x, pts[1].y);
+    ctx.moveTo(s1.x, s1.y); ctx.lineTo(s2.x, s2.y);
+    ctx.stroke();
+    ctx.fillStyle = o.color;
+    ctx.font = 'italic 13px Georgia, serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(o.name, s2.x + 6, s2.y - 6);
+  });
+  objects.filter(o => o.type === 'point' && o.visible).forEach(o=>{
+    const s = worldToScreen(o.x, o.y);
+    ctx.fillStyle = o.color;
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, o.id === selectedId ? 6 : 5, 0, Math.PI * 2);
+    ctx.fill();
+    if (o.id === selectedId){
+      ctx.strokeStyle = o.color; ctx.globalAlpha = 0.3; ctx.lineWidth = 6;
+      ctx.beginPath(); ctx.arc(s.x, s.y, 9, 0, Math.PI * 2); ctx.stroke(); ctx.globalAlpha = 1;
+    }
+    ctx.fillStyle = '#202124';
+    ctx.font = 'italic 13px Georgia, serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(o.name, s.x + 7, s.y - 7);
+  });
+}
+
+// clip infinite line a*x+b*y=c to a world rectangle, return up to 2 boundary points
+function clipLineToRect(a, b, c, xmin, xmax, ymin, ymax){
+  const pts = [];
+  function tryAdd(x, y){
+    if (x >= xmin - 1e-6 && x <= xmax + 1e-6 && y >= ymin - 1e-6 && y <= ymax + 1e-6) pts.push({ x, y });
+  }
+  if (Math.abs(b) > 1e-9){
+    tryAdd(xmin, (c - a * xmin) / b);
+    tryAdd(xmax, (c - a * xmax) / b);
+  }
+  if (Math.abs(a) > 1e-9){
+    tryAdd((c - b * ymin) / a, ymin);
+    tryAdd((c - b * ymax) / a, ymax);
+  }
+  // dedupe
+  const uniq = [];
+  pts.forEach(p=>{
+    if (!uniq.some(q => Math.abs(q.x - p.x) < 1e-6 && Math.abs(q.y - p.y) < 1e-6)) uniq.push(p);
+  });
+  return uniq.slice(0, 2);
+}
+
+function renderAll(){ renderAlgebra(); draw(); }
+
+// ---------- toolbar ----------
+toolbar.addEventListener('click', (e)=>{
+  const btn = e.target.closest('.tool-btn');
+  if (!btn) return;
+  currentTool = btn.dataset.tool;
+  document.querySelectorAll('.tool-btn').forEach(b => b.classList.toggle('active', b === btn));
+  pendingLinePoint = null;
+});
+
+// ---------- mouse interaction ----------
+let dragPointId = null;
+let panning = false;
+let panStart = null;
+let panOrigin = null;
+let pendingLinePoint = null;
+
+function hitTestPoint(sx, sy){
+  let best = null, bestD = 10;
+  objects.filter(o => o.type === 'point' && o.visible).forEach(o=>{
+    const s = worldToScreen(o.x, o.y);
+    const d = Math.hypot(s.x - sx, s.y - sy);
+    if (d < bestD){ bestD = d; best = o; }
+  });
+  return best;
+}
+function hitTestParabola(sx,sy){
+  const w=screenToWorld(sx,sy); let best=null,bestD=8/view.scale;
+  objects.filter(o=>o.type==='parabola'&&o.visible).forEach(o=>{
+    const y=o.a*w.x*w.x+o.b*w.x+o.c, d=Math.abs(w.y-y);
+    if(d<bestD){bestD=d;best=o;}
+  });
+  return best;
+}
+function hitTestLine(sx, sy){
+  const rect = wrap.getBoundingClientRect();
+  const w = screenToWorld(sx, sy);
+  const worldLeft = view.cx - rect.width / 2 / view.scale, worldRight = view.cx + rect.width / 2 / view.scale;
+  const worldBottom = view.cy - rect.height / 2 / view.scale, worldTop = view.cy + rect.height / 2 / view.scale;
+  let best = null, bestD = 6 / view.scale;
+  objects.filter(o => o.type === 'line' && o.visible).forEach(o=>{
+    const { a, b, c } = currentLineCoeffs(o);
+    const denom = Math.hypot(a, b);
+    if (denom < 1e-9) return;
+    const d = Math.abs(a * w.x + b * w.y - c) / denom;
+    if (d < bestD){ bestD = d; best = o; }
+  });
+  return best;
+}
+
+canvas.addEventListener('mousedown', (e)=>{
+  const rect = canvas.getBoundingClientRect();
+  const sx = e.clientX - rect.left, sy = e.clientY - rect.top;
+
+  if (currentTool === 'move'){
+    const p = hitTestPoint(sx, sy);
+    if (p){ dragPointId = p.id; selectedId = p.id; renderAll(); return; }
+    const l = hitTestLine(sx, sy);
+    if (l){ selectedId = l.id; renderAll(); return; }
+    const q = hitTestParabola(sx, sy);
+    if (q){ selectedId = q.id; renderAll(); return; }
+    panning = true; panStart = { x: e.clientX, y: e.clientY }; panOrigin = { cx: view.cx, cy: view.cy };
+    selectedId = null; renderAll();
+  } else if (currentTool === 'point'){
+    const w = screenToWorld(sx, sy);
+    addPoint(Math.round(w.x * 100) / 100, Math.round(w.y * 100) / 100);
+    renderAll();
+  } else if (currentTool === 'line'){
+    let p = hitTestPoint(sx, sy);
+    if (!p){ const w = screenToWorld(sx, sy); p = addPoint(Math.round(w.x * 100) / 100, Math.round(w.y * 100) / 100); }
+    if (!pendingLinePoint){ pendingLinePoint = p.id; }
+    else if (pendingLinePoint !== p.id){ addLineFromPoints(pendingLinePoint, p.id); pendingLinePoint = null; }
+    renderAll();
+  } else if (currentTool === 'parabola'){
+    const w = screenToWorld(sx, sy);
+    addParabola(1, -2*w.x, w.x*w.x + w.y);
+    renderAll();
+  } else if (currentTool === 'delete'){
+    const p = hitTestPoint(sx, sy);
+    if (p){ deleteObject(p.id); renderAll(); return; }
+    const l = hitTestLine(sx, sy);
+    if (l){ deleteObject(l.id); renderAll(); return; }
+    const q = hitTestParabola(sx, sy);
+    if (q){ deleteObject(q.id); renderAll(); }
+  }
+});
+
+window.addEventListener('mousemove', (e)=>{
+  const rect = canvas.getBoundingClientRect();
+  const sx = e.clientX - rect.left, sy = e.clientY - rect.top;
+  if (dragPointId !== null){
+    const w = screenToWorld(sx, sy);
+    const o = objects.find(x => x.id === dragPointId);
+    if (o){ o.x = Math.round(w.x * 100) / 100; o.y = Math.round(w.y * 100) / 100; renderAll(); }
+  } else if (panning){
+    const dxScreen = e.clientX - panStart.x, dyScreen = e.clientY - panStart.y;
+    view.cx = panOrigin.cx - dxScreen / view.scale;
+    view.cy = panOrigin.cy + dyScreen / view.scale;
+    draw();
+  }
+});
+window.addEventListener('mouseup', ()=>{ dragPointId = null; panning = false; });
+
+canvas.addEventListener('wheel', (e)=>{
+  e.preventDefault();
+  const rect = canvas.getBoundingClientRect();
+  const sx = e.clientX - rect.left, sy = e.clientY - rect.top;
+  const before = screenToWorld(sx, sy);
+  const factor = e.deltaY < 0 ? 1.12 : 1 / 1.12;
+  view.scale *= factor;
+  view.scale = Math.min(Math.max(view.scale, 5), 800);
+  const after = screenToWorld(sx, sy);
+  view.cx += before.x - after.x;
+  view.cy += before.y - after.y;
+  draw();
+}, { passive: false });
+
+document.getElementById('zoomIn').addEventListener('click', ()=>{ view.scale = Math.min(view.scale * 1.25, 800); draw(); });
+document.getElementById('zoomOut').addEventListener('click', ()=>{ view.scale = Math.max(view.scale / 1.25, 5); draw(); });
+document.getElementById('zoomHome').addEventListener('click', ()=>{ view = { ...DEFAULT_VIEW }; draw(); });
+document.getElementById('clearAll').addEventListener('click', ()=>{
+  objects=[]; selectedId=null; objId=1; pendingLinePoint=null; renderAll();
+});
+document.getElementById('exportPng').addEventListener('click', ()=>{
+  const link=document.createElement('a');
+  link.download='mathx-do-thi.png';
+  link.href=canvas.toDataURL('image/png');
+  link.click();
+});
+
+window.addEventListener('keydown', (e)=>{
+  if ((e.key === 'Delete' || e.key === 'Backspace') && selectedId !== null && document.activeElement !== algebraInput){
+    deleteObject(selectedId);
+    renderAll();
+  }
+});
+
+window.addEventListener('resize', ()=>{ resizeCanvas(); draw(); });
+
+// ---------- start empty ----------
+resizeCanvas();
+renderAll();
+</script>
+</body>
+</html>

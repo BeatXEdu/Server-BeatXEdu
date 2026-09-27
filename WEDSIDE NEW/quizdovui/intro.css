@@ -1,0 +1,237 @@
+/* ==========================================================================
+   INTRO SPLASH — H trượt trái, O trượt phải, 2 rớt vào giữa ghép H2O,
+   logo hiện ra, 3 "nhân vật" liếc mắt xuống rồi nhìn thẳng.
+   Dùng chung tokens màu/typography từ style.css (:root).
+   ========================================================================== */
+
+.intro-body {
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(1100px 550px at 12% -10%, var(--bg-deep) 0%, transparent 60%),
+    radial-gradient(900px 550px at 110% 15%, #e6f6ee 0%, transparent 55%),
+    var(--bg);
+}
+
+.intro-stage {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.intro-stage.fade-out {
+  opacity: 0;
+  transform: scale(0.96);
+}
+
+/* ---- Skip button ---- */
+
+.intro-skip {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.intro-skip:hover { border-color: var(--primary); color: var(--primary-dark); }
+
+/* ---- Molecule row: H  2  O ---- */
+
+.molecule {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: clamp(96px, 28vw, 140px);
+  margin-bottom: 8px;
+}
+
+.atom {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  font-family: var(--font-display);
+  font-weight: 800;
+  color: #fff;
+  opacity: 0;
+}
+
+.atom-label { pointer-events: none; }
+
+.atom-h {
+  width: clamp(70px, 20vw, 100px);
+  height: clamp(70px, 20vw, 100px);
+  font-size: clamp(2rem, 6vw, 2.8rem);
+  background: var(--medium);
+  transform: translateX(-160vw);
+  animation: slideInLeft 0.75s cubic-bezier(0.22, 0.85, 0.32, 1) forwards;
+  z-index: 2;
+}
+
+.atom-o {
+  width: clamp(70px, 20vw, 100px);
+  height: clamp(70px, 20vw, 100px);
+  font-size: clamp(2rem, 6vw, 2.8rem);
+  background: var(--primary);
+  transform: translateX(160vw);
+  animation: slideInRight 0.75s cubic-bezier(0.22, 0.85, 0.32, 1) forwards;
+  z-index: 2;
+}
+
+.atom-two {
+  width: clamp(34px, 10vw, 46px);
+  height: clamp(34px, 10vw, 46px);
+  font-size: clamp(1rem, 3vw, 1.3rem);
+  background: var(--accent);
+  margin: 0 -10px;
+  align-self: flex-end;
+  transform: translateY(-160px) rotate(-20deg);
+  opacity: 0;
+  z-index: 3;
+  animation: dropIn 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation-delay: 0.7s;
+}
+
+@keyframes slideInLeft {
+  0%   { transform: translateX(-160vw) rotate(-8deg); opacity: 0; }
+  70%  { opacity: 1; }
+  100% { transform: translateX(6px) rotate(0deg); opacity: 1; }
+}
+
+@keyframes slideInRight {
+  0%   { transform: translateX(160vw) rotate(8deg); opacity: 0; }
+  70%  { opacity: 1; }
+  100% { transform: translateX(-6px) rotate(0deg); opacity: 1; }
+}
+
+@keyframes dropIn {
+  0%   { transform: translateY(-160px) rotate(-20deg); opacity: 0; }
+  60%  { transform: translateY(6px) rotate(6deg); opacity: 1; }
+  80%  { transform: translateY(-4px) rotate(-3deg); }
+  100% { transform: translateY(0) rotate(0deg); opacity: 1; }
+}
+
+/* Nhún nhẹ cả phân tử khi ghép xong */
+.molecule.settle { animation: settleBounce 0.4s ease; }
+@keyframes settleBounce {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* ---- Eyes ---- */
+
+.eyes {
+  position: absolute;
+  top: 32%;
+  display: flex;
+  gap: 30%;
+}
+.eyes-sm { gap: 26%; top: 28%; }
+
+.eye {
+  width: 22%;
+  aspect-ratio: 1;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.atom-two .eye { width: 26%; }
+
+.pupil {
+  width: 46%;
+  aspect-ratio: 1;
+  background: var(--ink);
+  border-radius: 50%;
+  transform: translate(0, 0);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.molecule.look-down .pupil { transform: translate(0, 35%); }
+.molecule.look-center .pupil { transform: translate(0, 0); }
+
+/* ---- Logo below the molecule ---- */
+
+.intro-logo {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  margin-top: 6px;
+}
+.intro-logo.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.logo-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.3rem, 4.5vw, 1.7rem);
+  color: var(--primary-dark);
+}
+.logo-tag {
+  margin: 6px 0 0;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  max-width: 380px;
+}
+
+.intro-hint {
+  margin-top: 26px;
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+  opacity: 0;
+  animation: hintFade 0.5s ease forwards;
+  animation-delay: 2.1s;
+}
+@keyframes hintFade { to { opacity: 1; } }
+
+.intro-noscript {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  font-family: var(--font-body);
+  color: var(--ink);
+}
+.intro-noscript a {
+  color: var(--primary-dark);
+  font-weight: 700;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atom-h, .atom-o, .atom-two {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .intro-logo { transition: none; opacity: 1; transform: none; }
+  .intro-hint { animation: none; opacity: 1; }
+  .intro-stage.fade-out { transition: none; }
+}

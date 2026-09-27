@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập lần 3</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            min-height: 100%;
+            font-family:
+                Inter,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #fff;
+            background:
+                radial-gradient(
+                    circle at top,
+                    #171b30 0%,
+                    #0d101c 48%,
+                    #080a11 100%
+                );
+        }
+
+        .card {
+            width: min(440px, 100%);
+            padding: 32px;
+            border: 1px solid rgba(126, 145, 220, .28);
+            border-radius: 22px;
+            background: rgba(16, 19, 34, .97);
+            box-shadow: 0 25px 70px rgba(0,0,0,.48);
+            text-align: center;
+        }
+
+        .shield {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #5968ff, #7547e9);
+            font-size: 36px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 25px;
+        }
+
+        .subtitle {
+            margin: 10px 0 24px;
+            color: #9299b7;
+            font-size: 14px;
+        }
+
+        .security {
+            margin-bottom: 20px;
+            padding: 14px;
+            border-radius: 13px;
+            background: rgba(20,24,43,.8);
+            border: 1px solid rgba(110,128,198,.24);
+            color: #aab1cd;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .security strong {
+            color: #fff;
+        }
+
+        .group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            color: #b9c0db;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            height: 48px;
+            padding: 0 14px;
+            border: 1px solid rgba(121,137,196,.28);
+            border-radius: 12px;
+            outline: none;
+            background: #0d101d;
+            color: #fff;
+            font-size: 15px;
+        }
+
+        input:focus {
+            border-color: #6170ff;
+            box-shadow: 0 0 0 3px rgba(97,112,255,.12);
+        }
+
+        input::placeholder {
+            color: #626a87;
+        }
+
+        .password {
+            position: relative;
+        }
+
+        .password input {
+            padding-right: 50px;
+        }
+
+        .toggle {
+            position: absolute;
+            right: 7px;
+            top: 7px;
+            width: 36px;
+            height: 34px;
+            border: 0;
+            border-radius: 9px;
+            background: transparent;
+            color: #858da9;
+            cursor: pointer;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+        .login {
+            width: 100%;
+            height: 48px;
+            margin-top: 6px;
+            border: 0;
+            border-radius: 12px;
+            background: linear-gradient(135deg,#5968ff,#5864ee);
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .login:disabled {
+            opacity: .65;
+            cursor: wait;
+        }
+
+        .back {
+            width: 100%;
+            height: 44px;
+            margin-top: 11px;
+            border: 1px solid rgba(121,137,196,.28);
+            border-radius: 11px;
+            background: transparent;
+            color: #aeb6d2;
+            cursor: pointer;
+        }
+
+        .message {
+            display: none;
+            margin-top: 14px;
+            padding: 12px;
+            border-radius: 11px;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        .message.show {
+            display: block;
+        }
+
+        .error {
+            color: #ff9da3;
+            background: rgba(160,35,45,.14);
+            border: 1px solid rgba(255,87,87,.28);
+        }
+
+        .success {
+            color: #82e8bf;
+            background: rgba(31,155,108,.12);
+            border: 1px solid rgba(71,211,151,.25);
+        }
+
+        .footer {
+            margin-top: 24px;
+            color: #59627f;
+            font-size: 12px;
+        }
+
+        @media (max-width: 520px) {
+            .card {
+                padding: 26px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<main class="card">
+
+    <div class="shield">🛡️</div>
+
+    <h1>Đăng nhập lần 3</h1>
+
+    <div class="subtitle">
+        Xác thực cuối trước khi vào khu vực quản trị
+    </div>
+
+    <div class="security">
+        <strong>Lớp bảo mật thứ 3</strong><br>
+        Hoàn tất xác thực để truy cập khu vực quản trị.
+    </div>
+
+    <form id="loginForm" autocomplete="off">
+
+        <div class="group">
+            <label for="username">
+                Tên tài khoản nội bộ
+            </label>
+
+            <input
+                id="username"
+                type="text"
+                placeholder="Nhập tên tài khoản"
+                autocomplete="username"
+                maxlength="100"
+                required
+            >
+        </div>
+
+        <div class="group">
+            <label for="password">
+                Mật khẩu
+            </label>
+
+            <div class="password">
+                <input
+                    id="password"
+                    type="password"
+                    placeholder="Nhập mật khẩu"
+                    autocomplete="current-password"
+                    maxlength="200"
+                    required
+                >
+
+                <button
+                    type="button"
+                    class="toggle"
+                    id="toggle"
+                >👁</button>
+            </div>
+        </div>
+
+        <button
+            type="submit"
+            class="login"
+            id="loginButton"
+        >
+            Xác thực & vào khu quản trị
+        </button>
+
+    </form>
+
+    <div
+        id="message"
+        class="message"
+        role="alert"
+        aria-live="polite"
+    ></div>
+
+    <button
+        type="button"
+        class="back"
+        id="backButton"
+    >
+        ← Quay lại lớp 2
+    </button>
+NguyenMath
+    <div class="footer">
+        Bảng Tuần Hoàn • By BeatXEdu
+    </div>
+
+</main>
+
+<script>
+    const form = document.getElementById("loginForm");
+    const username = document.getElementById("username");
+    const password = document.getElementById("password");
+    const loginButton = document.getElementById("loginButton");
+    const message = document.getElementById("message");
+    const toggle = document.getElementById("toggle");
+    const backButton = document.getElementById("backButton");
+
+    const AUTH_ENDPOINT =
+        "/.netlify/functions/admin-auth";
+
+    function showMessage(text, type) {
+        message.textContent = text;
+        message.className = "message show " + type;
+    }
+
+    toggle.addEventListener("click", () => {
+        const hidden = password.type === "password";
+
+        password.type = hidden
+            ? "text"
+            : "password";
+
+        toggle.textContent =
+            hidden ? "🙈" : "👁";
+    });
+
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const user = username.value.trim();
+        const pass = password.value;
+
+        if (!user || !pass) {
+            showMessage(
+                "Vui lòng nhập đầy đủ tài khoản và mật khẩu.",
+                "error"
+            );
+            return;
+        }
+
+        loginButton.disabled = true;
+        loginButton.textContent = "Đang xác thực...";
+
+        try {
+            const response = await fetch(
+                AUTH_ENDPOINT,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        layer: 3,
+                        username: user,
+                        password: pass
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+                throw new Error(
+                    data.error ||
+                    "Tài khoản hoặc mật khẩu không hợp lệ."
+                );
+            }
+
+            /*
+             * lưu role.
+             */
+            if (data.role) {
+                sessionStorage.setItem(
+                    "admin_role",
+                    data.role
+                );
+            }
+
+            showMessage(
+                "Xác thực thành công. Đang mở khu quản trị...",
+                "success"
+            );
+
+            setTimeout(() => {
+                window.location.href =
+                    "/khuvuc/khu-admin/index.html";
+            }, 500);
+
+        } catch (error) {
+            console.error(error);
+
+            showMessage(
+                error.message ||
+                "Không thể kết nối máy chủ xác thực.",
+                "error"
+            );
+
+        } finally {
+            loginButton.disabled = false;
+            loginButton.textContent =
+                "Xác thực & vào khu quản trị";
+        }
+    });
+
+    backButton.addEventListener("click", () => {
+        window.location.href =
+            "/khuvuc/admin/index.html";
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+[
+  {
+    "id": "M3_001",
+    "difficulty": "Easy",
+    "question": "Khi đốt cháy que diêm, đây là loại phản ứng gì?",
+    "options": ["Phản ứng hóa học", "Hiện tượng vật lý", "Sự bay hơi", "Sự nóng chảy"],
+    "answer": 0,
+    "explanation": "Đốt cháy tạo ra chất mới (khói, tro), có sự thay đổi bản chất nên là phản ứng hóa học."
+  },
+  {
+    "id": "M3_002",
+    "difficulty": "Easy",
+    "question": "Dấu hiệu nào KHÔNG cho biết có phản ứng hóa học xảy ra?",
+    "options": ["Xuất hiện kết tủa", "Có khí thoát ra", "Thay đổi hình dạng vật chứa", "Đổi màu dung dịch"],
+    "answer": 2,
+    "explanation": "Thay đổi hình dạng vật chứa không liên quan đến biến đổi chất, không phải dấu hiệu phản ứng hóa học."
+  },
+  {
+    "id": "M3_003",
+    "difficulty": "Medium",
+    "question": "Phản ứng giữa axit và bazơ tạo thành muối và nước được gọi là phản ứng gì?",
+    "options": ["Phản ứng thế", "Phản ứng trung hòa", "Phản ứng phân hủy", "Phản ứng hóa hợp"],
+    "answer": 1,
+    "explanation": "Phản ứng giữa axit và bazơ tạo muối và nước gọi là phản ứng trung hòa."
+  },
+  {
+    "id": "M3_004",
+    "difficulty": "Medium",
+    "question": "Cho kẽm (Zn) tác dụng với axit clohidric (HCl), sản phẩm khí sinh ra là gì?",
+    "options": ["Khí Oxi", "Khí Hidro", "Khí Clo", "Khí Cacbonic"],
+    "answer": 1,
+    "explanation": "Zn + 2HCl → ZnCl2 + H2↑, khí sinh ra là Hidro."
+  },
+  {
+    "id": "M3_005",
+    "difficulty": "Hard",
+    "question": "Trong phản ứng: Fe2O3 + 3CO → 2Fe + 3CO2, chất nào đóng vai trò chất khử?",
+    "options": ["Fe2O3", "CO", "Fe", "CO2"],
+    "answer": 1,
+    "explanation": "CO nhường electron cho Fe2O3 (bị oxi hóa thành CO2), do đó CO là chất khử."
+  },
+  {
+    "id": "M3_006",
+    "difficulty": "Hard",
+    "question": "Phản ứng nào sau đây là phản ứng oxi hóa - khử?",
+    "options": ["CaCO3 → CaO + CO2", "2KClO3 → 2KCl + 3O2", "NaOH + HCl → NaCl + H2O", "BaCl2 + Na2SO4 → BaSO4 + 2NaCl"],
+    "answer": 1,
+    "explanation": "Trong 2KClO3 → 2KCl + 3O2, Clo giảm số oxi hóa từ +5 xuống -1 và Oxi tăng từ -2 lên 0, đây là phản ứng oxi hóa - khử."
+  },
+  {
+    "id": "M3_007",
+    "difficulty": "HSG",
+    "question": "Hòa tan hoàn toàn 5,6 gam Fe vào dung dịch HCl dư, thể tích khí H2 thu được ở đktc là bao nhiêu?",
+    "options": ["1,12 lít", "2,24 lít", "3,36 lít", "4,48 lít"],
+    "answer": 1,
+    "explanation": "nFe = 5,6/56 = 0,1 mol. Fe + 2HCl → FeCl2 + H2, nên nH2 = 0,1 mol → V = 2,24 lít."
+  },
+  {
+    "id": "M3_008",
+    "difficulty": "HSG",
+    "question": "Cho phản ứng: aFeS2 + bO2 → cFe2O3 + dSO2. Tổng hệ số cân bằng tối giản (a+b+c+d) là bao nhiêu?",
+    "options": ["21", "23", "25", "19"],
+    "answer": 1,
+    "explanation": "Phương trình cân bằng: 4FeS2 + 11O2 → 2Fe2O3 + 8SO2, tổng hệ số = 4+11+2+8 = 25."
+  },
+  {
+    "id": "M3_009",
+    "difficulty": "Hell",
+    "question": "Hỗn hợp X gồm Fe và Cu có tỉ lệ mol 1:1 tác dụng với dung dịch HNO3 loãng dư, thu được khí NO duy nhất. Tỉ lệ mol Fe3+ và Cu2+ trong dung dịch sau phản ứng là bao nhiêu?",
+    "options": ["1:1", "2:1", "1:2", "3:2"],
+    "answer": 0,
+    "explanation": "Với HNO3 dư, cả Fe và Cu đều bị oxi hóa hết lên mức cao nhất (Fe3+, Cu2+); vì số mol Fe = số mol Cu ban đầu nên tỉ lệ Fe3+:Cu2+ vẫn là 1:1."
+  },
+  {
+    "id": "M3_010",
+    "difficulty": "Hell",
+    "question": "Đốt cháy hoàn toàn 11,2 gam Fe trong bình chứa khí Cl2, sau phản ứng thu được muối FeCl3 duy nhất. Khối lượng Cl2 đã phản ứng là bao nhiêu?",
+    "options": ["21,3 gam", "10,65 gam", "31,95 gam", "14,2 gam"],
+    "answer": 0,
+    "explanation": "nFe = 11,2/56 = 0,2 mol. 2Fe + 3Cl2 → 2FeCl3, nCl2 = 0,3 mol → mCl2 = 0,3×71 = 21,3 gam."
+  }
+]

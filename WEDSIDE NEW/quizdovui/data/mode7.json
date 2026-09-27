@@ -1,0 +1,82 @@
+[
+  {
+    "id": "M7_001",
+    "difficulty": "Easy",
+    "question": "Dung dịch có pH = 7 là môi trường gì?",
+    "options": ["Axit", "Bazơ", "Trung tính", "Không xác định"],
+    "answer": 2,
+    "explanation": "pH = 7 là môi trường trung tính (đúng bằng pH của nước tinh khiết ở 25°C)."
+  },
+  {
+    "id": "M7_002",
+    "difficulty": "Easy",
+    "question": "Dung dịch có pH nhỏ hơn 7 mang tính chất gì?",
+    "options": ["Axit", "Bazơ", "Trung tính", "Muối"],
+    "answer": 0,
+    "explanation": "pH < 7 là môi trường axit, càng nhỏ tính axit càng mạnh."
+  },
+  {
+    "id": "M7_003",
+    "difficulty": "Medium",
+    "question": "Độ tan của một chất trong nước phụ thuộc chủ yếu vào yếu tố nào (với chất rắn)?",
+    "options": ["Áp suất", "Nhiệt độ", "Thể tích bình chứa", "Màu sắc dung dịch"],
+    "answer": 1,
+    "explanation": "Với chất rắn tan trong nước, độ tan phụ thuộc chủ yếu vào nhiệt độ."
+  },
+  {
+    "id": "M7_004",
+    "difficulty": "Medium",
+    "question": "Nồng độ phần trăm (C%) của dung dịch được tính theo công thức nào?",
+    "options": ["C% = mchất tan / mdung dịch × 100%", "C% = n/V", "C% = mchất tan / mdung môi", "C% = V×n"],
+    "answer": 0,
+    "explanation": "Nồng độ phần trăm C% = khối lượng chất tan / khối lượng dung dịch × 100%."
+  },
+  {
+    "id": "M7_005",
+    "difficulty": "Hard",
+    "question": "Hòa tan 20 gam NaOH vào 180 gam nước. Nồng độ phần trăm của dung dịch thu được là bao nhiêu?",
+    "options": ["10%", "11,1%", "20%", "9%"],
+    "answer": 0,
+    "explanation": "mdung dịch = 20+180 = 200 gam. C% = 20/200×100% = 10%."
+  },
+  {
+    "id": "M7_006",
+    "difficulty": "Hard",
+    "question": "Dung dịch HCl có nồng độ mol là 0,01M. pH của dung dịch này là bao nhiêu (coi HCl phân li hoàn toàn)?",
+    "options": ["1", "2", "3", "4"],
+    "answer": 1,
+    "explanation": "[H+] = 0,01 = 10^-2 M → pH = -log(10^-2) = 2."
+  },
+  {
+    "id": "M7_007",
+    "difficulty": "HSG",
+    "question": "Trộn 100ml dung dịch HCl 1M với 100ml dung dịch NaOH 0,5M. pH của dung dịch sau phản ứng gần bằng bao nhiêu?",
+    "options": ["1", "2", "3", "7"],
+    "answer": 0,
+    "explanation": "nHCl=0,1 mol, nNaOH=0,05 mol dư axit 0,05 mol trong 200ml → [H+]=0,25M → pH = -log(0,25) ≈ 0,6, gần với 1 nhất trong các đáp án."
+  },
+  {
+    "id": "M7_008",
+    "difficulty": "HSG",
+    "question": "Cần thêm bao nhiêu gam nước vào 300 gam dung dịch NaCl 20% để được dung dịch NaCl 15%?",
+    "options": ["50 gam", "80 gam", "100 gam", "120 gam"],
+    "answer": 2,
+    "explanation": "mNaCl = 60 gam (không đổi). Gọi x là gam nước thêm vào: 60/(300+x) = 0,15 → x = 100 gam."
+  },
+  {
+    "id": "M7_009",
+    "difficulty": "Hell",
+    "question": "Trộn 200ml dung dịch H2SO4 0,1M với 300ml dung dịch NaOH 0,15M. pH của dung dịch sau phản ứng gần đúng là bao nhiêu?",
+    "options": ["Xấp xỉ 12", "Xấp xỉ 7", "Xấp xỉ 2", "Xấp xỉ 9"],
+    "answer": 0,
+    "explanation": "nH+ = 2×0,2×0,1 = 0,04 mol; nOH- = 0,3×0,15 = 0,045 mol. OH- dư 0,005 mol trong 500ml → [OH-] = 0,01M → pOH = 2 → pH = 12."
+  },
+  {
+    "id": "M7_010",
+    "difficulty": "Hell",
+    "question": "Hòa tan hoàn toàn m gam Na vào nước dư thu được 500ml dung dịch có pH = 13. Giá trị m là bao nhiêu?",
+    "options": ["1,15 gam", "2,3 gam", "3,45 gam", "4,6 gam"],
+    "answer": 1,
+    "explanation": "pH=13 → pOH=1 → [OH-]=0,1M → nOH- = 0,1×0,5 = 0,05 mol = nNa → m = 0,05×23 = 1,15 gam."
+  }
+]

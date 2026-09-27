@@ -1,0 +1,82 @@
+[
+  {
+    "id": "M1_001",
+    "difficulty": "Easy",
+    "question": "Kí hiệu hóa học của Oxi là gì?",
+    "options": ["O", "Ox", "O2", "On"],
+    "answer": 0,
+    "explanation": "Oxi có kí hiệu hóa học là O, số hiệu nguyên tử 8."
+  },
+  {
+    "id": "M1_002",
+    "difficulty": "Easy",
+    "question": "Nguyên tố nào có kí hiệu hóa học là 'Na'?",
+    "options": ["Nitơ", "Natri", "Neon", "Niken"],
+    "answer": 1,
+    "explanation": "Na là kí hiệu của Natri (Sodium), kim loại kiềm phổ biến."
+  },
+  {
+    "id": "M1_003",
+    "difficulty": "Medium",
+    "question": "Nguyên tử khối trung bình của Cacbon (C) xấp xỉ bằng bao nhiêu?",
+    "options": ["12", "14", "16", "10"],
+    "answer": 0,
+    "explanation": "Cacbon có nguyên tử khối trung bình xấp xỉ 12 đvC."
+  },
+  {
+    "id": "M1_004",
+    "difficulty": "Medium",
+    "question": "Nguyên tố nào đứng đầu chu kì 3 trong bảng tuần hoàn?",
+    "options": ["Liti", "Natri", "Kali", "Magie"],
+    "answer": 1,
+    "explanation": "Natri (Na) là nguyên tố đầu tiên của chu kì 3."
+  },
+  {
+    "id": "M1_005",
+    "difficulty": "Hard",
+    "question": "Nguyên tố nào có độ âm điện lớn nhất trong bảng tuần hoàn?",
+    "options": ["Oxi", "Clo", "Flo", "Nitơ"],
+    "answer": 2,
+    "explanation": "Flo (F) có độ âm điện lớn nhất, khoảng 3.98 theo thang Pauling."
+  },
+  {
+    "id": "M1_006",
+    "difficulty": "Hard",
+    "question": "Cấu hình electron lớp ngoài cùng của nhóm khí hiếm (trừ Heli) có dạng nào?",
+    "options": ["ns1", "ns2np6", "ns2np5", "ns2"],
+    "answer": 1,
+    "explanation": "Khí hiếm (trừ He) có cấu hình bền ns2np6 ở lớp ngoài cùng."
+  },
+  {
+    "id": "M1_007",
+    "difficulty": "HSG",
+    "question": "Nguyên tố X có tổng số hạt proton, nơtron, electron là 34, số khối là 23. X là nguyên tố nào?",
+    "options": ["Natri (Na)", "Magie (Mg)", "Nhôm (Al)", "Liti (Li)"],
+    "answer": 0,
+    "explanation": "Từ 2p + n = 34 và p + n = 23 suy ra p = 11, đó là Natri (Na)."
+  },
+  {
+    "id": "M1_008",
+    "difficulty": "HSG",
+    "question": "Trong bảng tuần hoàn, tính kim loại của các nguyên tố trong cùng một nhóm A biến đổi như thế nào khi đi từ trên xuống dưới?",
+    "options": ["Giảm dần", "Tăng dần", "Không đổi", "Biến đổi tuần hoàn"],
+    "answer": 1,
+    "explanation": "Đi từ trên xuống dưới trong một nhóm A, bán kính nguyên tử tăng nên tính kim loại tăng dần."
+  },
+  {
+    "id": "M1_009",
+    "difficulty": "Hell",
+    "question": "Nguyên tử của nguyên tố Y có cấu hình electron kết thúc ở phân lớp 3d6 4s2. Y thuộc nhóm nào và có bao nhiêu electron hóa trị?",
+    "options": ["Nhóm VIIIB, 8 electron hóa trị", "Nhóm IIA, 2 electron hóa trị", "Nhóm VIB, 6 electron hóa trị", "Nhóm IIB, 2 electron hóa trị"],
+    "answer": 0,
+    "explanation": "Cấu hình 3d6 4s2 (tổng 8 electron ở phân lớp gần ngoài cùng) ứng với Sắt (Fe), thuộc nhóm VIIIB với 8 electron hóa trị."
+  },
+  {
+    "id": "M1_010",
+    "difficulty": "Hell",
+    "question": "Hai nguyên tố A, B ở hai nhóm A liên tiếp, tổng số proton là 23. Biết A thuộc chu kì 2. Cặp nguyên tố A, B phù hợp là?",
+    "options": ["N (Z=7) và Si (Z=14)", "O (Z=8) và P (Z=15)", "C (Z=6) và Al (Z=13)", "N (Z=7) và P (Z=15)... loại vì tổng 22"],
+    "answer": 1,
+    "explanation": "Với O (Z=8, chu kì 2, nhóm VIA) và P (Z=15, nhóm VA liền kề), tổng proton = 8 + 15 = 23, thỏa mãn điều kiện."
+  }
+]

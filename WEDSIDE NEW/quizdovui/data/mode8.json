@@ -1,0 +1,82 @@
+[
+  {
+    "id": "M8_001",
+    "difficulty": "Easy",
+    "question": "Kim loại nào dẫn điện tốt nhất trong các kim loại thông dụng?",
+    "options": ["Sắt", "Bạc", "Nhôm", "Chì"],
+    "answer": 1,
+    "explanation": "Bạc (Ag) có độ dẫn điện tốt nhất trong tất cả các kim loại."
+  },
+  {
+    "id": "M8_002",
+    "difficulty": "Easy",
+    "question": "Phi kim nào tồn tại ở thể lỏng trong điều kiện thường?",
+    "options": ["Brom", "Clo", "Iot", "Lưu huỳnh"],
+    "answer": 0,
+    "explanation": "Brom (Br2) là phi kim duy nhất tồn tại ở thể lỏng ở điều kiện thường."
+  },
+  {
+    "id": "M8_003",
+    "difficulty": "Medium",
+    "question": "Kim loại nào tác dụng được với nước ở điều kiện thường tạo dung dịch bazơ?",
+    "options": ["Fe", "Cu", "Na", "Ag"],
+    "answer": 2,
+    "explanation": "Natri (Na) phản ứng mạnh với nước: 2Na + 2H2O → 2NaOH + H2↑."
+  },
+  {
+    "id": "M8_004",
+    "difficulty": "Medium",
+    "question": "Dãy hoạt động hóa học của kim loại được sắp xếp theo chiều nào?",
+    "options": ["Tính khử tăng dần", "Tính khử giảm dần", "Khối lượng tăng dần", "Bán kính giảm dần"],
+    "answer": 1,
+    "explanation": "Dãy hoạt động hóa học (K, Na, Ca... đến Au) được sắp xếp theo chiều tính khử (hoạt động hóa học) giảm dần."
+  },
+  {
+    "id": "M8_005",
+    "difficulty": "Hard",
+    "question": "Kim loại nào sau đây không tác dụng với dung dịch HCl loãng?",
+    "options": ["Zn", "Fe", "Cu", "Al"],
+    "answer": 2,
+    "explanation": "Cu đứng sau H trong dãy hoạt động hóa học nên không phản ứng với HCl loãng."
+  },
+  {
+    "id": "M8_006",
+    "difficulty": "Hard",
+    "question": "Cho Fe vào dung dịch CuSO4, hiện tượng quan sát được là gì?",
+    "options": ["Không có hiện tượng", "Có kim loại màu đỏ bám vào đinh sắt", "Có khí thoát ra", "Dung dịch mất màu hoàn toàn ngay lập tức"],
+    "answer": 1,
+    "explanation": "Fe + CuSO4 → FeSO4 + Cu, đồng kim loại (màu đỏ) bám vào bề mặt sắt."
+  },
+  {
+    "id": "M8_007",
+    "difficulty": "HSG",
+    "question": "Ngâm một lá kẽm nặng 10 gam vào dung dịch CuSO4 dư, sau phản ứng khối lượng lá kẽm thay đổi như thế nào (biết Zn + CuSO4 → ZnSO4 + Cu)?",
+    "options": ["Tăng lên", "Giảm đi", "Không đổi", "Không xác định được"],
+    "answer": 1,
+    "explanation": "Cứ 1 mol Zn (65g) tan ra thì có 1 mol Cu (64g) bám vào lá kẽm. Vì 65 > 64, mỗi lần thay thế làm khối lượng lá kẽm giảm nhẹ, nên khối lượng lá kẽm giảm đi."
+  },
+  {
+    "id": "M8_008",
+    "difficulty": "HSG",
+    "question": "Hòa tan hoàn toàn 6,5 gam Zn vào dung dịch H2SO4 loãng dư. Thể tích khí H2 sinh ra ở đktc là bao nhiêu?",
+    "options": ["1,12 lít", "2,24 lít", "3,36 lít", "4,48 lít"],
+    "answer": 1,
+    "explanation": "nZn = 6,5/65 = 0,1 mol. Zn + H2SO4 → ZnSO4 + H2, nH2 = 0,1 mol → V = 2,24 lít."
+  },
+  {
+    "id": "M8_009",
+    "difficulty": "Hell",
+    "question": "Cho 11 gam hỗn hợp Fe và Al tác dụng vừa đủ với dung dịch HCl thu được 8,96 lít H2 (đktc). Khối lượng Fe trong hỗn hợp là bao nhiêu?",
+    "options": ["5,6 gam", "2,8 gam", "8,4 gam", "11 gam"],
+    "answer": 0,
+    "explanation": "Gọi x, y là mol Fe, Al: 56x+27y=11 và x + 1,5y = 0,4 (từ nH2=0,4). Giải hệ: x=0,1; y=0,2 → mFe = 0,1×56 = 5,6 gam."
+  },
+  {
+    "id": "M8_010",
+    "difficulty": "Hell",
+    "question": "Nhúng thanh kim loại M hóa trị II nặng 50 gam vào 200ml dung dịch CuSO4 1M, sau phản ứng khối lượng thanh kim loại tăng 1,2 gam. Kim loại M là gì?",
+    "options": ["Zn", "Fe", "Mg", "Ni"],
+    "answer": 1,
+    "explanation": "Gọi a là mol M phản ứng: M + CuSO4 → MSO4 + Cu. Độ tăng khối lượng = a(64-M) = 1,2. Với a ≤ 0,2 mol, thử M=56 (Fe): a×8=1,2 → a=0,15 (hợp lý, <0,2), vậy M là Fe."
+  }
+]

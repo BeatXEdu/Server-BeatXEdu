@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Đăng Nhập Lần 2</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
+            font-family:
+                Inter,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background:
+                radial-gradient(
+                    circle at top,
+                    #15182a 0%,
+                    #0d0f1b 48%,
+                    #080a12 100%
+                );
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .page {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .auth-card {
+            width: min(440px, 100%);
+            padding: 32px;
+            border: 1px solid rgba(126, 145, 220, 0.28);
+            border-radius: 22px;
+            background: rgba(16, 19, 34, 0.96);
+            box-shadow:
+                0 24px 70px rgba(0, 0, 0, 0.45),
+                inset 0 1px 0 rgba(255, 255, 255, 0.025);
+            text-align: center;
+        }
+
+        .shield {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            background: linear-gradient(
+                135deg,
+                #5968ff,
+                #7547e9
+            );
+            box-shadow:
+                0 10px 30px rgba(91, 91, 255, 0.25);
+            font-size: 38px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 26px;
+            line-height: 1.25;
+            font-weight: 750;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            margin: 10px 0 26px;
+            color: #9299b7;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .security-info {
+            margin-bottom: 22px;
+            padding: 16px;
+            border: 1px solid rgba(110, 128, 198, 0.24);
+            border-radius: 14px;
+            background: rgba(20, 24, 43, 0.8);
+            color: #aab1cd;
+            font-size: 14px;
+            line-height: 1.55;
+        }
+
+        .security-info strong {
+            color: #ffffff;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            color: #b9c0db;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            height: 48px;
+            padding: 0 14px;
+            border: 1px solid rgba(121, 137, 196, 0.28);
+            border-radius: 12px;
+            outline: none;
+            background: #0d101d;
+            color: #ffffff;
+            font-size: 15px;
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
+        }
+
+        input::placeholder {
+            color: #626a87;
+        }
+
+        input:focus {
+            border-color: #6170ff;
+            background: #101425;
+            box-shadow: 0 0 0 3px rgba(97, 112, 255, 0.12);
+        }
+
+        .password-wrap {
+            position: relative;
+        }
+
+        .password-wrap input {
+            padding-right: 52px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 7px;
+            top: 7px;
+            width: 36px;
+            height: 34px;
+            border: 0;
+            border-radius: 9px;
+            background: transparent;
+            color: #8189a8;
+            cursor: pointer;
+            font-size: 17px;
+        }
+
+        .toggle-password:hover {
+            background: rgba(255, 255, 255, 0.06);
+            color: #ffffff;
+        }
+
+        .login-button {
+            width: 100%;
+            height: 48px;
+            margin-top: 7px;
+            border: 0;
+            border-radius: 12px;
+            background: linear-gradient(
+                135deg,
+                #5968ff,
+                #5864ee
+            );
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition:
+                transform 0.15s ease,
+                filter 0.15s ease,
+                opacity 0.15s ease;
+        }
+
+        .login-button:hover {
+            filter: brightness(1.08);
+            transform: translateY(-1px);
+        }
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+        .login-button:disabled {
+            opacity: 0.65;
+            cursor: wait;
+            transform: none;
+        }
+
+        .message {
+            display: none;
+            margin-top: 15px;
+            padding: 12px 14px;
+            border-radius: 11px;
+            font-size: 13px;
+            line-height: 1.45;
+            text-align: left;
+        }
+
+        .message.show {
+            display: block;
+        }
+
+        .message.error {
+            border: 1px solid rgba(255, 87, 87, 0.28);
+            background: rgba(160, 35, 45, 0.14);
+            color: #ff9da3;
+        }
+
+        .message.success {
+            border: 1px solid rgba(71, 211, 151, 0.25);
+            background: rgba(31, 155, 108, 0.12);
+            color: #82e8bf;
+        }
+
+        .back-button {
+            width: 100%;
+            height: 44px;
+            margin-top: 11px;
+            border: 1px solid rgba(121, 137, 196, 0.28);
+            border-radius: 11px;
+            background: transparent;
+            color: #aeb6d2;
+            font-size: 14px;
+            cursor: pointer;
+            transition:
+                background 0.2s ease,
+                color 0.2s ease;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.04);
+            color: #ffffff;
+        }
+
+        .footer {
+            margin-top: 26px;
+            color: #59627f;
+            font-size: 12px;
+        }
+
+        .layer {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 4px 9px;
+            border-radius: 999px;
+            background: rgba(89, 104, 255, 0.10);
+            color: #737eff;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        @media (max-width: 520px) {
+            .page {
+                padding: 16px;
+            }
+
+            .auth-card {
+                padding: 26px 20px;
+                border-radius: 18px;
+            }
+
+            h1 {
+                font-size: 23px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <main class="auth-card">
+
+        <div class="shield" aria-hidden="true">
+            🛡️
+        </div>
+
+        <h1>Đăng Nhập Lần 2</h1>
+
+        <div class="subtitle">
+            Khu vực dành riêng cho hệ thống admin
+        </div>
+
+        <div class="security-info">
+            <strong>Lớp bảo mật thứ 2</strong><br>
+            Nhập tài khoản nội bộ hợp lệ để tiếp tục xác thực quyền quản trị.
+        </div>
+
+        <form id="loginForm" autocomplete="off">
+
+            <div class="form-group">
+                <label for="username">
+                    Tên tài khoản nội bộ
+                </label>
+
+                <input
+                    id="username"
+                    name="username"
+                    type="text"
+                    placeholder="Nhập tên tài khoản"
+                    autocomplete="username"
+                    required
+                    maxlength="100"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">
+                    Mật khẩu
+                </label>
+
+                <div class="password-wrap">
+
+                    <input
+                        id="password"
+                        name="password"
+                        type="password"
+                        placeholder="Nhập mật khẩu"
+                        autocomplete="current-password"
+                        required
+                        maxlength="200"
+                    >
+
+                    <button
+                        type="button"
+                        class="toggle-password"
+                        id="togglePassword"
+                        aria-label="Hiện mật khẩu"
+                    >
+                        👁
+                    </button>
+
+                </div>
+            </div>
+
+            <button
+                type="submit"
+                class="login-button"
+                id="loginButton"
+            >
+                Đăng nhập
+            </button>
+
+        </form>
+
+        <div
+            id="message"
+            class="message"
+            role="alert"
+            aria-live="polite"
+        ></div>
+
+        <button
+            type="button"
+            class="back-button"
+            id="backButton"
+        >
+            ← Quay lại Quản trị
+        </button>
+
+        <div class="footer">
+            Khu vực quản trị
+            <div class="layer">By PhuocDev • LAYER 2</div>
+        </div>
+
+    </main>
+
+</div>
+
+<script>
+    const loginForm = document.getElementById("loginForm");
+    const usernameInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
+    const loginButton = document.getElementById("loginButton");
+    const togglePassword = document.getElementById("togglePassword");
+    const message = document.getElementById("message");
+    const backButton = document.getElementById("backButton");
+
+    /*
+     * Netlify Function dùng để xác thực.
+     */
+    const AUTH_ENDPOINT = "/.netlify/functions/admin-auth";
+
+    function showMessage(text, type = "error") {
+        message.textContent = text;
+        message.className = "message show " + type;
+    }
+
+    function clearMessage() {
+        message.textContent = "";
+        message.className = "message";
+    }
+
+    togglePassword.addEventListener("click", () => {
+        const isPassword =
+            passwordInput.type === "password";
+
+        passwordInput.type =
+            isPassword ? "text" : "password";
+
+        togglePassword.textContent =
+            isPassword ? "🙈" : "👁";
+
+        togglePassword.setAttribute(
+            "aria-label",
+            isPassword
+                ? "Ẩn mật khẩu"
+                : "Hiện mật khẩu"
+        );
+    });
+
+    loginForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        clearMessage();
+
+        const username =
+            usernameInput.value.trim();
+
+        const password =
+            passwordInput.value;
+
+        if (!username || !password) {
+            showMessage(
+                "Vui lòng nhập đầy đủ tài khoản và mật khẩu."
+            );
+            return;
+        }
+
+        loginButton.disabled = true;
+        loginButton.textContent = "Đang xác thực...";
+
+        try {
+            const response = await fetch(
+                AUTH_ENDPOINT,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        layer: 2,
+                        username,
+                        password
+                    })
+                }
+            );
+
+            let data;
+
+            try {
+                data = await response.json();
+            } catch {
+                data = {};
+            }
+
+            if (!response.ok || !data.success) {
+                throw new Error(
+                    data.error ||
+                    "Tài khoản hoặc mật khẩu không hợp lệ."
+                );
+            }
+
+            showMessage(
+                "Xác thực lớp 2 thành công. Đang chuyển tiếp...",
+                "success"
+            );
+
+            /*
+             * Nếu Function trả token/session,
+             * có thể xử lý token ở đây.
+             */
+
+            setTimeout(() => {
+                window.location.href =
+                    "/khuvuc/hoavn/index.html";
+            }, 500);
+
+        } catch (error) {
+            console.error(
+                "Lỗi xác thực lớp 2:",
+                error
+            );
+
+            showMessage(
+                error.message ||
+                "Không thể kết nối máy chủ xác thực."
+            );
+
+        } finally {
+            loginButton.disabled = false;
+            loginButton.textContent = "Đăng nhập";
+        }
+    });
+
+    backButton.addEventListener("click", () => {
+        window.location.href =
+            "/khuvuc/quantri/index.html";
+    });
+
+    /*
+     * Cho phép nhấn Enter để gửi form.
+     * Đồng thời không lưu thông tin đăng nhập
+     * vào localStorage/sessionStorage.
+     */
+</script>
+
+</body>
+</html>

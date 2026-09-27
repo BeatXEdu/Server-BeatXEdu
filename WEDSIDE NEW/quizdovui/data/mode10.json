@@ -1,0 +1,82 @@
+[
+  {
+    "id": "M10_001",
+    "difficulty": "Easy",
+    "question": "Đơn vị đo khối lượng nguyên tử thường dùng là gì?",
+    "options": ["Gam", "Kilogam", "đvC (amu)", "Lít"],
+    "answer": 2,
+    "explanation": "Đơn vị khối lượng nguyên tử thường dùng là đvC (đơn vị Cacbon) hay amu."
+  },
+  {
+    "id": "M10_002",
+    "difficulty": "Easy",
+    "question": "Số Avogadro (6,022 × 10^23) dùng để chỉ điều gì?",
+    "options": ["Số nguyên tử trong 1 gam chất", "Số hạt trong 1 mol chất", "Số electron của nguyên tử", "Số proton của hạt nhân"],
+    "answer": 1,
+    "explanation": "Số Avogadro biểu thị số hạt (nguyên tử, phân tử...) có trong 1 mol chất."
+  },
+  {
+    "id": "M10_003",
+    "difficulty": "Medium",
+    "question": "1 mol khí ở điều kiện tiêu chuẩn (đktc) chiếm thể tích bao nhiêu lít?",
+    "options": ["11,2 lít", "22,4 lít", "24 lít", "20 lít"],
+    "answer": 1,
+    "explanation": "Ở điều kiện tiêu chuẩn (0°C, 1atm), 1 mol khí bất kỳ chiếm thể tích 22,4 lít."
+  },
+  {
+    "id": "M10_004",
+    "difficulty": "Medium",
+    "question": "Công thức tính số mol khi biết khối lượng là gì?",
+    "options": ["n = m/M", "n = m×M", "n = M/m", "n = V/22,4 luôn đúng cho mọi chất"],
+    "answer": 0,
+    "explanation": "Số mol n = khối lượng (m) chia cho khối lượng mol (M): n = m/M."
+  },
+  {
+    "id": "M10_005",
+    "difficulty": "Hard",
+    "question": "Tính khối lượng của 0,5 mol H2SO4 (M=98 g/mol).",
+    "options": ["49 gam", "98 gam", "196 gam", "24,5 gam"],
+    "answer": 0,
+    "explanation": "m = n×M = 0,5×98 = 49 gam."
+  },
+  {
+    "id": "M10_006",
+    "difficulty": "Hard",
+    "question": "Hòa tan 4 gam NaOH vào nước để được 200ml dung dịch. Nồng độ mol của dung dịch là bao nhiêu?",
+    "options": ["0,25M", "0,5M", "1M", "2M"],
+    "answer": 1,
+    "explanation": "nNaOH = 4/40 = 0,1 mol. CM = n/V = 0,1/0,2 = 0,5M."
+  },
+  {
+    "id": "M10_007",
+    "difficulty": "HSG",
+    "question": "Đốt cháy hoàn toàn 6 gam kim loại M (hóa trị II) trong khí Oxi dư thu được 10 gam oxit. Kim loại M là gì?",
+    "options": ["Magie (Mg)", "Canxi (Ca)", "Kẽm (Zn)", "Đồng (Cu)"],
+    "answer": 0,
+    "explanation": "mO2 phản ứng = 10-6 = 4 gam → nO = 0,25 mol = nM (do MO). M = 6/0,25 = 24, đó là Magie (Mg)."
+  },
+  {
+    "id": "M10_008",
+    "difficulty": "HSG",
+    "question": "Trộn 2 dung dịch HCl 2M và HCl 0,5M theo tỉ lệ thể tích 1:3 thu được dung dịch HCl có nồng độ bao nhiêu?",
+    "options": ["0,675M", "0,875M", "1,25M", "1M"],
+    "answer": 1,
+    "explanation": "Giả sử 1 lít loại 1 và 3 lít loại 2: tổng mol = 1×2+3×0,5 = 3,5 mol, tổng V = 4 lít → CM = 3,5/4 = 0,875M."
+  },
+  {
+    "id": "M10_009",
+    "difficulty": "Hell",
+    "question": "Cho hỗn hợp gồm K và Al (Al dư so với lượng cần phản ứng) tác dụng với nước dư, thu được 6,72 lít khí H2 (đktc) và còn lại chất rắn Al không tan hết. Khối lượng K trong hỗn hợp là bao nhiêu?",
+    "options": ["5,85 gam", "7,8 gam", "3,9 gam", "11,7 gam"],
+    "answer": 0,
+    "explanation": "Gọi a là mol K. K phản ứng với nước: 2K+2H2O→2KOH+H2 (cho a/2 mol H2). KOH sinh ra hòa tan đúng a mol Al dư: 2Al+2KOH+2H2O→2KAlO2+3H2 (cho 1,5a mol H2). Tổng H2 = 2a = 0,3 mol → a = 0,15 mol → mK = 0,15×39 = 5,85 gam."
+  },
+  {
+    "id": "M10_010",
+    "difficulty": "Hell",
+    "question": "Hòa tan hoàn toàn 18,6 gam hỗn hợp Fe và Zn (tỉ lệ mol 1:2) vào dung dịch H2SO4 loãng dư. Tổng thể tích khí H2 thu được ở đktc là bao nhiêu?",
+    "options": ["4,48 lít", "6,72 lít", "8,96 lít", "11,2 lít"],
+    "answer": 1,
+    "explanation": "Gọi x là mol Fe, 2x là mol Zn: 56x + 65×2x = 18,6 → 186x = 18,6 → x = 0,1 mol Fe, 0,2 mol Zn. Cả hai đều phản ứng theo tỉ lệ 1:1 với H2SO4 tạo H2, tổng nH2 = x + 2x = 0,3 mol → V = 6,72 lít."
+  }
+]

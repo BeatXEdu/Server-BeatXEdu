@@ -1,0 +1,82 @@
+[
+  {
+    "id": "M6_001",
+    "difficulty": "Easy",
+    "question": "Metan (CH4) thuộc dãy đồng đẳng nào?",
+    "options": ["Ankan", "Anken", "Ankin", "Aren"],
+    "answer": 0,
+    "explanation": "Metan là ankan đơn giản nhất, công thức chung CnH2n+2."
+  },
+  {
+    "id": "M6_002",
+    "difficulty": "Easy",
+    "question": "Chất nào sau đây là rượu (ancol)?",
+    "options": ["CH3COOH", "C2H5OH", "CH3CHO", "CH4"],
+    "answer": 1,
+    "explanation": "C2H5OH (etanol) là ancol, có nhóm -OH liên kết với gốc hidrocacbon no."
+  },
+  {
+    "id": "M6_003",
+    "difficulty": "Medium",
+    "question": "Công thức tổng quát của dãy đồng đẳng anken là gì?",
+    "options": ["CnH2n+2", "CnH2n", "CnH2n-2", "CnH2n-6"],
+    "answer": 1,
+    "explanation": "Anken có 1 liên kết đôi C=C, công thức chung là CnH2n (n≥2)."
+  },
+  {
+    "id": "M6_004",
+    "difficulty": "Medium",
+    "question": "Phản ứng đặc trưng của anken (có nối đôi C=C) là phản ứng gì?",
+    "options": ["Phản ứng thế", "Phản ứng cộng", "Phản ứng trung hòa", "Phản ứng trao đổi"],
+    "answer": 1,
+    "explanation": "Anken có liên kết pi kém bền nên dễ tham gia phản ứng cộng (với H2, Br2, HX...)."
+  },
+  {
+    "id": "M6_005",
+    "difficulty": "Hard",
+    "question": "Đốt cháy hoàn toàn 2,24 lít (đktc) khí etilen (C2H4), thể tích CO2 sinh ra (đktc) là bao nhiêu?",
+    "options": ["2,24 lít", "4,48 lít", "6,72 lít", "8,96 lít"],
+    "answer": 1,
+    "explanation": "nC2H4 = 0,1 mol. C2H4 + 3O2 → 2CO2 + 2H2O, nCO2 = 0,2 mol → V = 4,48 lít."
+  },
+  {
+    "id": "M6_006",
+    "difficulty": "Hard",
+    "question": "Chất nào sau đây làm mất màu dung dịch nước brom?",
+    "options": ["CH4", "C2H6", "C2H4", "C6H6 (benzen ở điều kiện thường)"],
+    "answer": 2,
+    "explanation": "C2H4 (etilen) có liên kết đôi kém bền, phản ứng cộng dễ dàng với Br2 làm mất màu dung dịch."
+  },
+  {
+    "id": "M6_007",
+    "difficulty": "HSG",
+    "question": "Đốt cháy hoàn toàn một ankan X thu được 8,8 gam CO2 và 4,5 gam H2O. Công thức phân tử của X là gì?",
+    "options": ["CH4", "C2H6", "C3H8", "C4H10"],
+    "answer": 1,
+    "explanation": "nCO2=0,2 mol → nC=0,2; nH2O=0,25 mol → nH=0,5. Tỉ lệ C:H = 0,2:0,5 = 2:5, ankan CnH2n+2 với n=2 → C2H6."
+  },
+  {
+    "id": "M6_008",
+    "difficulty": "HSG",
+    "question": "Cho 4,6 gam ancol etylic phản ứng hết với Na dư, thể tích khí H2 thu được ở đktc là bao nhiêu?",
+    "options": ["1,12 lít", "2,24 lít", "0,56 lít", "3,36 lít"],
+    "answer": 0,
+    "explanation": "nC2H5OH = 4,6/46 = 0,1 mol. 2C2H5OH + 2Na → 2C2H5ONa + H2, nH2 = 0,05 mol → V = 1,12 lít."
+  },
+  {
+    "id": "M6_009",
+    "difficulty": "Hell",
+    "question": "Hỗn hợp X gồm CH4 và C2H4 có tỉ khối so với H2 là 15,2. Phần trăm thể tích CH4 trong X là bao nhiêu?",
+    "options": ["20%", "40%", "60%", "80%"],
+    "answer": 1,
+    "explanation": "M trung bình = 30,4. Gọi x là %CH4: 16x + 28(1-x) = 30,4 → x = 0,4, vậy CH4 chiếm 40%."
+  },
+  {
+    "id": "M6_010",
+    "difficulty": "Hell",
+    "question": "Đốt cháy hoàn toàn 0,1 mol hỗn hợp 2 ankin đồng đẳng liên tiếp thu được 6,72 lít CO2 (đktc). Công thức của 2 ankin là gì?",
+    "options": ["C2H2 và C3H4", "C3H4 và C4H6", "C4H6 và C5H8", "C2H2 và C4H6"],
+    "answer": 0,
+    "explanation": "nCO2 = 0,3 mol → số nguyên tử C trung bình = 0,3/0,1 = 3, phù hợp với cặp ankin đồng đẳng liên tiếp C2H2 và C3H4 (số C trung bình nằm giữa 2 và 3 tùy tỉ lệ mol)."
+  }
+]

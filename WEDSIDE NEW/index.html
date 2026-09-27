@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BeatXEdu — Hệ sinh thái học tập</title>
+
+<meta name="description"
+      content="BeatXEdu — hệ sinh thái các công cụ học tập miễn phí, nhẹ và dễ sử dụng.">
+<meta name="author" content="Võ Gia Phước">
+<meta name="theme-color" content="#1793d1">
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f5f5;
+    color: #333;
+}
+
+/* ===== HEADER ===== */
+
+header {
+    background: #333;
+    border-bottom: 5px solid #1793d1;
+    color: white;
+}
+
+.header-inner {
+    max-width: 1280px;
+    margin: auto;
+    min-height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: white;
+}
+
+.logo-symbol {
+     width: 38px;
+     height: 45px;
+     display: grid;
+     grid-template-rows: repeat(4, 11px);
+     color: #1793d1;
+     font-family: monospace;
+     font-size: 25px;
+     line-height: 11px;
+     font-weight: bold;
+     white-space: nowrap;
+     overflow: hidden;
+}
+
+.logo-symbol span {
+     display: block;
+     height: 11px;
+     letter-spacing: -2px;
+}
+
+.logo-text {
+    font-size: 30px;
+    font-weight: bold;
+    letter-spacing: -1px;
+}
+
+.logo-text span {
+    color: #1793d1;
+}
+
+.logo-small {
+    font-size: 11px;
+    color: #aaa;
+    align-self: flex-start;
+    margin-top: 13px;
+}
+
+nav {
+    display: flex;
+    gap: 27px;
+    align-items: center;
+}
+
+nav a {
+    color: #aaa;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+nav a:hover,
+nav a.active {
+    color: white;
+}
+
+/* ===== LAYOUT ===== */
+
+.container {
+    max-width: 1280px;
+    margin: 20px auto;
+    padding: 0 18px;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 38px;
+}
+
+/* ===== MAIN ===== */
+
+.main-box {
+    background: #fff;
+    border: 1px solid #c9d2d8;
+    padding: 22px;
+}
+
+.main-box h1 {
+    margin: 0 0 12px;
+    font-size: 25px;
+    border-bottom: 1px solid #aaa;
+    padding-bottom: 8px;
+}
+
+.main-box h2 {
+    font-size: 21px;
+    border-bottom: 1px solid #aaa;
+    padding-bottom: 7px;
+    margin-top: 30px;
+}
+
+.main-box p {
+    line-height: 1.65;
+    font-size: 15px;
+}
+
+.main-box a {
+    color: #1683b9;
+    text-decoration: none;
+}
+
+.main-box a:hover {
+    text-decoration: underline;
+}
+
+/* ===== INTRO ===== */
+
+.intro {
+    background: #eef7fb;
+    border: 1px solid #c4d4dc;
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+.intro h1 {
+    margin-top: 0;
+}
+
+.intro strong {
+    color: #1683b9;
+}
+
+/* ===== APPS ===== */
+
+.apps {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 18px;
+}
+
+.app {
+    border: 1px solid #c7d0d5;
+    background: #fafafa;
+    padding: 17px;
+}
+
+.app h3 {
+    margin: 0 0 9px;
+    color: #1683b9;
+    font-size: 18px;
+}
+
+.app p {
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.app-button {
+    display: inline-block;
+    background: #1793d1;
+    color: white !important;
+    padding: 7px 12px;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none !important;
+}
+
+.app-button:hover {
+    background: #1179ad;
+}
+.source-cta{margin:0 0 22px;padding:15px 17px;border:1px solid #b9d7e5;background:#eef8fc;display:flex;justify-content:space-between;align-items:center;gap:15px}
+.source-cta div{display:flex;flex-direction:column;gap:4px}.source-cta span{font-size:13px;color:#58717d}
+.source-cta a{background:#1793d1;color:#fff!important;padding:9px 13px;font-weight:700;text-decoration:none!important;white-space:nowrap}
+@media(max-width:850px){.source-cta{align-items:flex-start;flex-direction:column}}
+
+
+/* ===== NEWS ===== */
+
+.news {
+    margin-top: 30px;
+}
+
+.news-title {
+    display: inline-block;
+    background: #1793d1;
+    color: white;
+    padding: 7px 14px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.news-item {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+}
+
+.news-item h3 {
+    color: #1683b9;
+    margin: 0 0 7px;
+    font-size: 17px;
+}
+
+.news-date {
+    float: right;
+    color: #777;
+    font-size: 12px;
+}
+
+/* ===== UPDATE ===== */
+
+.update {
+    margin-top: 28px;
+    border: 1px solid #c7d0d5;
+    background: #fafafa;
+}
+
+.update-header {
+    background: #1793d1;
+    color: white;
+    padding: 9px 13px;
+    font-weight: bold;
+}
+
+.update-content {
+    padding: 17px;
+}
+
+.update-content h3 {
+    margin-top: 0;
+}
+
+.update-content ul {
+    line-height: 1.9;
+}
+
+.status {
+    display: inline-block;
+    padding: 5px 9px;
+    background: #e8f5e9;
+    border: 1px solid #9ccc9c;
+    color: #267236;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+/* ===== SIDEBAR ===== */
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.sidebar-box {
+    border: 1px solid #c5ced3;
+    background: #f7f7f7;
+}
+
+.sidebar-title {
+    background: #1793d1;
+    color: white;
+    padding: 10px 13px;
+    font-weight: bold;
+}
+
+.sidebar-content {
+    padding: 13px;
+}
+
+.sidebar-content ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar-content li {
+    padding: 6px 0;
+}
+
+.sidebar-content a {
+    color: #1683b9;
+    text-decoration: none;
+}
+
+.sidebar-content a:hover {
+    text-decoration: underline;
+}
+
+/* ===== SEARCH ===== */
+
+.search-box {
+    display: flex;
+    gap: 7px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #bbb;
+}
+
+.search-box button {
+    background: #1793d1;
+    color: white;
+    border: 0;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+/* ===== CODE ===== */
+
+code,
+pre {
+    font-family: monospace;
+}
+
+pre {
+    background: #eee;
+    border: 1px solid #ddd;
+    padding: 12px;
+    overflow-x: auto;
+    font-size: 13px;
+}
+
+/* ===== FOOTER ===== */
+
+footer {
+    margin-top: 35px;
+    background: #333;
+    border-top: 5px solid #1793d1;
+    color: #bbb;
+    padding: 25px;
+    text-align: center;
+    font-size: 13px;
+}
+
+footer strong {
+    color: white;
+}
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 850px) {
+    .header-inner {
+        flex-direction: column;
+        padding: 15px;
+        gap: 15px;
+    }
+
+    nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .apps {
+        grid-template-columns: 1fr;
+    }
+
+    .news-date {
+        float: none;
+        display: block;
+        margin-top: 4px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header>
+    <div class="header-inner">
+
+        <a href="/" class="logo">
+            <div class="logo-symbol" aria-label="B logo"><span>/\\</span><span>\\/</span><span>/\\</span><span>\\/</span></div>
+
+            <div class="logo-text">
+                Beat<span>X</span>Edu
+            </div>
+
+            <div class="logo-small">™</div>
+        </a>
+
+        <nav>
+            <a href="/" class="active">Trang chủ</a>
+            <a href="#apps">Ứng dụng</a>
+            <a href="#updates">Cập nhật</a>
+            <a href="#source">Mã nguồn</a>
+            <a href="#about">Giới thiệu</a>
+        </nav>
+
+    </div>
+</header>
+
+
+<!-- ================= CONTENT ================= -->
+
+<div class="container">
+
+<div class="layout">
+
+<main>
+
+    <!-- INTRO -->
+
+    <section class="intro">
+
+        <h1>Một hệ sinh thái học tập nhỏ gọn</h1>
+
+        <p>
+            Chào mừng đến với <strong>BeatXEdu</strong> —
+            một dự án web hướng đến việc xây dựng các công cụ
+            học tập miễn phí, nhẹ và dễ tiếp cận.
+        </p>
+
+        <p>
+            BeatXEdu tập trung vào những công cụ có thể sử dụng
+            trực tiếp trên trình duyệt mà không cần cài đặt
+            phần mềm phức tạp.
+        </p>
+
+        <p>
+            Dự án được phát triển với tinh thần
+            <strong>tự học, tự xây dựng và chia sẻ</strong>.
+        </p>
+
+    </section>
+
+    <div class="source-cta">
+        <div><strong>🛠️ Mã nguồn BeatXEdu</strong><span>Khám phá cấu trúc dự án và công nghệ được sử dụng.</span></div>
+        <a href="#source">Xem mã nguồn →</a>
+    </div>
+
+
+    <!-- APPLICATIONS -->
+
+    <section id="apps">
+
+        <h2>Các ứng dụng học tập</h2>
+
+        <div class="apps">
+
+            <article class="app">
+
+                <h3>⚛️ Bảng Tuần Hoàn</h3>
+
+                <p>
+                    Công cụ tra cứu bảng tuần hoàn các nguyên tố
+                    hóa học, hỗ trợ việc học và tìm hiểu thông tin
+                    về nguyên tố.
+                </p>
+
+                <a class="app-button" href="/bangtuanhoan/index.html">
+                    Mở Bảng Tuần Hoàn →
+                </a>
+
+            </article>
+
+
+            <article class="app">
+
+                <h3>∑ MathX</h3>
+
+                <p>
+                    Công cụ hỗ trợ học Toán với các tính năng
+                    được xây dựng hướng tới học sinh.
+                </p>
+
+                <a class="app-button" href="/MathX/index.html">
+                    Mở MathX →
+                </a>
+
+            </article>
+
+
+            <article class="app">
+
+                <h3>🧪 Đố Vui Hóa Học</h3>
+
+                <p>
+                    Trò chơi trắc nghiệm Hóa học giúp ôn tập
+                    kiến thức theo nhiều mức độ khác nhau.
+                </p>
+
+                <a class="app-button" href="/quizdovui/index.html">
+                    Mở Đố Vui Hóa Học →
+                </a>
+
+            </article>
+
+            <article class="app">
+                <h3>Benchmark KK</h3>
+
+                <p>
+                    Công cụ Benchmark KK giúp bạn có thể tìm các
+                    ứng dụng học tập phù hợp trên máy của mình và
+                    được các trải nghiệm mượt mà nhất có thể.
+                </p>
+
+                <a class="app-button" href="benchmark-kk/index.html">
+                    Mở Benchmark KK →
+                </a>
+            </article>
+
+            <article class="app">
+                <h3>Physics Study</h3>
+
+                <p>
+                    Là một công cụ học tập giống như Bảng Tuần Hoàn
+                    hay MathX như chúng tôi từng làm. Nhưng lần này
+                    sẽ tập chung vào môn Lý cho các bạn HSG hay
+                    những bạn học Lý điều được.
+                </p>
+
+                <a class="app-button" href="physics-study/index.html">
+                    Mở Physics Study →
+                </a>
+
+            </article>
+        </div>
+
+    </section>
+
+
+    <!-- NEWS -->
+
+    <section class="news">
+
+        <span class="news-title">Tin tức mới nhất</span>
+
+        <article class="news-item">
+            <span class="news-date">23/09/2026 · v1.3</span>
+            <h3>🚀 Cập nhật BeatXEdu v1.3 — Ra Mắt Physics Study</h3>
+            <p><strong>Physics Study:</strong> Chúng tôi hiện đã cập nhật công cụ Physics Study dành riêng cho môn Lý. Bạn có thể ôn và làm bài tập trên đó, đặc biệt Physics Study có chế độ làm bài test và ôn cho HSG.</p>
+        </article>
+
+        <article class="news-item">
+            <span class="news-date">22/09/2026 · v1.2</span>
+            <h3>🔧 Cập nhật BeatXEdu v1.2 — Tách cửa sổ Câu chuyện</h3>
+            <p><strong>Bảng Tuần Hoàn:</strong> Phần “Câu chuyện &amp; Người phát hiện” được đưa sang cửa sổ riêng. Card nguyên tố chính được giữ gọn, dễ xem hơn và tiết kiệm không gian.</p>
+        </article>
+
+        <article class="news-item">
+            <span class="news-date">22/09/2026 · v1.1</span>
+            <h3>🔧 Cập nhật BeatXEdu v1.1 — Sửa Bảng Tuần Hoàn</h3>
+            <p><strong>Đã sửa lỗi:</strong> click vào nguyên tố không hiện thông tin. Bổ sung và kết nối lại các trường số oxi hóa, trạng thái và phần thông tin lịch sử để card nguyên tố hoạt động đúng.</p>
+        </article>
+
+        <article class="news-item">
+            <span class="news-date">22/09/2026 · v1.0</span>
+            <h3>🚀 BeatXEdu v1.0 — Đợt nâng cấp lớn</h3>
+            <p><strong>Branding:</strong> đồng bộ BeatX → BeatXEdu. <strong>Bảng Tuần Hoàn:</strong> thêm thông tin chi tiết, tìm kiếm và bộ lọc. <strong>Đố Vui Hóa Học:</strong> thêm giải thích đáp án, lịch sử điểm và luyện tập. <strong>Benchmark KK:</strong> sửa thông tin trình duyệt, mô tả chấm điểm và gợi ý ứng dụng. <strong>MathX:</strong> hỗ trợ parabol, xóa tất cả và xuất ảnh. <strong>Trang chủ &amp; trải nghiệm:</strong> đồng bộ card, tin tức, mã nguồn, mobile, favicon/PWA và giới thiệu team.</p>
+        </article>
+
+        <article class="news-item">
+            <span class="news-date">22/09/2026</span>
+            <h3>Benchmark KK chính thức ra mắt</h3>
+            <p>Benchmark KK kiểm tra CPU, GPU, RAM, SSD và Wi‑Fi ngay trên trình duyệt, sau đó quy đổi thành điểm nội bộ trên thang 100 để tham khảo khả năng chạy các công cụ học tập.</p>
+        </article>
+        <article class="news-item">
+            <span class="news-date">18/09/2026</span>
+            <h3>BeatXEdu tiếp tục được hoàn thiện</h3>
+            <p>Bảng Tuần Hoàn, MathX và Đố Vui Hóa Học đang được bổ sung tính năng, tối ưu trải nghiệm và đồng bộ nhận diện thành một hệ sinh thái học tập thống nhất.</p>
+        </article>
+
+
+        <article class="news-item">
+
+            <h3>
+                Các dự án học tập được phát triển độc lập
+            </h3>
+
+            <p>
+                MathX, Bảng Tuần Hoàn và Đố Vui Hóa Học
+                là những dự án được xây dựng và phát triển
+                trong hệ sinh thái BeatXEdu.
+            </p>
+
+        </article>
+
+    </section>
+
+
+    <!-- UPCOMING UPDATE -->
+
+    <section class="update" id="updates">
+
+        <div class="update-header">
+            🚀 Bản cập nhật sắp tới — COMING SOON
+        </div>
+
+        <div class="update-content">
+
+            <h3>
+                BeatXEdu tiếp tục được phát triển
+            </h3>
+
+            <p>
+                Một số kế hoạch đang được thực hiện cho
+                những phiên bản tiếp theo của BeatXEdu:
+            </p>
+
+            <ul>
+                <li>
+                    Hiện Đang Xem Xét Bộ Sung Các Môn Học
+                    Khác.
+                </li>
+            </ul>
+
+            <ul>
+                <li>
+                  Đang Tiến Hành Phát Triển Và Thử Nghiệm
+                  Thêm Các Môn Học Còn Lại Môn Sinh.
+                </li>
+            </ul>
+
+            <p>
+                <span class="status">
+                    Trạng thái: Đang phát triển
+                </span>
+            </p>
+
+            <p>
+                Thời gian phát hành chính thức sẽ được công bố
+                khi phiên bản hoàn thiện.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ABOUT -->
+
+    <section id="about">
+
+        <h2>Về BeatXEdu</h2>
+
+        <p>
+            <strong>BeatXEdu</strong> là tên chung của hệ sinh thái
+            các dự án web và công cụ học tập được xây dựng
+            với mục tiêu tạo ra những sản phẩm đơn giản,
+            nhẹ và dễ sử dụng.
+        </p>
+
+        <p>
+            Các dự án được phát triển chủ yếu bằng HTML,
+            CSS và JavaScript, kết hợp với các công nghệ web
+            phù hợp cho từng ứng dụng.
+        </p>
+
+        <p>
+            BeatXEdu không phải là một nền tảng giáo dục chính thức.
+            Đây là dự án cá nhân / cộng tác nhằm phục vụ việc
+            học tập, thực hành lập trình và chia sẻ sản phẩm.
+        </p>
+
+    </section>
+
+
+    <!-- SOURCE -->
+
+    <section id="source">
+
+        <h2>Mã nguồn & công nghệ</h2>
+
+        <p>
+            BeatXEdu được xây dựng bằng các công nghệ web tiêu chuẩn:
+        </p>
+
+        <ul>
+            <li>HTML5</li>
+            <li>CSS3</li>
+            <li>JavaScript</li>
+            <li>JSON</li>
+            <li>Progressive Web App (PWA)</li>
+            <li>Netlify</li>
+        </ul>
+
+        <p>
+            Cấu trúc dự án được chia thành các thư mục riêng
+            cho từng ứng dụng nhằm giúp việc phát triển và
+            bảo trì dễ dàng hơn.
+        </p>
+
+        <pre>
+            Truy cập https://github.com/BeatXEdu/M-Ngu-n-Web-BeatXEdu để xem mã nguồn.
+        </pre>
+
+    </section>
+
+
+    <!-- AUTHORS -->
+
+    <section id="team">
+
+        <h2>Đội ngũ BeatXEdu</h2>
+
+        <p>
+            <strong>Tác giả:</strong>
+            PhuocDev (Võ Gia Phước)
+        </p>
+
+        <p>
+            <strong>Đồng tác giả:</strong>
+            NgXMath (Lê Trọng Nguyễn)
+        </p>
+
+        <p>
+            BeatXEdu là dự án được phát triển với sự đóng góp
+            của những người tham gia vào quá trình xây dựng,
+            thiết kế, thử nghiệm và phát triển các ứng dụng.
+            Mỗi thành viên có thể phụ trách những phần khác nhau
+            như ý tưởng, lập trình, thiết kế và kiểm thử.
+        </p>
+
+    </section>
+
+
+    <!-- LICENSE -->
+
+    <section>
+
+        <h2>Bản quyền & giấy phép</h2>
+
+        <p>
+            © 2026 BeatXEdu.
+            Một số thành phần của dự án có thể có giấy phép
+            hoặc điều khoản riêng được ghi trong mã nguồn.
+        </p>
+
+        <p>
+            Vui lòng kiểm tra tệp <code>LICENES</code> và
+            tài liệu đi kèm trước khi sử dụng hoặc phân phối
+            lại mã nguồn.
+        </p>
+
+    </section>
+
+</main>
+
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar">
+
+
+    <!-- SEARCH -->
+
+    <div class="sidebar-box">
+
+        <div class="sidebar-title">
+            Tìm kiếm BeatXEdu
+        </div>
+
+        <div class="sidebar-content">
+
+            <div class="search-box">
+
+                <input
+                    type="search"
+                    id="searchInput"
+                    placeholder="Tìm kiếm..."
+                >
+
+                <button onclick="searchSite()">
+                    🔎
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- APPS -->
+
+    <div class="sidebar-box">
+
+        <div class="sidebar-title">
+            Ứng dụng học tập
+        </div>
+
+        <div class="sidebar-content">
+
+            <ul>
+
+                <li>
+                    <a href="/bangtuanhoan/index.html">
+                        ⚛️ Bảng Tuần Hoàn
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/MathX/index.html">
+                        ∑ MathX
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/quizdovui/index.html">
+                        🧪 Đố Vui Hóa Học
+                    </a>
+                </li>
+
+                <li>
+                     <a href="/benchmark-kk/index.html">
+                        Chấm Điểm Cấu Hình
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/physics-study/index.html">
+                        Physics Study
+                    </a>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+
+    <!-- UPDATES -->
+
+    <div class="sidebar-box">
+
+        <div class="sidebar-title"> 
+            Bản cập nhật
+        </div>
+
+        <div class="sidebar-content">
+
+            <ul>
+
+                <li>
+                    <a href="#updates">
+                        🚀 Coming Soon
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#source">
+                        🛠️ Mã nguồn
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+
+    <!-- DOCUMENTATION -->
+
+    <div class="sidebar-box">
+
+        <div class="sidebar-title">
+            Documentation
+        </div>
+
+        <div class="sidebar-content">
+
+            <ul>
+
+                <li>
+                    <a href="#about">
+                        Giới thiệu BeatXEdu
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#apps">
+                        Danh sách ứng dụng
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#updates">
+                        Lộ trình cập nhật
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#source">
+                        Cấu trúc mã nguồn
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+
+    <!-- COMMUNITY -->
+
+    <div class="sidebar-box">
+
+        <div class="sidebar-title">
+            Thông tin
+        </div>
+
+        <div class="sidebar-content">
+
+            <ul>
+
+                <li>
+                    <a href="#about">
+                        Về BeatXEdu
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#source">
+                        Công nghệ
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#source">
+                        Mã nguồn
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#team">
+                        👥 Đội ngũ BeatXEdu™
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</aside>
+
+</div>
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <strong>BeatXEdu™</strong><br><br>
+
+    Hệ sinh thái học tập nhỏ gọn và miễn phí.<br>
+
+    Created by <strong>PhuocDev (Võ Gia Phước)</strong>
+    &amp;
+    <strong>NgXMath (Lê Trọng Nguyễn)</strong>.
+
+    <br><br>
+
+    © 2026 BeatXEdu. All rights reserved.
+
+</footer>
+
+
+<script>
+function searchSite() {
+
+    const input =
+        document.getElementById("searchInput");
+
+    const value =
+        input.value.trim().toLowerCase();
+
+    if (!value) {
+        return;
+    }
+
+    const sections = document.querySelectorAll(
+        "main section, .app, .news-item"
+    );
+
+    let found = false;
+
+    sections.forEach(section => {
+
+        const text =
+            section.innerText.toLowerCase();
+
+        if (!found && text.includes(value)) {
+
+            section.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+            found = true;
+        }
+
+    });
+
+    if (!found) {
+        alert(
+            "Không tìm thấy nội dung phù hợp trên BeatXEdu."
+        );
+    }
+}
+
+
+document
+    .getElementById("searchInput")
+    .addEventListener("keydown", function(event) {
+
+        if (event.key === "Enter") {
+            searchSite();
+        }
+
+    });
+</script>
+
+</body>
+</html>

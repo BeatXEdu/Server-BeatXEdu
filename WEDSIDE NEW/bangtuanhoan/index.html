@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảng Tuần Hoàn — By BeatXEdu</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#080b10">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Bảng Tuần Hoàn">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <script type="importmap">
+    {
+      "imports": {
+        "@google/genai": "https://esm.sh/@google/genai"
+      }
+    }
+    </script>
+
+  <style>
+      /* ==========================================
+        CHAT WIDGET - PHONG CÁCH BẢNG THÔNG TIN
+        ========================================== */
+      .chat-bubble {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        width: 60px;
+        height: 60px;
+        background: #1a1a2e;
+        border: 2px solid rgba(167, 139, 250, 0.3);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        z-index: 9998;
+        box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
+        transition: all 0.3s ease;
+      }
+
+      .chat-bubble:hover {
+        transform: scale(1.08);
+        border-color: rgba(167, 139, 250, 0.6);
+        box-shadow: 0 4px 35px rgba(0, 0, 0, 0.8);
+      }
+
+      .chat-bubble svg {
+        width: 28px;
+        height: 28px;
+        stroke: #e2e8f0;
+      }
+
+      .chat-widget {
+        position: fixed;
+        bottom: 96px;
+        right: 24px;
+        width: 400px;
+        height: 540px;
+        background: #0d0d1a;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 18px;
+        display: none;
+        flex-direction: column;
+        z-index: 9998;
+        box-shadow: 0 20px 70px rgba(0, 0, 0, 0.85);
+        overflow: hidden;
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        transition: all 0.3s ease;
+      }
+
+      .chat-widget.open {
+        display: flex;
+      }
+
+      .chat-header {
+        padding: 16px 20px;
+        background: #141425;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-shrink: 0;
+      }
+
+      .chat-header-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .chat-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #7c3aed, #4f46e5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 700;
+        color: #fff;
+        flex-shrink: 0;
+      }
+
+      .chat-user-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+
+      .chat-user-status {
+        font-size: 11px;
+        color: #64748b;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .chat-status-dot {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        background: #22c55e;
+        border-radius: 50%;
+        animation: pulse-dot 1.5s ease-in-out infinite;
+      }
+
+      @keyframes pulse-dot {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.3; }
+      }
+
+      .chat-close-btn {
+        background: none;
+        border: none;
+        color: #64748b;
+        font-size: 20px;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 6px;
+        transition: all 0.2s;
+      }
+
+      .chat-close-btn:hover {
+        color: #e2e8f0;
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .chat-body {
+        flex: 1;
+        padding: 18px 20px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        background: #0a0a16;
+      }
+
+      .chat-body::-webkit-scrollbar {
+        width: 4px;
+      }
+
+      .chat-body::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .chat-body::-webkit-scrollbar-thumb {
+        background: #1e1e32;
+        border-radius: 4px;
+      }
+
+      .msg {
+        max-width: 88%;
+        padding: 10px 14px;
+        font-size: 13px;
+        line-height: 1.6;
+        word-break: break-word;
+      }
+
+      .msg-bot {
+        align-self: flex-start;
+        border-radius: 14px 14px 14px 4px;
+        background: #181830;
+        color: #e2e8f0;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+      }
+
+      .msg-user {
+        align-self: flex-end;
+        border-radius: 14px 14px 4px 14px;
+        background: #1e1e3a;
+        color: #e2e8f0;
+        border: 1px solid rgba(167, 139, 250, 0.15);
+      }
+
+      .msg-bot strong {
+        color: #a78bfa;
+        font-weight: 600;
+      }
+
+      .msg-user strong {
+        color: #60a5fa;
+        font-weight: 600;
+      }
+
+      .chat-footer {
+        padding: 12px 16px;
+        background: #141425;
+        border-top: 1px solid rgba(255, 255, 255, 0.04);
+        display: flex;
+        gap: 10px;
+        flex-shrink: 0;
+      }
+
+      .chat-input {
+        flex: 1;
+        background: #0a0a16;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 10px 16px;
+        border-radius: 10px;
+        color: #e2e8f0;
+        outline: none;
+        font-size: 13px;
+        font-family: inherit;
+        transition: border-color 0.2s;
+      }
+
+      .chat-input:focus {
+        border-color: rgba(167, 139, 250, 0.4);
+      }
+
+      .chat-input::placeholder {
+        color: #475569;
+      }
+
+      .chat-send-btn {
+        background: linear-gradient(135deg, #7c3aed, #4f46e5);
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: inherit;
+      }
+
+      .chat-send-btn:hover {
+        opacity: 0.85;
+        transform: scale(1.02);
+      }
+
+      .chat-send-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      :root {
+        --bg-dark: #0d0b14;
+        --card-bg: #161224;
+        --card-border: #29223d;
+        --primary-pink: #ff2a8d;
+        --neon-blue: #00f0ff;
+        --neon-purple: #9d4edd;
+        --neon-green: #00ff88;
+        --text-main: #f0f4f8;
+        --text-sub: #8d95b0;
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+
+      body {
+        background: radial-gradient(circle at top center, #1b152d 0%, var(--bg-dark) 100%);
+        color: var(--text-main);
+        min-height: 100vh;
+        overflow-x: auto;
+        padding-bottom: 40px;
+      }
+
+      /* ==========================================
+        1. SPLASH SCREEN
+        ========================================== */
+      #splash-screen {
+        position: fixed; inset: 0;
+        background: #09070f;
+        display: flex; flex-direction: column; justify-content: center; align-items: center;
+        z-index: 99999;
+        transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      #canvas-3d {
+        position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
+      }
+
+      .brand-intro {
+        position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center;
+      }
+
+      .atom-logo-3d {
+        position: relative; width: 120px; height: 120px;
+        display: flex; justify-content: center; align-items: center; margin-bottom: 25px;
+      }
+
+      .atom-core-glow {
+        width: 40px; height: 40px; background: radial-gradient(circle, var(--neon-blue) 0%, var(--primary-pink) 100%);
+        border-radius: 50%; box-shadow: 0 0 35px var(--neon-blue), 0 0 60px var(--primary-pink);
+        display: flex; justify-content: center; align-items: center; font-weight: 900; font-size: 18px; color: #fff;
+      }
+
+      .ring-3d {
+        position: absolute; border-radius: 50%; border: 2px solid transparent;
+      }
+      .ring-1 { width: 90px; height: 90px; border-top-color: var(--neon-blue); border-bottom-color: var(--neon-blue); animation: spin3D1 2s linear infinite; }
+      .ring-2 { width: 110px; height: 110px; border-left-color: var(--primary-pink); border-right-color: var(--primary-pink); animation: spin3D2 2.5s linear infinite; }
+      .ring-3 { width: 130px; height: 130px; border-top-color: var(--neon-purple); border-left-color: var(--neon-purple); animation: spin3D3 3s linear infinite; }
+
+      @keyframes spin3D1 { 0% { transform: rotateX(70deg) rotateY(10deg) rotateZ(0deg); } 100% { transform: rotateX(70deg) rotateY(10deg) rotateZ(360deg); } }
+      @keyframes spin3D2 { 0% { transform: rotateX(20deg) rotateY(70deg) rotateZ(0deg); } 100% { transform: rotateX(20deg) rotateY(70deg) rotateZ(360deg); } }
+      @keyframes spin3D3 { 0% { transform: rotateX(60deg) rotateY(60deg) rotateZ(0deg); } 100% { transform: rotateX(60deg) rotateY(60deg) rotateZ(360deg); } }
+
+      .splash-title {
+        font-size: 28px; font-weight: 900; letter-spacing: 4px;
+        background: linear-gradient(90deg, #00f0ff, #ff2a8d, #9d4edd);
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-shadow: 0 0 20px rgba(0, 240, 255, 0.3); margin-bottom: 5px;
+      }
+
+      .phuocdev-badge {
+        font-size: 14px; letter-spacing: 2px; color: var(--neon-blue); font-weight: 700;
+        background: rgba(0, 240, 255, 0.1); border: 1px solid rgba(0, 240, 255, 0.3);
+        padding: 4px 16px; border-radius: 20px; margin-bottom: 30px; box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+      }
+
+      .progress-box {
+        width: 300px; height: 8px; background: rgba(255, 255, 255, 0.05);
+        border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.1); overflow: hidden; position: relative;
+      }
+
+      .progress-bar {
+        width: 0%; height: 100%; background: linear-gradient(90deg, var(--neon-blue), var(--primary-pink));
+        box-shadow: 0 0 15px var(--neon-blue); transition: width 0.1s linear;
+      }
+
+      .progress-text { margin-top: 12px; font-size: 12px; color: var(--text-sub); font-family: monospace; }
+      .fade-out { opacity: 0 !important; pointer-events: none; }
+
+      /* ==========================================
+        2. BẢNG TUẦN HOÀN
+        ========================================== */
+      #main-app { padding: 20px; opacity: 0; transition: all 0.8s ease 0.3s; min-width: 1250px; }
+      #main-app.show { opacity: 1; }
+
+      header {
+        display: flex; justify-content: space-between; align-items: center;
+        max-width: 1400px; margin: 0 auto 20px auto; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 15px;
+      }
+
+      .header-title { font-size: 22px; font-weight: 800; color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.2); }
+      .header-title span { color: var(--primary-pink); }
+      .header-brand { font-size: 14px; font-weight: 700; color: var(--neon-blue); background: rgba(0, 240, 255, 0.1); padding: 5px 15px; border-radius: 6px; border: 1px solid rgba(0, 240, 255, 0.3); }
+
+      .periodic-tools {
+        max-width: 1400px; margin: 0 auto 16px auto; display: grid;
+        grid-template-columns: minmax(220px, 1.5fr) repeat(3, minmax(150px, .7fr)); gap: 10px;
+      }
+      .periodic-tools input, .periodic-tools select {
+        width: 100%; padding: 11px 13px; border-radius: 9px; border: 1px solid #2d2444;
+        background: #100d19; color: #fff; outline: none; font: 500 13px/1.2 system-ui, sans-serif;
+      }
+      .periodic-tools input:focus, .periodic-tools select:focus { border-color: #00f0ff; box-shadow: 0 0 0 2px rgba(0,240,255,.08); }
+      .periodic-tools option { background: #100d19; color: #fff; }
+      .filter-count { max-width: 1400px; margin: -6px auto 10px; color: var(--text-sub); font-size: 12px; }
+      .element-story { margin-top: 14px; padding: 12px; border-radius: 10px; background: rgba(157,78,221,.08); border: 1px solid rgba(157,78,221,.2); color: #e9e3f5; line-height: 1.55; font-size: 13px; }
+      .element-story b { color: var(--neon-blue); }
+      .story-open-btn {
+        width: 100%; margin-top: 14px; padding: 11px 14px; border: 1px solid rgba(0,240,255,.25);
+        border-radius: 10px; background: rgba(0,240,255,.07); color: var(--neon-blue); font-weight: 700;
+        cursor: pointer; transition: .2s ease; text-align: left;
+      }
+      .story-open-btn:hover { background: rgba(0,240,255,.13); transform: translateY(-1px); }
+      .story-modal-overlay {
+        position: fixed; inset: 0; z-index: 100000; display: flex; align-items: center; justify-content: center;
+        padding: 20px; background: rgba(0,0,0,.78); backdrop-filter: blur(7px);
+        opacity: 0; pointer-events: none; transition: opacity .2s ease;
+      }
+      .story-modal-overlay.active { opacity: 1; pointer-events: auto; }
+      .story-modal-overlay { isolation: isolate; }
+      .story-modal-card {
+        position: relative; width: min(680px, 94vw); max-height: 82vh; overflow-y: auto; padding: 28px;
+        border: 1px solid rgba(0,240,255,.25); border-radius: 18px; background: #100d19;
+        box-shadow: 0 20px 70px rgba(0,0,0,.55); color: #fff;
+      }
+      .story-modal-close {
+        position: absolute; top: 14px; right: 16px; width: 34px; height: 34px; border: 0; border-radius: 50%;
+        background: rgba(255,255,255,.07); color: #aaa; cursor: pointer; font-size: 18px;
+      }
+      .story-modal-close:hover { color: #fff; background: rgba(255,255,255,.13); }
+      .story-modal-kicker { color: var(--neon-blue); font-size: 11px; font-weight: 800; letter-spacing: 1.5px; margin-bottom: 8px; }
+      .story-modal-card h2 { margin: 0 45px 12px 0; font-size: 24px; }
+      .story-discoverer { padding: 10px 12px; margin-bottom: 16px; border-left: 3px solid var(--neon-blue); background: rgba(0,240,255,.06); color: #dcecff; font-size: 13px; }
+      .story-modal-text { color: #ddd5e8; line-height: 1.75; font-size: 14px; white-space: pre-line; }
+      .story-note { margin-top: 18px; padding: 10px 12px; border-radius: 10px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); color: #aaa; font-size: 12px; line-height: 1.55; }
+      @media (max-width: 560px) { .story-modal-card { padding: 22px 18px; } .story-modal-card h2 { font-size: 20px; } }
+      @media (max-width: 900px) {
+        #main-app { min-width: 0; padding: 14px; }
+        .periodic-tools { grid-template-columns: 1fr 1fr; }
+        .grid-container { grid-template-columns: repeat(9, minmax(0,1fr)); overflow-x: auto; }
+        .gap-row { grid-column: span 9; }
+        .element-box { min-width: 54px; }
+        .element-card { width: min(92vw, 720px); max-height: 90vh; overflow-y: auto; grid-template-columns: 1fr; }
+        .atom-right { border-left: 0; border-top: 1px solid #231b36; padding: 18px 0 0; }
+      }
+      @media (max-width: 560px) {
+        .periodic-tools { grid-template-columns: 1fr; }
+        .header-title { font-size: 16px; }
+        .header-brand { font-size: 11px; }
+      }
+
+      .grid-container {
+        display: grid; grid-template-columns: repeat(18, 1fr); gap: 6px;
+        max-width: 1400px; margin: 0 auto;
+      }
+
+      .element-box {
+        aspect-ratio: 1; background: #161322; border: 1px solid #28223b; border-radius: 6px;
+        display: flex; flex-direction: column; justify-content: space-between; padding: 4px;
+        cursor: pointer; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden;
+      }
+
+      .element-box:hover {
+        transform: translateY(-4px) scale(1.12); z-index: 100;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8), 0 0 15px var(--hover-color, #ff2a8d);
+        border-color: var(--hover-color, #ff2a8d);
+      }
+
+      .element-box .num { font-size: 9px; color: var(--text-sub); font-weight: 600; }
+      .element-box .sym { font-size: 15px; font-weight: 800; text-align: center; color: var(--sym-color, #fff); }
+      .element-box .name { font-size: 8px; color: var(--text-sub); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+      .cat-alkali { --sym-color: #ff5252; --hover-color: #ff5252; background: rgba(255, 82, 82, 0.08); border-color: rgba(255, 82, 82, 0.2); }
+      .cat-alkaline { --sym-color: #ffb142; --hover-color: #ffb142; background: rgba(255, 177, 66, 0.08); border-color: rgba(255, 177, 66, 0.2); }
+      .cat-transition { --sym-color: #ff52b4; --hover-color: #ff52b4; background: rgba(255, 82, 180, 0.08); border-color: rgba(255, 82, 180, 0.2); }
+      .cat-post-trans { --sym-color: #34ace0; --hover-color: #34ace0; background: rgba(52, 172, 224, 0.08); border-color: rgba(52, 172, 224, 0.2); }
+      .cat-metalloid { --sym-color: #33d9b2; --hover-color: #33d9b2; background: rgba(51, 217, 178, 0.08); border-color: rgba(51, 217, 178, 0.2); }
+      .cat-nonmetal { --sym-color: #70a1ff; --hover-color: #70a1ff; background: rgba(112, 161, 255, 0.08); border-color: rgba(112, 161, 255, 0.2); }
+      .cat-halogen { --sym-color: #ff793f; --hover-color: #ff793f; background: rgba(255, 121, 63, 0.08); border-color: rgba(255, 121, 63, 0.2); }
+      .cat-noble { --sym-color: #00d2d3; --hover-color: #00d2d3; background: rgba(0, 210, 211, 0.08); border-color: rgba(0, 210, 211, 0.2); }
+      .cat-lanthanide { --sym-color: #00f0ff; --hover-color: #00f0ff; background: rgba(0, 240, 255, 0.08); border-color: rgba(0, 240, 255, 0.25); }
+      .cat-actinide { --sym-color: #ff2a8d; --hover-color: #ff2a8d; background: rgba(255, 42, 141, 0.08); border-color: rgba(255, 42, 141, 0.25); }
+
+      .gap-row { grid-column: span 18; height: 18px; }
+
+      /* ==========================================
+        3. MODAL
+        ========================================== */
+      .modal-overlay {
+        position: fixed; inset: 0; background: rgba(5, 3, 10, 0.85); 
+        -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+        display: flex; justify-content: center; align-items: center; z-index: 9999;
+        opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+      }
+      .modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+      .element-card {
+        background: #120e1e; border: 1px solid #2d2444; border-radius: 20px; width: 720px; padding: 30px;
+        display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 25px; position: relative;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 30px rgba(157, 78, 221, 0.2);
+        transform: scale(0.85); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .modal-overlay.active .element-card { transform: scale(1); }
+
+      .close-btn { position: absolute; top: 18px; right: 22px; color: var(--text-sub); font-size: 22px; cursor: pointer; transition: color 0.2s; }
+      .close-btn:hover { color: #fff; }
+
+      .info-left h1 { font-size: 48px; color: var(--primary-pink); font-weight: 900; line-height: 1; text-shadow: 0 0 15px rgba(255, 42, 141, 0.4); }
+      .info-left h3 { font-size: 18px; color: #fff; margin-bottom: 18px; font-weight: 700; }
+
+      .data-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; border-bottom: 1px dashed rgba(255,255,255,0.05); padding-bottom: 4px; }
+      .data-label { color: var(--text-sub); }
+      .data-value { color: var(--neon-blue); font-weight: 700; }
+
+      .section-title { font-size: 11px; font-weight: 800; color: var(--neon-purple); text-transform: uppercase; margin: 16px 0 8px 0; letter-spacing: 1px; }
+      .reaction-box { background: rgba(0,0,0,0.3); border: 1px solid #28203d; padding: 10px; border-radius: 8px; font-family: monospace; color: var(--neon-green); font-size: 13px; line-height: 1.4; }
+
+      .atom-right { display: flex; flex-direction: column; justify-content: center; align-items: center; border-left: 1px solid #231b36; padding-left: 20px; }
+      .atom-container { position: relative; width: 220px; height: 220px; display: flex; justify-content: center; align-items: center; }
+      
+      .nucleus {
+        width: 42px; height: 42px; background: radial-gradient(circle, #ff2a8d 0%, #d61b6e 100%);
+        border-radius: 50%; display: flex; justify-content: center; align-items: center;
+        font-weight: 900; font-size: 14px; color: #fff; box-shadow: 0 0 20px rgba(255, 42, 141, 0.8); z-index: 10;
+      }
+
+      .orbit {
+        position: absolute; border: 1px dashed rgba(0, 240, 255, 0.3); border-radius: 50%;
+        animation: spinOrbit linear infinite;
+      }
+
+      .e-dot {
+        position: absolute; width: 7px; height: 7px; background: var(--neon-blue); border-radius: 50%;
+        box-shadow: 0 0 8px var(--neon-blue); transform: translate(-50%, -50%);
+      }
+
+      @keyframes spinOrbit { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+    <link rel="manifest" href="/manifest.json">
+
+    <meta name="theme-color" content="#0b0f19">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="BeatXEdu — Bảng Tuần Hoàn">
+    <link rel="apple-touch-icon" href="/icons/icon-192.png">
+    
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          packages: {'[+]': ['ams']}
+        },
+        svg: {
+          fontCache: 'global'
+        }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+</head>
+<body>
+
+    <div id="splash-screen">
+      <canvas id="canvas-3d"></canvas>
+      <div class="brand-intro">
+        <div class="atom-logo-3d">
+          <div class="atom-core-glow">Pt</div>
+          <div class="ring-3d ring-1"></div>
+          <div class="ring-3d ring-2"></div>
+          <div class="ring-3d ring-3"></div>
+        </div>
+        <div class="splash-title">BẢNG TUẦN HOÀN</div>
+        <div class="phuocdev-badge">PROJECT BY BeatXEdu</div>
+        <div class="progress-box"><div class="progress-bar" id="progress-bar"></div></div>
+        <div class="progress-text" id="progress-text">Đang khởi tạo hệ thống... 0%</div>
+      </div>
+    </div>
+
+    <div id="main-app">
+      <header>
+        <div class="header-title">BẢNG TUẦN HOÀN CÁC NGUYÊN TỐ HÓA HỌC</div>
+        <div class="header-brand">By BeatXEdu</div>
+        <div class="project-nav" aria-label="Ứng dụng BeatXEdu">
+        </div>
+      </header>
+      <section class="periodic-tools" aria-label="Tìm kiếm và lọc nguyên tố">
+        <input id="element-search" type="search" placeholder="🔎 Tìm theo tên, ký hiệu hoặc số hiệu..." autocomplete="off">
+        <select id="group-filter">
+          <option value="">Tất cả nhóm</option>
+          <option value="1">Nhóm 1</option><option value="2">Nhóm 2</option><option value="3">Nhóm 3</option>
+          <option value="4">Nhóm 4</option><option value="5">Nhóm 5</option><option value="6">Nhóm 6</option>
+          <option value="7">Nhóm 7</option><option value="8">Nhóm 8</option><option value="9">Nhóm 9</option>
+          <option value="10">Nhóm 10</option><option value="11">Nhóm 11</option><option value="12">Nhóm 12</option>
+          <option value="13">Nhóm 13</option><option value="14">Nhóm 14</option><option value="15">Nhóm 15</option>
+          <option value="16">Nhóm 16</option><option value="17">Nhóm 17</option><option value="18">Nhóm 18</option>
+        </select>
+        <select id="period-filter">
+          <option value="">Tất cả chu kỳ</option>
+          <option value="1">Chu kỳ 1</option><option value="2">Chu kỳ 2</option><option value="3">Chu kỳ 3</option>
+          <option value="4">Chu kỳ 4</option><option value="5">Chu kỳ 5</option><option value="6">Chu kỳ 6</option><option value="7">Chu kỳ 7</option>
+        </select>
+        <select id="state-filter">
+          <option value="">Tất cả trạng thái</option>
+          <option value="solid">Rắn</option><option value="liquid">Lỏng</option><option value="gas">Khí</option><option value="predicted">Dự đoán</option>
+        </select>
+      </section>
+      <div class="filter-count" id="filter-count">Hiển thị 118 / 118 nguyên tố</div>
+      <main class="grid-container" id="grid"></main>
+    </div>
+
+    <div class="modal-overlay" id="element-modal">
+      <div class="element-card">
+        <span class="close-btn" onclick="closeModal()">✕</span>
+        <div class="info-left">
+          <h1 id="m-symbol">Ti</h1>
+          <h3 id="m-name">Titanium</h3>
+          <div class="data-row"><span class="data-label">Số hiệu nguyên tử:</span><span class="data-value" id="m-number">22</span></div>
+          <div class="data-row"><span class="data-label">Nguyên tử khối:</span><span class="data-value" id="m-mass">47.867</span></div>
+          <div class="data-row"><span class="data-label">Hóa Trị:</span><span class="data-value" id="m-valence">II, III, IV</span></div>
+          <div class="data-row"><span class="data-label">Số oxi hóa:</span><span class="data-value" id="m-oxidation">+2, +3, +4</span></div>
+          <div class="data-row"><span class="data-label">Trạng thái:</span><span class="data-value" id="m-state">Rắn</span></div>
+          <div class="data-row"><span class="data-label">Phân loại nhóm:</span><span class="data-value" id="m-type">Kim loại chuyển tiếp</span></div>
+          <button class="story-open-btn" id="story-open-btn" type="button" onclick="openStoryModal()">📖 Câu chuyện & người phát hiện</button>
+          
+          <div class="section-title">CẤU HÌNH ELECTRON</div>
+          <div class="data-row"><span class="data-label">Cấu hình phân lớp:</span><span style="color:#fff;" id="m-config">2 - 8 - 10 - 2</span></div>
+          
+          <div class="section-title">PHẢN ỨNG TIÊU BIỂU</div>
+          <div class="reaction-box" id="m-reaction">Ti + O₂ → TiO₂ (t°)</div>
+        </div>
+
+        <div class="atom-right">
+          <div class="atom-container" id="atom-orbits-container">
+            <div class="nucleus" id="m-nucleus">22</div>
+          </div>
+          <div style="margin-top: 15px; font-size: 13px; color: var(--text-sub);">Số lớp electron: <span id="m-shells" style="color:var(--neon-blue); font-weight:bold;">4</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== COMMAND BAR ===== -->
+    <div id="cmdPaletteOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(3px); z-index: 99999; justify-content: center; align-items: flex-start; padding-top: 15vh;">
+      <div style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; width: 450px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 255, 102, 0.15); overflow: hidden; font-family: 'Courier New', Courier, monospace;">
+        <div style="display: flex; align-items: center; padding: 12px 16px; border-bottom: 1px solid #1e293b;">
+          <span style="color: #00ff66; font-weight: bold; margin-right: 10px;">❯</span>
+          <input type="text" id="cmdInput" placeholder="Nhập lệnh (VD: @admin#)..." autocomplete="off" spellcheck="false" style="width: 100%; background: transparent; border: none; color: #f8fafc; font-size: 16px; outline: none; font-family: monospace;">
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 8px 16px; background: #020617; color: #64748b; font-size: 12px;">
+          <span>Nhấn <b style="color: #94a3b8;">Enter</b> để thực thi</span>
+          <span>Nhấn <b style="color: #94a3b8;">ESC</b> để đóng</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="story-modal-overlay" id="story-modal">
+      <div class="story-modal-card">
+        <button class="story-modal-close" type="button" onclick="closeStoryModal()" aria-label="Đóng">✕</button>
+        <div class="story-modal-kicker">LỊCH SỬ &amp; GIAI THOẠI</div>
+        <h2 id="story-title">Câu chuyện về nguyên tố</h2>
+        <div class="story-discoverer" id="story-discoverer"></div>
+        <div class="story-modal-text" id="story-text"></div>
+        <div class="story-note">ℹ️ <strong>Lưu ý:</strong> “Tư liệu lịch sử” là thông tin về lịch sử khoa học; “Giai thoại” là chuyện dân gian/truyền thuyết và không được xem là sự thật khoa học.</div>
+      </div>
+    </div>
+
+    <script>
+      // ==========================================
+      // DỮ LIỆU NGUYÊN TỐ (ĐÃ THÊM HÓA TRỊ - v)
+      // ==========================================
+      const elementsData = [
+        { n: 1, s: "H", name: "Hydrogen", m: "1.008", v: "I", t: "Phi kim", c: "1", cat: "cat-nonmetal", col: 1, row: 1, r: "2H₂ + O₂ → 2H₂O (t°)" },
+        { n: 2, s: "He", name: "Helium", m: "4.0026", v: "0", t: "Khí hiếm", c: "2", cat: "cat-noble", col: 18, row: 1, r: "Không phản ứng (Khí trơ)" },
+        { n: 3, s: "Li", name: "Lithium", m: "6.94", v: "I", t: "Kim loại kiềm", c: "2 - 1", cat: "cat-alkali", col: 1, row: 2, r: "2Li + 2H₂O → 2LiOH + H₂" },
+        { n: 4, s: "Be", name: "Beryllium", m: "9.0122", v: "II", t: "Kim loại kiềm thổ", c: "2 - 2", cat: "cat-alkaline", col: 2, row: 2, r: "2Be + O₂ → 2BeO (t°)" },
+        { n: 5, s: "B", name: "Boron", m: "10.81", v: "III", t: "Á kim", c: "2 - 3", cat: "cat-metalloid", col: 13, row: 2, r: "4B + 3O₂ → 2B₂O₃ (t°)" },
+        { n: 6, s: "C", name: "Carbon", m: "12.011", v: "II, IV", t: "Phi kim", c: "2 - 4", cat: "cat-nonmetal", col: 14, row: 2, r: "C + O₂ → CO₂ (t°)" },
+        { n: 7, s: "N", name: "Nitrogen", m: "14.007", v: "I, II, III, IV, V", t: "Phi kim", c: "2 - 5", cat: "cat-nonmetal", col: 15, row: 2, r: "N₂ + 3H₂ ⇌ 2NH₃ (t°, Xt)" },
+        { n: 8, s: "O", name: "Oxygen", m: "15.999", v: "II", t: "Phi kim", c: "2 - 6", cat: "cat-nonmetal", col: 16, row: 2, r: "2Mg + O₂ → 2MgO (t°)" },
+        { n: 9, s: "F", name: "Fluorine", m: "18.998", v: "I", t: "Halogen", c: "2 - 7", cat: "cat-halogen", col: 17, row: 2, r: "F₂ + H₂ → 2HF (Nổ bóng tối)" },
+        { n: 10, s: "Ne", name: "Neon", m: "20.180", v: "0", t: "Khí hiếm", c: "2 - 8", cat: "cat-noble", col: 18, row: 2, r: "Không phản ứng" },
+        { n: 11, s: "Na", name: "Sodium", m: "22.990", v: "I", t: "Kim loại kiềm", c: "2 - 8 - 1", cat: "cat-alkali", col: 1, row: 3, r: "2Na + 2H₂O → 2NaOH + H₂" },
+        { n: 12, s: "Mg", name: "Magnesium", m: "24.305", v: "II", t: "Kim loại kiềm thổ", c: "2 - 8 - 2", cat: "cat-alkaline", col: 2, row: 3, r: "Mg + 2HCl → MgCl₂ + H₂" },
+        { n: 13, s: "Al", name: "Aluminium", m: "26.982", v: "III", t: "Kim loại yếu", c: "2 - 8 - 3", cat: "cat-post-trans", col: 13, row: 3, r: "4Al + 3O₂ → 2Al₂O₃ (t°)" },
+        { n: 14, s: "Si", name: "Silicon", m: "28.085", v: "IV", t: "Á kim", c: "2 - 8 - 4", cat: "cat-metalloid", col: 14, row: 3, r: "Si + O₂ → SiO₂ (t°)" },
+        { n: 15, s: "P", name: "Phosphorus", m: "30.974", v: "III, V", t: "Phi kim", c: "2 - 8 - 5", cat: "cat-nonmetal", col: 15, row: 3, r: "4P + 5O₂ → 2P₂O₅ (t°)" },
+        { n: 16, s: "S", name: "Sulfur", m: "32.06", v: "II, IV, VI", t: "Phi kim", c: "2 - 8 - 6", cat: "cat-nonmetal", col: 16, row: 3, r: "S + O₂ → SO₂ (t°)" },
+        { n: 17, s: "Cl", name: "Chlorine", m: "35.45", v: "I, III, V, VII", t: "Halogen", c: "2 - 8 - 7", cat: "cat-halogen", col: 17, row: 3, r: "Cl₂ + H₂ → 2HCl (Ánh sáng)" },
+        { n: 18, s: "Ar", name: "Argon", m: "39.948", v: "0", t: "Khí hiếm", c: "2 - 8 - 8", cat: "cat-noble", col: 18, row: 3, r: "Không phản ứng" },
+        { n: 19, s: "K", name: "Potassium", m: "39.098", v: "I", t: "Kim loại kiềm", c: "2 - 8 - 8 - 1", cat: "cat-alkali", col: 1, row: 4, r: "2K + 2H₂O → 2KOH + H₂" },
+        { n: 20, s: "Ca", name: "Calcium", m: "40.078", v: "II", t: "Kim loại kiềm thổ", c: "2 - 8 - 8 - 2", cat: "cat-alkaline", col: 2, row: 4, r: "Ca + 2H₂O → Ca(OH)₂ + H₂" },
+        { n: 21, s: "Sc", name: "Scandium", m: "44.956", v: "III", t: "Chuyển tiếp", c: "2 - 8 - 9 - 2", cat: "cat-transition", col: 3, row: 4, r: "2Sc + 6HCl → 2ScCl₃ + 3H₂" },
+        { n: 22, s: "Ti", name: "Titanium", m: "47.867", v: "II, III, IV", t: "Chuyển tiếp", c: "2 - 8 - 10 - 2", cat: "cat-transition", col: 4, row: 4, r: "Ti + O₂ → TiO₂ (t°)" },
+        { n: 23, s: "V", name: "Vanadium", m: "50.942", v: "II, III, IV, V", t: "Chuyển tiếp", c: "2 - 8 - 11 - 2", cat: "cat-transition", col: 5, row: 4, r: "4V + 5O₂ → 2V₂O₅ (t°)" },
+        { n: 24, s: "Cr", name: "Chromium", m: "51.996", v: "II, III, VI", t: "Chuyển tiếp", c: "2 - 8 - 13 - 1", cat: "cat-transition", col: 6, row: 4, r: "4Cr + 3O₂ → 2Cr₂O₃ (t°)" },
+        { n: 25, s: "Mn", name: "Manganese", m: "54.938", v: "II, III, IV, VII", t: "Chuyển tiếp", c: "2 - 8 - 13 - 2", cat: "cat-transition", col: 7, row: 4, r: "Mn + 2HCl → MnCl₂ + H₂" },
+        { n: 26, s: "Fe", name: "Iron", m: "55.845", v: "II, III", t: "Chuyển tiếp", c: "2 - 8 - 14 - 2", cat: "cat-transition", col: 8, row: 4, r: "3Fe + 2O₂ → Fe₃O₄ (t°)" },
+        { n: 27, s: "Co", name: "Cobalt", m: "58.933", v: "II, III", t: "Chuyển tiếp", c: "2 - 8 - 15 - 2", cat: "cat-transition", col: 9, row: 4, r: "Co + 2HCl → CoCl₂ + H₂" },
+        { n: 28, s: "Ni", name: "Nickel", m: "58.693", v: "II, III", t: "Chuyển tiếp", c: "2 - 8 - 16 - 2", cat: "cat-transition", col: 10, row: 4, r: "Ni + 2HCl → NiCl₂ + H₂" },
+        { n: 29, s: "Cu", name: "Copper", m: "63.546", v: "I, II", t: "Chuyển tiếp", c: "2 - 8 - 18 - 1", cat: "cat-transition", col: 11, row: 4, r: "2Cu + O₂ → 2CuO (t°)" },
+        { n: 30, s: "Zn", name: "Zinc", m: "65.38", v: "II", t: "Chuyển tiếp", c: "2 - 8 - 18 - 2", cat: "cat-transition", col: 12, row: 4, r: "Zn + 2HCl → ZnCl₂ + H₂" },
+        { n: 31, s: "Ga", name: "Gallium", m: "69.723", v: "III", t: "Kim loại yếu", c: "2 - 8 - 18 - 3", cat: "cat-post-trans", col: 13, row: 4, r: "2Ga + 6HCl → 2GaCl₃ + 3H₂" },
+        { n: 32, s: "Ge", name: "Germanium", m: "72.630", v: "IV", t: "Á kim", c: "2 - 8 - 18 - 4", cat: "cat-metalloid", col: 14, row: 4, r: "Ge + O₂ → GeO₂ (t°)" },
+        { n: 33, s: "As", name: "Arsenic", m: "74.922", v: "III, V", t: "Á kim", c: "2 - 8 - 18 - 5", cat: "cat-metalloid", col: 15, row: 4, r: "4As + 3O₂ → 2As₂O₃ (t°)" },
+        { n: 34, s: "Se", name: "Selenium", m: "78.971", v: "II, IV, VI", t: "Phi kim", c: "2 - 8 - 18 - 6", cat: "cat-nonmetal", col: 16, row: 4, r: "Se + O₂ → SeO₂ (t°)" },
+        { n: 35, s: "Br", name: "Bromine", m: "79.904", v: "I, III, V, VII", t: "Halogen", c: "2 - 8 - 18 - 7", cat: "cat-halogen", col: 17, row: 4, r: "Br₂ + H₂ → 2HBr (t°)" },
+        { n: 36, s: "Kr", name: "Krypton", m: "83.798", v: "0, II", t: "Khí hiếm", c: "2 - 8 - 18 - 8", cat: "cat-noble", col: 18, row: 4, r: "Ít phản ứng" },
+        { n: 37, s: "Rb", name: "Rubidium", m: "85.468", v: "I", t: "Kim loại kiềm", c: "2 - 8 - 18 - 8 - 1", cat: "cat-alkali", col: 1, row: 5, r: "2Rb + 2H₂O → 2RbOH + H₂" },
+        { n: 38, s: "Sr", name: "Strontium", m: "87.62", v: "II", t: "Kim loại kiềm thổ", c: "2 - 8 - 18 - 8 - 2", cat: "cat-alkaline", col: 2, row: 5, r: "Sr + 2H₂O → Sr(OH)₂ + H₂" },
+        { n: 39, s: "Y", name: "Yttrium", m: "88.906", v: "III", t: "Chuyển tiếp", c: "2 - 8 - 18 - 9 - 2", cat: "cat-transition", col: 3, row: 5, r: "4Y + 3O₂ → 2Y₂O₃ (t°)" },
+        { n: 40, s: "Zr", name: "Zirconium", m: "91.224", v: "IV", t: "Chuyển tiếp", c: "2 - 8 - 18 - 10 - 2", cat: "cat-transition", col: 4, row: 5, r: "Zr + O₂ → ZrO₂ (t°)" },
+        { n: 41, s: "Nb", name: "Niobium", m: "92.906", v: "III, V", t: "Chuyển tiếp", c: "2 - 8 - 18 - 12 - 1", cat: "cat-transition", col: 5, row: 5, r: "4Nb + 5O₂ → 2Nb₂O₅ (t°)" },
+        { n: 42, s: "Mo", name: "Molybdenum", m: "95.95", v: "IV, VI", t: "Chuyển tiếp", c: "2 - 8 - 18 - 13 - 1", cat: "cat-transition", col: 6, row: 5, r: "2Mo + 3O₂ → 2MoO₃ (t°)" },
+        { n: 43, s: "Tc", name: "Technetium", m: "98", v: "VII", t: "Chuyển tiếp", c: "2 - 8 - 18 - 13 - 2", cat: "cat-transition", col: 7, row: 5, r: "Phóng xạ nhân tạo" },
+        { n: 44, s: "Ru", name: "Ruthenium", m: "101.07", v: "II, III, IV, VI", t: "Chuyển tiếp", c: "2 - 8 - 18 - 15 - 1", cat: "cat-transition", col: 8, row: 5, r: "Ru + O₂ → RuO₂ (t°)" },
+        { n: 45, s: "Rh", name: "Rhodium", m: "102.91", v: "II, III, IV", t: "Chuyển tiếp", c: "2 - 8 - 18 - 16 - 1", cat: "cat-transition", col: 9, row: 5, r: "Trơ hóa học" },
+        { n: 46, s: "Pd", name: "Palladium", m: "106.42", v: "II, IV", t: "Chuyển tiếp", c: "2 - 8 - 18 - 18", cat: "cat-transition", col: 10, row: 5, r: "Hấp thụ tốt H₂" },
+        { n: 47, s: "Ag", name: "Silver", m: "107.87", v: "I", t: "Chuyển tiếp", c: "2 - 8 - 18 - 18 - 1", cat: "cat-transition", col: 11, row: 5, r: "2Ag + Cl₂ → 2AgCl (t°)" },
+        { n: 48, s: "Cd", name: "Cadmium", m: "112.41", v: "II", t: "Chuyển tiếp", c: "2 - 8 - 18 - 18 - 2", cat: "cat-transition", col: 12, row: 5, r: "Cd + 2HCl → CdCl₂ + H₂" },
+        { n: 49, s: "In", name: "Indium", m: "114.82", v: "I, III", t: "Kim loại yếu", c: "2 - 8 - 18 - 18 - 3", cat: "cat-post-trans", col: 13, row: 5, r: "2In + 6HCl → 2InCl₃ + 3H₂" },
+        { n: 50, s: "Sn", name: "Tin", m: "118.71", v: "II, IV", t: "Kim loại yếu", c: "2 - 8 - 18 - 18 - 4", cat: "cat-post-trans", col: 14, row: 5, r: "Sn + 2HCl → SnCl₂ + H₂" },
+        { n: 51, s: "Sb", name: "Antimony", m: "121.76", v: "III, V", t: "Á kim", c: "2 - 8 - 18 - 18 - 5", cat: "cat-metalloid", col: 15, row: 5, r: "4Sb + 3O₂ → 2Sb₂O₃ (t°)" },
+        { n: 52, s: "Te", name: "Tellurium", m: "127.60", v: "II, IV, VI", t: "Á kim", c: "2 - 8 - 18 - 18 - 6", cat: "cat-metalloid", col: 16, row: 5, r: "Te + O₂ → TeO₂ (t°)" },
+        { n: 53, s: "I", name: "Iodine", m: "126.90", v: "I, III, V, VII", t: "Halogen", c: "2 - 8 - 18 - 18 - 7", cat: "cat-halogen", col: 17, row: 5, r: "I₂ + H₂ ⇌ 2HI (t°, Xt)" },
+        { n: 54, s: "Xe", name: "Xenon", m: "131.29", v: "0, II, IV, VI", t: "Khí hiếm", c: "2 - 8 - 18 - 18 - 8", cat: "cat-noble", col: 18, row: 5, r: "Xe + F₂ → XeF₂ (Điều kiện cao)" },
+        { n: 55, s: "Cs", name: "Caesium", m: "132.91", v: "I", t: "Kim loại kiềm", c: "2 - 8 - 18 - 18 - 8 - 1", cat: "cat-alkali", col: 1, row: 6, r: "Phản ứng mãnh liệt với nước" },
+        { n: 56, s: "Ba", name: "Barium", m: "137.33", v: "II", t: "Kim loại kiềm thổ", c: "2 - 8 - 18 - 18 - 8 - 2", cat: "cat-alkaline", col: 2, row: 6, r: "Ba + 2H₂O → Ba(OH)₂ + H₂" },
+        { n: 57, s: "La", name: "Lanthanum", m: "138.91", v: "III", t: "Lanthanide", c: "2 - 8 - 18 - 18 - 9 - 2", cat: "cat-lanthanide", col: 3, row: 9, r: "2La + 6H₂O → 2La(OH)₃ + 3H₂" },
+        { n: 58, s: "Ce", name: "Cerium", m: "140.12", v: "III, IV", t: "Lanthanide", c: "2 - 8 - 18 - 19 - 9 - 2", cat: "cat-lanthanide", col: 4, row: 9, r: "Ce + O₂ → CeO₂ (t°)" },
+        { n: 59, s: "Pr", name: "Praseodymium", m: "140.91", v: "III", t: "Lanthanide", c: "2 - 8 - 18 - 21 - 8 - 2", cat: "cat-lanthanide", col: 5, row: 9, r: "Tạo Oxit Pr₆O₁₁" },
+        { n: 60, s: "Nd", name: "Neodymium", m: "144.24", v: "III", t: "Lanthanide", c: "2 - 8 - 18 - 22 - 8 - 2", cat: "cat-lanthanide", col: 6, row: 9, r: "Chế tạo nam châm vĩnh cửu" },
+        { n: 61, s: "Pm", name: "Promethium", m: "145", v: "III", t: "Lanthanide", c: "2 - 8 - 18 - 23 - 8 - 2", cat: "cat-lanthanide", col: 7, row: 9, r: "Phóng xạ nhân tạo" },
+        { n: 62, s: "Sm", name: "Samarium", m: "150.36", v: "II, III", t: "Lanthanide", c: "2 - 8 - 18 - 25 - 8 - 2", cat: "cat-lanthanide", col: 8, row: 9, r: "2Sm + 3Cl₂ → 2SmCl₃" },
+        { n: 63, s: "Eu", name: "Europium", m: "151.96", v: "II, III", t: "Lanthanide", c: "2 - 8 - 18 - 25 - 8 - 2", cat: "cat-lanthanide", col: 9, row: 9, r: "Eu + 2H₂O → Eu(OH)₂ + H₂" },
+        { n: 64, s: "Gd", name: "Gadolinium", m: "157.25", v: "III", t: "Lanthanide", c: "2 - 8 - 18 - 25 - 9 - 2", cat: "cat-lanthanide", col: 10, row: 9, r: "2Gd + 3O₂ → 2Gd₂O₃" },
+        { n: 65, s: "Tb", name: "Terbium", m: "158.93", v: "III, IV", t: "Lanthanide", c: "2 - 8 - 18 - 27 - 8 - 2", cat: "cat-lanthanide", col: 11, row: 9, r: "Phản ứng với Halogen" },
+        { n: 66, s: "Dy", name: "Dysprosium", m: "162.50", v: "III", t: "Lanthanide", c: "2 - 8 - 18 - 28 - 8 - 2", cat: "cat-lanthanide", col: 12, row: 9, r: "2Dy + 6HCl → 2DyCl₃ + 3H₂" },
+        { n: 67, s: "Ho", name: "Holmium", m: "164.93", v: "III", t: "Lanthanide", c: "2 - 8 - 18 - 29 - 8 - 2", cat: "cat-lanthanide", col: 13, row: 9, r: "2Ho + 3O₂ → 2Ho₂O₃" },
+        { n: 68, s: "Er", name: "Erbium", m: "167.26", v: "III", t: "Lanthanide", c: "2 - 8 - 18 - 30 - 8 - 2", cat: "cat-lanthanide", col: 14, row: 9, r: "2Er + 3F₂ → 2ErF₃" },
+        { n: 69, s: "Tm", name: "Thulium", m: "168.93", v: "III", t: "Lanthanide", c: "2 - 8 - 18 - 31 - 8 - 2", cat: "cat-lanthanide", col: 15, row: 9, r: "Tạo hợp chất Tm³⁺" },
+        { n: 70, s: "Yb", name: "Ytterbium", m: "173.05", v: "II, III", t: "Lanthanide", c: "2 - 8 - 18 - 32 - 8 - 2", cat: "cat-lanthanide", col: 16, row: 9, r: "Yb + 2HCl → YbCl₂ + H₂" },
+        { n: 71, s: "Lu", name: "Lutetium", m: "174.97", v: "III", t: "Lanthanide", c: "2 - 8 - 18 - 32 - 9 - 2", cat: "cat-lanthanide", col: 17, row: 9, r: "2Lu + 6HCl → 2LuCl₃ + 3H₂" },
+        { n: 72, s: "Hf", name: "Hafnium", m: "178.49", v: "IV", t: "Chuyển tiếp", c: "2 - 8 - 18 - 32 - 10 - 2", cat: "cat-transition", col: 4, row: 6, r: "Hf + 2F₂ → HfF₄" },
+        { n: 73, s: "Ta", name: "Tantalum", m: "180.95", v: "V", t: "Chuyển tiếp", c: "2 - 8 - 18 - 32 - 11 - 2", cat: "cat-transition", col: 5, row: 6, r: "4Ta + 5O₂ → 2Ta₂O₅" },
+        { n: 74, s: "W", name: "Tungsten", m: "183.84", v: "VI", t: "Chuyển tiếp", c: "2 - 8 - 18 - 32 - 12 - 2", cat: "cat-transition", col: 6, row: 6, r: "2W + 3O₂ → 2WO₃ (t° cao)" },
+        { n: 75, s: "Re", name: "Rhenium", m: "186.21", v: "III, IV, VII", t: "Chuyển tiếp", c: "2 - 8 - 18 - 32 - 13 - 2", cat: "cat-transition", col: 7, row: 6, r: "4Re + 7O₂ → 2Re₂O₇" },
+        { n: 76, s: "Os", name: "Osmium", m: "190.23", v: "II, III, IV, VIII", t: "Chuyển tiếp", c: "2 - 8 - 18 - 32 - 14 - 2", cat: "cat-transition", col: 8, row: 6, r: "Os + 2O₂ → OsO₄ (Độc)" },
+        { n: 77, s: "Ir", name: "Iridium", m: "192.22", v: "III, IV, VI", t: "Chuyển tiếp", c: "2 - 8 - 18 - 32 - 15 - 2", cat: "cat-transition", col: 9, row: 6, r: "Chống ăn mòn tuyệt đối" },
+        { n: 78, s: "Pt", name: "Platinum", m: "195.08", v: "II, IV", t: "Chuyển tiếp", c: "2 - 8 - 18 - 32 - 17 - 1", cat: "cat-transition", col: 10, row: 6, r: "Chỉ tan trong Nước Cường Toan" },
+        { n: 79, s: "Au", name: "Gold", m: "196.97", v: "I, III", t: "Chuyển tiếp", c: "2 - 8 - 18 - 32 - 18 - 1", cat: "cat-transition", col: 11, row: 6, r: "Au + HNO₃ + 3HCl → H[AuCl₄] + NO + 2H₂O" },
+        { n: 80, s: "Hg", name: "Mercury", m: "200.59", v: "I, II", t: "Chuyển tiếp", c: "2 - 8 - 18 - 32 - 18 - 2", cat: "cat-transition", col: 12, row: 6, r: "Hg + S → HgS (Nhiệt độ phòng)" },
+        { n: 81, s: "Tl", name: "Thallium", m: "204.38", v: "I, III", t: "Kim loại yếu", c: "2 - 8 - 18 - 32 - 18 - 3", cat: "cat-post-trans", col: 13, row: 6, r: "2Tl + 2HCl → 2TlCl + H₂" },
+        { n: 82, s: "Pb", name: "Lead", m: "207.2", v: "II, IV", t: "Kim loại yếu", c: "2 - 8 - 18 - 32 - 18 - 4", cat: "cat-post-trans", col: 14, row: 6, r: "2Pb + O₂ → 2PbO (t°)" },
+        { n: 83, s: "Bi", name: "Bismuth", m: "208.98", v: "III, V", t: "Kim loại yếu", c: "2 - 8 - 18 - 32 - 18 - 5", cat: "cat-post-trans", col: 15, row: 6, r: "4Bi + 3O₂ → 2Bi₂O₃ (t°)" },
+        { n: 84, s: "Po", name: "Polonium", m: "209", v: "II, IV", t: "Á kim", c: "2 - 8 - 18 - 32 - 18 - 6", cat: "cat-metalloid", col: 16, row: 6, r: "Nguyên tố phóng xạ mạnh" },
+        { n: 85, s: "At", name: "Astatine", m: "210", v: "I, III, V, VII", t: "Halogen", c: "2 - 8 - 18 - 32 - 18 - 7", cat: "cat-halogen", col: 17, row: 6, r: "Halogen phóng xạ hiếm" },
+        { n: 86, s: "Rn", name: "Radon", m: "222", v: "0", t: "Khí hiếm", c: "2 - 8 - 18 - 32 - 18 - 8", cat: "cat-noble", col: 18, row: 6, r: "Khí hiếm phóng xạ" },
+        { n: 87, s: "Fr", name: "Francium", m: "223", v: "I", t: "Kim loại kiềm", c: "2 - 8 - 18 - 32 - 18 - 8 - 1", cat: "cat-alkali", col: 1, row: 7, r: "Phóng xạ cực kỳ kém bền" },
+        { n: 88, s: "Ra", name: "Radium", m: "226", v: "II", t: "Kim loại kiềm thổ", c: "2 - 8 - 18 - 32 - 18 - 8 - 2", cat: "cat-alkaline", col: 2, row: 7, r: "Ra + 2H₂O → Ra(OH)₂ + H₂" },
+        { n: 89, s: "Ac", name: "Actinium", m: "227", v: "III", t: "Actinide", c: "2 - 8 - 18 - 32 - 18 - 9 - 2", cat: "cat-actinide", col: 3, row: 10, r: "2Ac + 6H₂O → 2Ac(OH)₃ + 3H₂" },
+        { n: 90, s: "Th", name: "Thorium", m: "232.04", v: "IV", t: "Actinide", c: "2 - 8 - 18 - 32 - 18 - 10 - 2", cat: "cat-actinide", col: 4, row: 10, r: "Th + O₂ → ThO₂ (t°)" },
+        { n: 91, s: "Pa", name: "Protactinium", m: "231.04", v: "V", t: "Actinide", c: "2 - 8 - 18 - 32 - 20 - 9 - 2", cat: "cat-actinide", col: 5, row: 10, r: "Phát bức xạ Alpha độc hại" },
+        { n: 92, s: "U", name: "Uranium", m: "238.03", v: "III, IV, V, VI", t: "Actinide", c: "2 - 8 - 18 - 32 - 21 - 9 - 2", cat: "cat-actinide", col: 6, row: 10, r: "Nhiên liệu phân hạch hạt nhân" },
+        { n: 93, s: "Np", name: "Neptunium", m: "237", v: "III, IV, V, VI", t: "Actinide", c: "2 - 8 - 18 - 32 - 22 - 9 - 2", cat: "cat-actinide", col: 7, row: 10, r: "Tạo NpF₆ siêu bay hơi" },
+        { n: 94, s: "Pu", name: "Plutonium", m: "244", v: "III, IV, V, VI", t: "Actinide", c: "2 - 8 - 18 - 32 - 24 - 8 - 2", cat: "cat-actinide", col: 8, row: 10, r: "Nhiên liệu bom hạt nhân" },
+        { n: 95, s: "Am", name: "Americium", m: "243", v: "III, IV, V, VI", t: "Actinide", c: "2 - 8 - 18 - 32 - 25 - 8 - 2", cat: "cat-actinide", col: 9, row: 10, r: "Dùng trong thiết bị báo khói" },
+        { n: 96, s: "Cm", name: "Curium", m: "247", v: "III, IV", t: "Actinide", c: "2 - 8 - 18 - 32 - 25 - 9 - 2", cat: "cat-actinide", col: 10, row: 10, r: "Phát nhiệt lượng mạnh" },
+        { n: 97, s: "Bk", name: "Berkelium", m: "247", v: "III, IV", t: "Actinide", c: "2 - 8 - 18 - 32 - 27 - 8 - 2", cat: "cat-actinide", col: 11, row: 10, r: "Chế tạo nguyên tố siêu nặng" },
+        { n: 98, s: "Cf", name: "Californium", m: "251", v: "III", t: "Actinide", c: "2 - 8 - 18 - 32 - 28 - 8 - 2", cat: "cat-actinide", col: 12, row: 10, r: "Nguồn phát Neutron cực mạnh" },
+        { n: 99, s: "Es", name: "Einsteinium", m: "252", v: "III", t: "Actinide", c: "2 - 8 - 18 - 32 - 29 - 8 - 2", cat: "cat-actinide", col: 13, row: 10, r: "Tạo ra trong vụ thử bom H" },
+        { n: 100, s: "Fm", name: "Fermium", m: "257", v: "III", t: "Actinide", c: "2 - 8 - 18 - 32 - 30 - 8 - 2", cat: "cat-actinide", col: 14, row: 10, r: "Nghiên cứu khoa học" },
+        { n: 101, s: "Md", name: "Mendelevium", m: "258", v: "II, III", t: "Actinide", c: "2 - 8 - 18 - 32 - 31 - 8 - 2", cat: "cat-actinide", col: 15, row: 10, r: "Đặt tên theo Mendeleev" },
+        { n: 102, s: "No", name: "Nobelium", m: "259", v: "II, III", t: "Actinide", c: "2 - 8 - 18 - 32 - 32 - 8 - 2", cat: "cat-actinide", col: 16, row: 10, r: "Chế tạo bằng máy gia tốc" },
+        { n: 103, s: "Lr", name: "Lawrencium", m: "266", v: "III", t: "Actinide", c: "2 - 8 - 18 - 32 - 32 - 9 - 2", cat: "cat-actinide", col: 17, row: 10, r: "Chu kỳ bán rã vài giờ" },
+        { n: 104, s: "Rf", name: "Rutherfordium", m: "267", v: "IV", t: "Chuyển tiếp", c: "2 - 8 - 18 - 32 - 32 - 10 - 2", cat: "cat-transition", col: 4, row: 7, r: "Siêu nặng, rất kém bền" },
+        { n: 105, s: "Db", name: "Dubnium", m: "268", v: "V", t: "Chuyển tiếp", c: "2 - 8 - 18 - 32 - 32 - 11 - 2", cat: "cat-transition", col: 5, row: 7, r: "Phóng xạ nhân tạo" },
+        { n: 106, s: "Sg", name: "Seaborgium", m: "269", v: "VI", t: "Chuyển tiếp", c: "2 - 8 - 18 - 32 - 32 - 12 - 2", cat: "cat-transition", col: 6, row: 7, r: "Tổng hợp phòng thí nghiệm" },
+        { n: 107, s: "Bh", name: "Bohrium", m: "270", v: "VII", t: "Chuyển tiếp", c: "2 - 8 - 18 - 32 - 32 - 13 - 2", cat: "cat-transition", col: 7, row: 7, r: "Phân rã cực nhanh" },
+        { n: 108, s: "Hs", name: "Hassium", m: "277", v: "VIII", t: "Chuyển tiếp", c: "2 - 8 - 18 - 32 - 32 - 14 - 2", cat: "cat-transition", col: 8, row: 7, r: "Tạo HsO₄ tương tự Os" },
+        { n: 109, s: "Mt", name: "Meitnerium", m: "278", v: "III, IV, VI", t: "Chuyển tiếp", c: "2 - 8 - 18 - 32 - 32 - 15 - 2", cat: "cat-transition", col: 9, row: 7, r: "Tổng hợp trong máy gia tốc" },
+        { n: 110, s: "Ds", name: "Darmstadtium", m: "281", v: "II, IV", t: "Chuyển tiếp", c: "2 - 8 - 18 - 32 - 32 - 17 - 1", cat: "cat-transition", col: 10, row: 7, r: "Chu kỳ bán rã vài mili giây" },
+        { n: 111, s: "Rg", name: "Roentgenium", m: "282", v: "I, III", t: "Chuyển tiếp", c: "2 - 8 - 18 - 32 - 32 - 18 - 1", cat: "cat-transition", col: 11, row: 7, r: "Siêu nặng, phân rã nhanh" },
+        { n: 112, s: "Cn", name: "Copernicium", m: "285", v: "II", t: "Chuyển tiếp", c: "2 - 8 - 18 - 32 - 32 - 18 - 2", cat: "cat-transition", col: 12, row: 7, r: "Tính chất tương tự Thuỷ Ngân" },
+        { n: 113, s: "Nh", name: "Nihonium", m: "286", v: "I, III", t: "Kim loại yếu", c: "2 - 8 - 18 - 32 - 32 - 18 - 3", cat: "cat-post-trans", col: 13, row: 7, r: "Tổng hợp tại Nhật Bản" },
+        { n: 114, s: "Fl", name: "Flerovium", m: "289", v: "II, IV", t: "Kim loại yếu", c: "2 - 8 - 18 - 32 - 32 - 18 - 4", cat: "cat-post-trans", col: 14, row: 7, r: "Có tính chất giống Khí Trơ" },
+        { n: 115, s: "Mc", name: "Moscovium", m: "290", v: "I, III", t: "Kim loại yếu", c: "2 - 8 - 18 - 32 - 32 - 18 - 5", cat: "cat-post-trans", col: 15, row: 7, r: "Phóng xạ nhân tạo" },
+        { n: 116, s: "Lv", name: "Livermorium", m: "293", v: "II, IV", t: "Kim loại yếu", c: "2 - 8 - 18 - 32 - 32 - 18 - 6", cat: "cat-post-trans", col: 16, row: 7, r: "Siêu nặng, phân rã Alpha" },
+        { n: 117, s: "Ts", name: "Tennessine", m: "294", v: "I, III, V, VII", t: "Halogen", c: "2 - 8 - 18 - 32 - 32 - 18 - 7", cat: "cat-halogen", col: 17, row: 7, r: "Halogen siêu nặng" },
+        { n: 118, s: "Og", name: "Oganesson", m: "294", v: "0", t: "Khí hiếm", c: "2 - 8 - 18 - 32 - 32 - 18 - 8", cat: "cat-noble", col: 18, row: 7, r: "Nguyên tố cuối cùng trong BTH" }
+      ];
+
+      // ==========================================
+      // TÌM KIẾM / LỌC / DỮ LIỆU BỔ SUNG
+      // ==========================================
+      const discoverers = {
+        1:"Henry Cavendish",2:"Pierre Janssen & Norman Lockyer",3:"Johan August Arfwedson",4:"Louis Nicolas Vauquelin",
+        5:"Joseph Louis Gay-Lussac & Louis Jacques Thénard",6:"Thời cổ đại",7:"Daniel Rutherford",8:"Carl Wilhelm Scheele & Joseph Priestley",
+        9:"Henri Moissan",10:"William Ramsay & Morris Travers",11:"Humphry Davy",12:"Joseph Black",13:"Hans Christian Ørsted",
+        14:"Jöns Jacob Berzelius",15:"Hennig Brand",16:"Thời cổ đại",17:"Carl Wilhelm Scheele",18:"Lord Rayleigh & William Ramsay",
+        19:"Humphry Davy",20:"Humphry Davy",21:"Lars Fredrik Nilson",22:"William Gregor",23:"Andrés Manuel del Río",
+        24:"Nicolas-Louis Vauquelin",25:"Gahn & Scheele",26:"Thời cổ đại",27:"Georg Brandt",28:"Axel Fredrik Cronstedt",
+        29:"Thời cổ đại",30:"Andreas Marggraf",31:"Paul-Émile Lecoq de Boisbaudran",32:"Clemens Winkler",33:"Albertus Magnus",
+        34:"Jöns Jacob Berzelius",35:"Antoine Jérôme Balard",36:"William Ramsay & Morris Travers",37:"Robert Bunsen & Gustav Kirchhoff",
+        38:"Humphry Davy",39:"Johan Gadolin",40:"Martin Heinrich Klaproth",41:"H. Rose",42:"Carl Wilhelm Scheele",
+        43:"Emilio Segrè & Carlo Perrier",44:"Karl Ernst Claus",45:"William Hyde Wollaston",46:"William Hyde Wollaston",
+        47:"Thời cổ đại",48:"Andreas Marggraf",49:"Ferdinand Reich & Theodor Richter",50:"Thời cổ đại",51:"Thời cổ đại",
+        52:"Franz-Joseph Müller von Reichenstein",53:"Bernard Courtois",54:"William Ramsay & Morris Travers",55:"Robert Bunsen & Gustav Kirchhoff",
+        56:"Humphry Davy",57:"Carl Gustaf Mosander",58:"Carl Gustaf Mosander",59:"Carl Gustaf Mosander",60:"Carl Gustaf Mosander",
+        61:"Jacob Marinsky, Lawrence Glendenin & Charles Coryell",62:"Paul-Émile Lecoq de Boisbaudran",63:"Eugène-Anatole Demarçay",
+        64:"Jean Charles Galissard de Marignac",65:"Carl Gustaf Mosander",66:"Lars Fredrik Nilson",67:"Marc Delafontaine & Jacques Soret",
+        68:"Carl Gustaf Mosander",69:"Johan Gadolin",70:"Jean Charles Galissard de Marignac",71:"Georges Urbain",
+        72:"Dirk Coster & George de Hevesy",73:"Nils Gabriel Sefström",74:"Juan José Elhuyar & Fausto Elhuyar",75:"Ida Noddack, Walter Noddack & Otto Berg",
+        76:"Smithson Tennant",77:"Smithson Tennant",78:"William Hyde Wollaston",79:"Thời cổ đại",80:"Thời cổ đại",
+        81:"William Crookes",82:"Thời cổ đại",83:"Claude François Geoffroy",84:"Marie & Pierre Curie",85:"Dale R. Corson, Kenneth Ross MacKenzie & Emilio Segrè",
+        86:"Friedrich Ernst Dorn",87:"Marguerite Perey",88:"Pierre & Marie Curie",89:"Friedrich Oskar Giesel",
+        90:"Jöns Jacob Berzelius",91:"Otto Hahn & Lise Meitner",92:"Martin Heinrich Klaproth",93:"Edwin McMillan & Philip Abelson",
+        94:"Glenn T. Seaborg & cộng sự",95:"Glenn T. Seaborg & cộng sự",96:"Glenn T. Seaborg & cộng sự",97:"Glenn T. Seaborg & cộng sự",
+        98:"Glenn T. Seaborg & cộng sự",99:"Albert Ghiorso & cộng sự",100:"Albert Ghiorso & cộng sự",101:"Albert Ghiorso & cộng sự",
+        102:"Albert Ghiorso & cộng sự",103:"Albert Ghiorso & cộng sự",104:"Dubna & Berkeley",105:"Dubna & Berkeley",106:"Berkeley",
+        107:"GSI Darmstadt",108:"GSI Darmstadt",109:"GSI Darmstadt",110:"GSI Darmstadt",111:"GSI Darmstadt",
+        112:"GSI Darmstadt",113:"RIKEN",114:"Dubna & Livermore",115:"Dubna & Livermore",116:"Dubna & Livermore",
+        117:"JINR, Oak Ridge & Vanderbilt",118:"JINR, Livermore & các cộng tác viên"
+      };
+      const liquid = new Set([35,80]);
+      const gases = new Set([1,2,7,8,9,10,17,18,36,54,86]);
+      const predicted = new Set([118]);
+      const periodFor = n => n <= 2 ? 1 : n <= 10 ? 2 : n <= 18 ? 3 : n <= 36 ? 4 : n <= 54 ? 5 : n <= 86 ? 6 : 7;
+      const stateFor = n => predicted.has(n) ? "Dự đoán" : liquid.has(n) ? "Lỏng" : gases.has(n) ? "Khí" : "Rắn";
+      const stateKey = n => predicted.has(n) ? "predicted" : liquid.has(n) ? "liquid" : gases.has(n) ? "gas" : "solid";
+      const oxidationStates = {"1": "+1, −1", "2": "0", "3": "+1", "4": "+2", "5": "−3, +3", "6": "−4, +2, +4", "7": "−3, +1, +2, +3, +4, +5", "8": "−2, −1, +1, +2", "9": "−1", "10": "0", "11": "+1", "12": "+2", "13": "+1, +3", "14": "−4, +2, +4", "15": "−3, +3, +5", "16": "−2, +2, +4, +6", "17": "−1, +1, +3, +5, +7", "18": "0", "19": "+1", "20": "+2", "21": "+3", "22": "+2, +3, +4", "23": "+2, +3, +4, +5", "24": "+2, +3, +6", "25": "+2, +3, +4, +6, +7", "26": "+2, +3", "27": "+2, +3", "28": "+2, +3", "29": "+1, +2", "30": "+2", "31": "+1, +3", "32": "−4, +2, +4", "33": "−3, +3, +5", "34": "−2, +4, +6", "35": "−1, +1, +3, +5, +7", "36": "0", "37": "+1", "38": "+2", "39": "+3", "40": "+4", "41": "+3, +5", "42": "+2, +3, +4, +5, +6", "43": "+4, +7", "44": "+2, +3, +4, +6, +8", "45": "+3", "46": "+2, +4", "47": "+1", "48": "+2", "49": "+1, +3", "50": "+2, +4", "51": "−3, +3, +5", "52": "−2, +2, +4, +6", "53": "−1, +1, +3, +5, +7", "54": "0", "55": "+1", "56": "+2", "57": "+3", "58": "+3, +4", "59": "+3, +4", "60": "+3", "61": "+3", "62": "+2, +3", "63": "+2, +3", "64": "+3", "65": "+3, +4", "66": "+3", "67": "+3", "68": "+3", "69": "+2, +3", "70": "+2, +3", "71": "+3", "72": "+4", "73": "+5", "74": "+2, +3, +4, +5, +6", "75": "+2, +3, +4, +5, +6, +7", "76": "+2, +3, +4, +6, +8", "77": "+3, +4, +6", "78": "+2, +4", "79": "+1, +3", "80": "+1, +2", "81": "+1, +3", "82": "+2, +4", "83": "+3, +5", "84": "+2, +4, +6", "85": "−1, +1, +3, +5, +7", "86": "0", "87": "+1", "88": "+2", "89": "+3", "90": "+4", "91": "+4, +5", "92": "+3, +4, +5, +6", "93": "+3, +4, +5, +6", "94": "+3, +4, +5, +6", "95": "+2, +3, +4, +5, +6", "96": "+3, +4", "97": "+3, +4", "98": "+2, +3, +4", "99": "+2, +3", "100": "+2, +3", "101": "+2, +3", "102": "+2, +3", "103": "+3", "104": "+4", "105": "+5", "106": "+6", "107": "+7", "108": "+8", "109": "+3", "110": "+2, +4", "111": "+1, +3", "112": "+2", "113": "+1, +3", "114": "+2, +4", "115": "+1, +3, +5", "116": "+2, +4", "117": "−1, +1, +3, +5, +7", "118": "0"};
+      const oxidation = (n,v) => oxidationStates[String(n)] || (v === "0" ? "0" : v.split(',').map(x => `+${x.trim()}`).join(', '));
+      const stories = {
+        1:"Tư liệu lịch sử: Henry Cavendish mô tả khí hydrogen vào năm 1766; Antoine Lavoisier sau đó đặt tên hydrogen, liên quan đến khả năng tạo nước.\n\nGiai thoại: Trong nhiều truyền thống, nước được xem là một trong những chất nền tảng của tự nhiên; đây là quan niệm dân gian/lịch sử, không phải bằng chứng khoa học về hydrogen.",
+        6:"Tư liệu lịch sử: Carbon dưới dạng than và than củi đã được con người sử dụng từ thời tiền sử. Kim cương và graphite về sau được nhận ra là các dạng khác nhau của cùng một nguyên tố.\n\nGiai thoại: Than củi và đá đen xuất hiện trong nhiều truyền thống dân gian như biểu tượng của lửa, sức mạnh hoặc sự thanh tẩy.",
+        8:"Tư liệu lịch sử: Joseph Priestley và Carl Wilhelm Scheele đã nghiên cứu khí oxygen độc lập vào thế kỷ XVIII; Antoine Lavoisier góp phần xác lập cách hiểu hiện đại về vai trò của oxygen trong sự cháy.\n\nGiai thoại: Người xưa thường xem không khí là một yếu tố nuôi lửa và sự sống; đó là quan niệm trước hóa học hiện đại, không phải tên gọi của oxygen.",
+        13:"Tư liệu lịch sử: Aluminium rất khó tách khỏi quặng bằng phương pháp hóa học thông thường nên từng có giá trị cao. Phương pháp Hall–Héroult cuối thế kỷ XIX giúp sản xuất aluminium quy mô lớn và làm giá thành giảm mạnh.\n\nGiai thoại: Có câu chuyện phổ biến rằng Napoleon III dùng đồ ăn bằng aluminium trong những bữa tiệc sang trọng; chi tiết này thường được kể lại nhưng mức độ chính xác của từng phiên bản giai thoại không chắc chắn.",
+        26:"Tư liệu lịch sử: Iron đã được con người sử dụng từ thời cổ đại; một số đồ sắt rất sớm có nguồn gốc từ thiên thạch. Thời đại đồ sắt sau đó làm thay đổi công cụ và vũ khí ở nhiều nền văn minh.\n\nGiai thoại: Trong nhiều nền văn hóa, sắt được xem là vật có khả năng xua đuổi tà ma hoặc bảo vệ con người. Đây là tín ngưỡng dân gian, không phải tính chất hóa học đã được chứng minh.",
+        29:"Tư liệu lịch sử: Copper được con người sử dụng từ thời tiền sử và là một trong những kim loại đầu tiên được luyện và tạo hợp kim. Đồng cũng góp phần hình thành Thời đại đồ đồng.\n\nGiai thoại: Người Ai Cập và nhiều nền văn hóa cổ dùng copper trong đồ vật nghi lễ; dân gian về sau gán cho đồng các khả năng bảo vệ và chữa bệnh, nhưng các niềm tin này không thay thế bằng chứng y khoa.",
+        47:"Tư liệu lịch sử: Silver đã được biết từ thời cổ đại và được dùng làm đồ trang sức, tiền tệ. Khả năng phản xạ ánh sáng cao khiến nó có vị trí đặc biệt trong nhiều nền văn hóa.\n\nGiai thoại: Truyền thuyết về bạc chống lại người sói và các sinh vật siêu nhiên xuất hiện trong văn hóa dân gian châu Âu. Đây là truyền thuyết, không phải tác dụng hóa học đã được chứng minh.",
+        50:"Tư liệu lịch sử: Tin được biết từ thời cổ đại và là thành phần quan trọng của đồng bronze. Việc thêm tin vào copper tạo ra hợp kim cứng và hữu ích hơn cho công cụ, vũ khí và đồ vật.\n\nGiai thoại: Nhiều câu chuyện dân gian châu Âu gắn đồ thiếc với đời sống gia đình và nghề thủ công; các câu chuyện này mang tính văn hóa hơn là khoa học.",
+        79:"Tư liệu lịch sử: Gold được biết từ thời cổ đại và có mặt trong nhiều nền văn minh nhờ độ bền hóa học, màu sắc đặc trưng và khả năng dát mỏng.\n\nGiai thoại: Alchemy từng xem gold là biểu tượng của sự hoàn hảo và tìm cách biến kim loại thường thành vàng. Alchemy có ảnh hưởng lịch sử tới hóa học nhưng không chứng minh được phép biến kim loại thành vàng theo cách dân gian kể.",
+        80:"Tư liệu lịch sử: Mercury được biết từ thời cổ đại và từng được dùng trong nhiều dụng cụ, khoáng vật và thực hành luyện kim. Việc sử dụng mercury ngày nay bị hạn chế do độc tính.\n\nGiai thoại: Alchemy xem mercury là một trong các nguyên lý nền tảng của vật chất; đây là quan niệm lịch sử, không phải mô hình nguyên tử hiện đại.",
+        82:"Tư liệu lịch sử: Lead được con người sử dụng từ thời cổ đại vì dễ khai thác và dễ tạo hình. Người La Mã từng dùng lead trong nhiều vật dụng và đường ống.\n\nGiai thoại: Trong folklore, lead đôi khi được liên hệ với các nghi lễ bảo vệ hoặc bói toán; đây là niềm tin dân gian và không phải công dụng khoa học.",
+        92:"Tư liệu lịch sử: Martin Heinrich Klaproth xác định uranium vào năm 1789 từ pitchblende. Hơn một thế kỷ sau, Becquerel phát hiện hiện tượng phóng xạ và uranium trở thành đối tượng quan trọng của vật lý hạt nhân.\n\nGiai thoại: Vì uranium phát sáng hoặc gây ấn tượng mạnh trong một số khoáng vật, các câu chuyện dân gian hiện đại đôi khi gán cho nó những năng lực bí ẩn; các cách kể này không phải bằng chứng khoa học.",
+        118:"Tư liệu lịch sử: Oganesson được tổng hợp nhân tạo vào đầu thế kỷ XXI và được đặt tên để vinh danh nhà vật lý Yuri Oganessian. Vì chỉ tạo được số nguyên tử rất nhỏ và tồn tại cực ngắn, nhiều tính chất của nó vẫn dựa trên dự đoán.\n\nGiai thoại: Chưa có truyền thuyết dân gian lâu đời về oganesson vì đây là nguyên tố được tạo ra trong thời hiện đại; các câu chuyện trên mạng về nó nên được xem là hư cấu nếu không có nguồn khoa học."
+      };
+      elementsData.forEach(item => {
+        item.period = periodFor(item.n);
+        item.state = stateFor(item.n);
+        item.stateKey = stateKey(item.n);
+        item.ox = oxidation(item.n, item.v);
+        item.discoverer = discoverers[item.n] || "Được xác định trong nghiên cứu hiện đại";
+        item.story = stories[item.n] || `Tư liệu lịch sử: ${item.name} được xác định và nghiên cứu trong lịch sử phát triển của hóa học hiện đại; thông tin người phát hiện được ghi ở trên.\n\nGiai thoại dân gian: Chưa ghi nhận một giai thoại dân gian phổ biến, có nguồn rõ ràng về nguyên tố này. Không nên nhầm các câu chuyện trên mạng với tư liệu lịch sử.`;
+        item.group = (item.cat === "cat-lanthanide" || item.cat === "cat-actinide") ? 3 : item.col;
+      });
+
+      const grid = document.getElementById('grid');
+      const matrix = Array(10).fill(null).map(() => Array(18).fill(null));
+      elementsData.forEach(item => { matrix[item.row - 1][item.col - 1] = item; });
+
+      function matchesFilters(item) {
+        const q = document.getElementById('element-search').value.trim().toLowerCase();
+        const group = document.getElementById('group-filter').value;
+        const period = document.getElementById('period-filter').value;
+        const st = document.getElementById('state-filter').value;
+        const textMatch = !q || String(item.n) === q || item.s.toLowerCase().includes(q) || item.name.toLowerCase().includes(q);
+        return textMatch && (!group || String(item.group) === group) && (!period || String(item.period) === period) && (!st || item.stateKey === st);
+      }
+
+      function renderGrid() {
+        grid.innerHTML = "";
+        let visible = 0;
+        for (let r = 0; r < 10; r++) {
+          if (r === 7) { const gap = document.createElement('div'); gap.className='gap-row'; grid.appendChild(gap); continue; }
+          for (let c = 0; c < 18; c++) {
+            const item = matrix[r][c];
+            const cell = document.createElement('div');
+            if (item && matchesFilters(item)) {
+              visible++;
+              cell.className = `element-box ${item.cat}`;
+              cell.innerHTML = `<div class="num">${item.n}</div><div class="sym">${item.s}</div><div class="name">${item.name}</div>`;
+              cell.onclick = () => showModal(item);
+            } else {
+              cell.style.visibility = 'hidden';
+            }
+            grid.appendChild(cell);
+          }
+        }
+        document.getElementById('filter-count').textContent = `Hiển thị ${visible} / ${elementsData.length} nguyên tố`;
+      }
+      ['element-search','group-filter','period-filter','state-filter'].forEach(id => document.getElementById(id).addEventListener('input', renderGrid));
+      renderGrid();
+
+      // ==========================================
+      // SPLASH SCREEN
+      // ==========================================
+      const canvas = document.getElementById('canvas-3d');
+      const ctx = canvas.getContext('2d');
+      let particles = [];
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+
+      class Particle {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+          this.size = Math.random() * 2 + 1;
+          this.speedX = (Math.random() - 0.5) * 1.5;
+          this.speedY = (Math.random() - 0.5) * 1.5;
+          this.color = Math.random() > 0.5 ? '#00f0ff' : '#ff2a8d';
+        }
+        update() {
+          this.x += this.speedX; this.y += this.speedY;
+          if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+          if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+        }
+        draw() {
+          ctx.fillStyle = this.color;
+          ctx.shadowBlur = 10; ctx.shadowColor = this.color;
+          ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+
+      for (let i = 0; i < 70; i++) particles.push(new Particle());
+
+      function animate3D() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => { p.update(); p.draw(); });
+        requestAnimationFrame(animate3D);
+      }
+      animate3D();
+
+      document.addEventListener('DOMContentLoaded', () => {
+        let p = 0;
+        const timer = setInterval(() => {
+          p += 5;
+          document.getElementById('progress-bar').style.width = p + '%';
+          document.getElementById('progress-text').innerText = `Đang khởi tạo By BeatXEdu... ${p}%`;
+          if (p >= 100) {
+            clearInterval(timer);
+            setTimeout(() => {
+              document.getElementById('splash-screen').classList.add('fade-out');
+              document.getElementById('main-app').classList.add('show');
+            }, 300);
+          }
+        }, 35);
+      });
+
+      // ==========================================
+      // MODAL - HIỂN THỊ HÓA TRỊ
+      // ==========================================
+      function showModal(item) {
+        document.getElementById('m-symbol').innerText = item.s;
+        document.getElementById('m-name').innerText = item.name;
+        document.getElementById('m-number').innerText = item.n;
+        document.getElementById('m-mass').innerText = item.m;
+        document.getElementById('m-valence').innerText = item.v;
+        document.getElementById('m-oxidation').innerText = item.ox;
+        document.getElementById('m-state').innerText = item.state;
+        document.getElementById('m-type').innerText = item.t;
+        currentElementStory = item;
+        document.getElementById('m-config').innerText = item.c;
+        document.getElementById('m-reaction').innerText = item.r;
+        document.getElementById('m-nucleus').innerText = item.n;
+
+        const shellArr = item.c.split(' - ').map(Number);
+        document.getElementById('m-shells').innerText = shellArr.length;
+
+        const atomContainer = document.getElementById('atom-orbits-container');
+        atomContainer.querySelectorAll('.orbit').forEach(o => o.remove());
+
+        const baseRadius = 35;
+        const stepRadius = 22;
+
+        shellArr.forEach((eCount, index) => {
+          const radius = baseRadius + (index * stepRadius);
+          const orbit = document.createElement('div');
+          orbit.className = 'orbit';
+          orbit.style.width = (radius * 2) + 'px';
+          orbit.style.height = (radius * 2) + 'px';
+          orbit.style.animationDuration = (4 + index * 2.5) + 's';
+
+          for (let i = 0; i < eCount; i++) {
+            const angle = (i / eCount) * (2 * Math.PI);
+            const x = radius + radius * Math.cos(angle);
+            const y = radius + radius * Math.sin(angle);
+
+            const eDot = document.createElement('div');
+            eDot.className = 'e-dot';
+            eDot.style.left = x + 'px';
+            eDot.style.top = y + 'px';
+            orbit.appendChild(eDot);
+          }
+
+          atomContainer.appendChild(orbit);
+        });
+
+        document.getElementById('element-modal').classList.add('active');
+      }
+
+      function closeModal() {
+        document.getElementById('element-modal').classList.remove('active');
+      }
+      let currentElementStory = null;
+
+      function openStoryModal() {
+        if (!currentElementStory) return;
+        document.getElementById('story-title').innerText = `Câu chuyện về ${currentElementStory.name}`;
+        document.getElementById('story-discoverer').innerHTML = `<strong>Người phát hiện:</strong> ${currentElementStory.discoverer}`;
+        document.getElementById('story-text').innerText = currentElementStory.story;
+        document.getElementById('story-modal').classList.add('active');
+      }
+
+      function closeStoryModal() {
+        document.getElementById('story-modal').classList.remove('active');
+      }
+
+      document.getElementById('story-modal')?.addEventListener('click', (e) => {
+        if (e.target.id === 'story-modal') closeStoryModal();
+      });
+
+
+      // ==========================================
+      // CHAT WIDGET
+      // ==========================================
+      document.addEventListener('DOMContentLoaded', function() {
+        const chatBubble = document.getElementById('chat-bubble');
+        const chatWidget = document.getElementById('chat-widget');
+        const closeChatBtn = document.getElementById('close-chat-btn');
+        const chatBody = document.getElementById('chat-box');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn')
+
+        // Mở cửa sổ chat 
+        chatBubble.addEventListener('click', function() {
+          chatWidget.classList.toggle('open');
+          if (chatWidget.classList.contains('open')) {
+            setTimeout(() => userInput.focus(), 100);
+          }
+        });
+
+        // Đóng cửa sổ chat 
+        closeChatBtn.addEventListener('click', function() {
+          chatWidget.classList.remove('open');
+        });
+
+        // Chỗ để nhắn nho mấy cục dàng
+        function addMessage(text, isUser) {
+          const msg = document.createElement('div');
+          msg.className = isUser ? 'msg msg-user' : 'msg msg-bot';
+          msg.textContent = text;
+          chatBody.appendChild(msg);
+          chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        // Gửi tin nhắn
+        async function handleSend() {
+          const text = userInput.value.trim();
+          if (!text) return;
+
+          addMessage(text, true);
+          userInput.value = '';
+          sendBtn.disabled = true;
+          sendBtn.textContent = '...';
+
+          try {
+            const reply = await guiCauHoiGemini(text);
+            addMessage(reply || 'Xin lỗi, Gemini đang xảy ra sự cố.', false);
+          } catch (err) {
+            addMessage('Xin Lỗi về sự cố này, chúng tôi sẽ sửa nó nhanh nhất có thể.', false);
+          } finally {
+            sendBtn.disabled = false;
+            sendBtn.textContent = 'Gửi';
+          }
+        }
+
+        sendBtn.addEventListener('click', handleSend);
+        userInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleSend();
+          }
+        });
+      });
+
+      // ==========================================
+      // COMMAND BAR
+      // ==========================================
+      const cmdOverlay = document.getElementById('cmdPaletteOverlay');
+      const cmdInput = document.getElementById('cmdInput');
+      const ADMIN_PASS = '@@AdMin#';
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === '`' && !e.ctrlKey && !e.altKey && !e.metaKey) {
+          e.preventDefault();
+          if (cmdOverlay.style.display === 'none' || cmdOverlay.style.display === '') {
+            cmdOverlay.style.display = 'flex';
+            setTimeout(() => cmdInput.focus(), 50);
+          } else {
+            cmdOverlay.style.display = 'none';
+          }
+        }
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && cmdOverlay.style.display === 'flex') {
+          cmdOverlay.style.display = 'none';
+          cmdInput.value = '';
+        }
+      });
+
+      cmdInput.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+          let inputKey = cmdInput.value.trim();
+          if (!inputKey) return;
+
+          if (inputKey === ADMIN_PASS) {
+            cmdOverlay.style.display = 'none';
+            cmdInput.value = '';
+            window.location.href = "/khuvuc/quantri/index.html";
+          } else {
+            cmdInput.value = '';
+            cmdInput.placeholder = "❌ Sai mã!";
+            setTimeout(() => { 
+              cmdInput.placeholder = "Nhập lệnh..."; 
+            }, 1500);
+          }
+        }
+      });
+
+    </script>
+
+    <script src="/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Bảng Tuần Hoàn — Đăng Nhập Lần 1</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-family: Arial, sans-serif;
+
+      color: #fff;
+
+      background:
+        radial-gradient(
+          circle at top,
+          #20263f 0%,
+          #0d0f19 55%,
+          #070810 100%
+        );
+    }
+
+    .container {
+      width: min(440px, 92%);
+      padding: 32px;
+
+      border: 1px solid #30364d;
+      border-radius: 22px;
+
+      background: rgba(17, 20, 34, 0.96);
+
+      box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.5);
+
+      text-align: center;
+    }
+
+    .icon {
+      width: 70px;
+      height: 70px;
+
+      margin: 0 auto 18px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 20px;
+
+      background: linear-gradient(
+        135deg,
+        #5865f2,
+        #7c4dff
+      );
+
+      font-size: 34px;
+
+      box-shadow:
+        0 10px 30px rgba(88, 101, 242, 0.35);
+    }
+
+    h1 {
+      margin: 0;
+
+      font-size: 25px;
+    }
+
+    .subtitle {
+      margin-top: 9px;
+
+      color: #9299ad;
+
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .notice {
+      margin-top: 25px;
+      padding: 15px;
+
+      border-radius: 13px;
+
+      background: #111625;
+      border: 1px solid #292f45;
+
+      color: #b8bfd1;
+
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .enter-button {
+      width: 100%;
+
+      margin-top: 20px;
+      padding: 14px;
+
+      border: 0;
+      border-radius: 12px;
+
+      background: #5865f2;
+      color: #fff;
+
+      font-size: 15px;
+      font-weight: bold;
+
+      cursor: pointer;
+
+      transition:
+        transform 0.15s,
+        filter 0.15s;
+    }
+
+    .enter-button:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    .back-button {
+      width: 100%;
+
+      margin-top: 10px;
+      padding: 12px;
+
+      border: 1px solid #343a52;
+      border-radius: 12px;
+
+      background: transparent;
+      color: #9da5ba;
+
+      font-size: 14px;
+
+      cursor: pointer;
+    }
+
+    .back-button:hover {
+      background: #151a2a;
+      color: #fff;
+    }
+
+    .footer {
+      margin-top: 25px;
+
+      color: #5e667c;
+
+      font-size: 11px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="container">
+
+    <div class="icon">
+      🛡️
+    </div>
+
+    <h1>Quản trị - Đăng Nhập Lần 1</h1>
+
+    <div class="subtitle">
+      Khu vực dành riêng cho hệ thống admin
+    </div>
+
+    <div class="notice">
+      Khu vực này được bảo vệ.
+      <br>
+      Bạn cần xác thực quyền quản trị
+      trước khi tiếp tục.
+    </div>
+
+    <button
+      class="enter-button"
+      id="enterButton"
+    >
+      Tiếp tục xác thực
+    </button>
+
+    <button
+      class="back-button"
+      id="backButton"
+    >
+      ← Quay về Bảng Tuần Hoàn
+    </button>
+
+    <div class="footer">
+      Khu vực quản trị
+    </div>
+
+  </main>
+
+
+  <script>
+
+    const enterButton =
+      document.getElementById("enterButton");
+
+    const backButton =
+      document.getElementById("backButton");
+
+
+    /*
+     * bước xác thực đầu tiên.
+     *
+     * /admin/index.html
+     */
+
+    enterButton.addEventListener(
+      "click",
+      function () {
+
+        window.location.href =
+            "/khuvuc/admin/index.html";
+
+      }
+    );
+
+
+    /*
+     * Quay về trang chính.
+     */
+
+    backButton.addEventListener(
+      "click",
+      function () {
+
+        window.location.href =
+          "/test.html";
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>

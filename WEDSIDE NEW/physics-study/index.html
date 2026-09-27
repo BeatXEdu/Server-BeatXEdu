@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Physics Study — By BeatXEdu</title>
+  <meta name="description" content="Physics Study — học Vật lý bằng tư duy, liên hệ công thức, biến đổi và luyện tập. By BeatXEdu.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="splash" class="splash">
+    <div class="splash-logo"><span>Ψ</span></div>
+    <h1>Physics Study</h1>
+    <p>Học để hiểu — không học thuộc máy móc</p>
+    <small>By BeatXEdu</small>
+  </div>
+
+  <div id="app" class="app hidden">
+    <header class="topbar">
+      <div class="brand" onclick="showHome()">
+        <div class="brand-mark">Ψ</div>
+        <div>
+          <strong>Physics Study</strong>
+          <small>By BeatXEdu</small>
+        </div>
+      </div>
+      <nav>
+        <button onclick="showHome()">Trang chủ</button>
+        <button onclick="openTopics()">Chủ đề</button>
+        <button onclick="openPractice()">Luyện tập</button>
+      </nav>
+      <button class="theme-btn" onclick="toggleTheme()" aria-label="Đổi giao diện">◐</button>
+    </header>
+
+    <main id="main"></main>
+
+    <footer>
+      <strong>Physics Study</strong> · Học để hiểu, không học thuộc máy móc · <b>By BeatXEdu</b>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

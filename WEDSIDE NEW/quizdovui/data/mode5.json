@@ -1,0 +1,82 @@
+[
+  {
+    "id": "M5_001",
+    "difficulty": "Easy",
+    "question": "Đá vôi có thành phần chính là hợp chất nào?",
+    "options": ["CaCO3", "CaO", "Ca(OH)2", "CaCl2"],
+    "answer": 0,
+    "explanation": "Đá vôi có thành phần chính là Canxi cacbonat (CaCO3)."
+  },
+  {
+    "id": "M5_002",
+    "difficulty": "Easy",
+    "question": "Khí nào gây ra hiệu ứng nhà kính chủ yếu do hoạt động đốt nhiên liệu hóa thạch?",
+    "options": ["N2", "CO2", "O2", "H2"],
+    "answer": 1,
+    "explanation": "Khí CO2 là tác nhân chính gây hiệu ứng nhà kính từ việc đốt nhiên liệu hóa thạch."
+  },
+  {
+    "id": "M5_003",
+    "difficulty": "Medium",
+    "question": "Oxit nào sau đây là oxit lưỡng tính?",
+    "options": ["Na2O", "Al2O3", "SO3", "CaO"],
+    "answer": 1,
+    "explanation": "Al2O3 là oxit lưỡng tính, vừa tác dụng được với axit vừa tác dụng được với bazơ mạnh."
+  },
+  {
+    "id": "M5_004",
+    "difficulty": "Medium",
+    "question": "Dung dịch nào làm quỳ tím chuyển sang màu đỏ?",
+    "options": ["NaOH", "HCl", "NaCl", "H2O"],
+    "answer": 1,
+    "explanation": "Dung dịch axit HCl làm quỳ tím chuyển sang màu đỏ."
+  },
+  {
+    "id": "M5_005",
+    "difficulty": "Hard",
+    "question": "Cho từ từ khí CO2 vào dung dịch Ca(OH)2 dư, hiện tượng quan sát được là gì?",
+    "options": ["Không có hiện tượng", "Xuất hiện kết tủa trắng", "Có khí thoát ra", "Dung dịch chuyển màu xanh"],
+    "answer": 1,
+    "explanation": "CO2 + Ca(OH)2 → CaCO3↓ + H2O, xuất hiện kết tủa trắng CaCO3 (Ca(OH)2 dư nên kết tủa không tan lại)."
+  },
+  {
+    "id": "M5_006",
+    "difficulty": "Hard",
+    "question": "Chất nào sau đây được dùng để làm khô khí CO2 (không phản ứng với CO2)?",
+    "options": ["CaO", "NaOH đặc", "H2SO4 đặc", "KOH rắn"],
+    "answer": 2,
+    "explanation": "H2SO4 đặc có tính háo nước mạnh và không phản ứng với CO2, dùng để làm khô khí CO2."
+  },
+  {
+    "id": "M5_007",
+    "difficulty": "HSG",
+    "question": "Hòa tan hoàn toàn 10 gam CaCO3 vào dung dịch HCl dư, thể tích CO2 sinh ra ở đktc là bao nhiêu?",
+    "options": ["1,12 lít", "2,24 lít", "3,36 lít", "4,48 lít"],
+    "answer": 1,
+    "explanation": "nCaCO3 = 10/100 = 0,1 mol. CaCO3 + 2HCl → CaCl2 + CO2 + H2O, nCO2 = 0,1 mol → V = 2,24 lít."
+  },
+  {
+    "id": "M5_008",
+    "difficulty": "HSG",
+    "question": "Cho 5,4 gam Al tác dụng vừa đủ với dung dịch HCl. Khối lượng muối AlCl3 thu được là bao nhiêu?",
+    "options": ["13,35 gam", "26,7 gam", "20,025 gam", "6,675 gam"],
+    "answer": 1,
+    "explanation": "nAl = 5,4/27 = 0,2 mol. 2Al + 6HCl → 2AlCl3 + 3H2, nAlCl3 = nAl = 0,2 mol → m = 0,2×133,5 = 26,7 gam."
+  },
+  {
+    "id": "M5_009",
+    "difficulty": "Hell",
+    "question": "Hỗn hợp X gồm Na2CO3 và NaHCO3 có tổng khối lượng 22,4 gam tác dụng hết với HCl dư thu được 4,48 lít khí (đktc). Khối lượng Na2CO3 trong X là bao nhiêu?",
+    "options": ["10,6 gam", "21,2 gam", "16,8 gam", "5,3 gam"],
+    "answer": 0,
+    "explanation": "Gọi x, y là mol Na2CO3, NaHCO3: 106x+84y=22,4 và x+y=0,2 (tổng CO2). Giải ra x=0,1; y=0,1 → mNa2CO3=0,1×106=10,6 gam."
+  },
+  {
+    "id": "M5_010",
+    "difficulty": "Hell",
+    "question": "Nung 20 gam CaCO3 đến khi phản ứng hoàn toàn, sau đó cho toàn bộ CaO thu được tác dụng với nước dư. Khối lượng Ca(OH)2 tạo thành là bao nhiêu (biết CaCO3 → CaO + CO2)?",
+    "options": ["14,8 gam", "18,5 gam", "11,2 gam", "22,2 gam"],
+    "answer": 0,
+    "explanation": "nCaCO3 = 20/100 = 0,2 mol → nCaO = 0,2 mol → nCa(OH)2 = 0,2 mol → m = 0,2×74 = 14,8 gam."
+  }
+]

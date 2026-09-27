@@ -1,0 +1,82 @@
+[
+  {
+    "id": "M2_001",
+    "difficulty": "Easy",
+    "question": "Công thức hóa học của nước là gì?",
+    "options": ["H2O", "HO2", "H2O2", "OH"],
+    "answer": 0,
+    "explanation": "Nước có công thức H2O gồm 2 nguyên tử Hidro và 1 nguyên tử Oxi."
+  },
+  {
+    "id": "M2_002",
+    "difficulty": "Easy",
+    "question": "Công thức hóa học của khí Cacbonic là gì?",
+    "options": ["CO", "CO2", "C2O", "CO3"],
+    "answer": 1,
+    "explanation": "Khí Cacbonic (carbon dioxide) có công thức CO2."
+  },
+  {
+    "id": "M2_003",
+    "difficulty": "Medium",
+    "question": "Muối ăn (Natri clorua) có công thức hóa học là gì?",
+    "options": ["NaCl", "Na2Cl", "NaCl2", "NaClO"],
+    "answer": 0,
+    "explanation": "Natri clorua có công thức NaCl, tỉ lệ 1:1 giữa Na+ và Cl-."
+  },
+  {
+    "id": "M2_004",
+    "difficulty": "Medium",
+    "question": "Công thức hóa học đúng của Nhôm oxit là gì?",
+    "options": ["AlO", "Al2O3", "Al3O2", "AlO3"],
+    "answer": 1,
+    "explanation": "Nhôm (hóa trị III) kết hợp Oxi (hóa trị II) theo quy tắc hóa trị cho ra Al2O3."
+  },
+  {
+    "id": "M2_005",
+    "difficulty": "Hard",
+    "question": "Hợp chất X có phân tử khối 98, chứa H, S, O với tỉ lệ nguyên tử 2:1:4. X là chất nào?",
+    "options": ["H2SO3", "H2SO4", "H2S2O4", "H2SO2"],
+    "answer": 1,
+    "explanation": "H2SO4 có phân tử khối 2+32+64=98, đúng tỉ lệ nguyên tử 2:1:4 và khối lượng."
+  },
+  {
+    "id": "M2_006",
+    "difficulty": "Hard",
+    "question": "Công thức hóa học của Canxi hidrocacbonat (gây nước cứng tạm thời) là gì?",
+    "options": ["CaCO3", "Ca(HCO3)2", "CaHCO3", "Ca(HCO3)3"],
+    "answer": 1,
+    "explanation": "Canxi hidrocacbonat có công thức Ca(HCO3)2, tan trong nước gây nước cứng tạm thời."
+  },
+  {
+    "id": "M2_007",
+    "difficulty": "HSG",
+    "question": "Một oxit kim loại M có công thức M2O3, trong đó M chiếm 70% khối lượng. M là kim loại nào?",
+    "options": ["Nhôm (Al)", "Sắt (Fe)", "Crom (Cr)", "Mangan (Mn)"],
+    "answer": 1,
+    "explanation": "Với M2O3, %M = 2M/(2M+48) = 0.7 → M ≈ 56, đó là Sắt (Fe), công thức Fe2O3."
+  },
+  {
+    "id": "M2_008",
+    "difficulty": "HSG",
+    "question": "Hợp chất hữu cơ X có công thức đơn giản nhất là CH2O và phân tử khối 180. Công thức phân tử của X là gì?",
+    "options": ["C6H12O6", "C3H6O3", "C2H4O2", "C5H10O5"],
+    "answer": 0,
+    "explanation": "CH2O có khối lượng 30; 180/30 = 6, nên công thức phân tử là (CH2O)6 = C6H12O6 (glucose)."
+  },
+  {
+    "id": "M2_009",
+    "difficulty": "Hell",
+    "question": "Hợp chất tinh thể ngậm nước CuSO4.xH2O có khối lượng mol 250 g/mol. Giá trị x là bao nhiêu?",
+    "options": ["3", "5", "7", "9"],
+    "answer": 1,
+    "explanation": "CuSO4 = 160; (250-160)/18 = 5, vậy công thức là CuSO4.5H2O (đồng sunfat ngậm 5 nước)."
+  },
+  {
+    "id": "M2_010",
+    "difficulty": "Hell",
+    "question": "Đốt cháy hoàn toàn hợp chất hữu cơ X chỉ thu được CO2 và H2O theo tỉ lệ mol 2:3. Tỉ lệ số nguyên tử C:H tối giản trong X là bao nhiêu?",
+    "options": ["1:3", "2:3", "1:2", "2:6"],
+    "answer": 0,
+    "explanation": "nCO2:nH2O = 2:3 nghĩa là nC:nH = 2:6 = 1:3, tỉ lệ tối giản C:H là 1:3."
+  }
+]
